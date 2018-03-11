@@ -28,19 +28,19 @@ public class SqliteDatabaseConnector {
 		try {
 			connection = DriverManager.getConnection(CONNECTION_URL);
 		} catch (SQLException e) {
-			System.out.println("Connection Failure!");
 			e.printStackTrace();
-		} finally {
-			if (connection != null) {
-				try {
-					connection.close();
-				} catch (SQLException e) {
-					System.out.println("Failure to close the connection!");
-					e.printStackTrace();
-				}
-			}
 		}
 		return connection;
+	}
+	
+	public static void closeConnection(Connection connection) {
+		try {
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	/**

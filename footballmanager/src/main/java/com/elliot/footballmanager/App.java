@@ -1,12 +1,10 @@
 package com.elliot.footballmanager;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
-import com.elliot.footballmanager.database.SqliteDatabaseConnector;
-import com.elliot.footballmanager.footballteam.FootballTeam;
-
+import com.elliot.footballmanager.country.Country;
+import com.elliot.footballmanager.country.CountryDao;
+import com.elliot.footballmanager.country.CountryDaoImpl;
 
 /**
  * @author Elliot
@@ -16,7 +14,6 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
  */
 public class App {
 	
-	private static Map<Integer, FootballTeam> footballTeams = new HashMap<Integer, FootballTeam>();
 	private static Scanner scanner  = new Scanner(System.in);
 	
     public static void main( String[] args ) {    	
@@ -58,6 +55,11 @@ public class App {
     	System.out.println("Welcome to Elliot's Football Manager!");
     	System.out.println("Please select the country that you would like to play in:");
     	
+    	CountryDao countryDao = new CountryDaoImpl();
+    	
+    	for (Country country : countryDao.getAllCountries()) {
+			System.out.println("[" + country.getCountryId() + "]" + " " + country.getCountryName());
+		}
     	//TODO: Add new Classes that connect to the Database and retrieve the information needed such as countries,
     	// Leagues, FootballTeams...
     }
