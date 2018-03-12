@@ -5,6 +5,9 @@ import java.util.Scanner;
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.country.CountryDao;
 import com.elliot.footballmanager.country.CountryDaoImpl;
+import com.elliot.footballmanager.league.League;
+import com.elliot.footballmanager.league.LeagueDao;
+import com.elliot.footballmanager.league.LeagueDaoImpl;
 
 /**
  * @author Elliot
@@ -56,10 +59,28 @@ public class App {
     	System.out.println("Please select the country that you would like to play in:");
     	
     	CountryDao countryDao = new CountryDaoImpl();
+    	LeagueDao leagueDao = new LeagueDaoImpl();
     	
     	for (Country country : countryDao.getAllCountries()) {
 			System.out.println("[" + country.getCountryId() + "]" + " " + country.getCountryName());
 		}
+    	
+    	int choice;
+    	boolean quit = false;
+    	
+        do {
+        	choice  = scanner.nextInt();
+        	
+        	if (choice == 1) {
+        		for (League league : leagueDao.getAllLeagues(1)) {
+					System.out.println(league.getLeagueName());
+				}
+        	} else {
+        		System.out.println("Invalid option, please try again.");
+        	}
+        } while (!quit);
+    	
+    	
     	//TODO: Add new Classes that connect to the Database and retrieve the information needed such as countries,
     	// Leagues, FootballTeams...
     }

@@ -15,10 +15,10 @@ import com.elliot.footballmanager.database.SqliteDatabaseConnector;
  */
 public class CountryDaoImpl implements CountryDao {
 	
-	List<Country> allCountries;
-	String query = "SELECT * FROM COUNTRY";
-
 	public List<Country> getAllCountries() {
+		List<Country> allCountries = new ArrayList<Country>();
+		String query = "SELECT * FROM COUNTRY";
+		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(query)) {
