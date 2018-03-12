@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.country;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Elliot
@@ -9,8 +9,11 @@ import java.util.List;
  */
 public interface CountryDao {
 
+
 	/**
-	 * @return A list of all countries stored in the database.
+	 * @return A Map of all the Countires stored in the database.
+	 * Key : CountryId
+	 * Value : Country object
 	 */
-	public List<Country> getAllCountries();
+	public Map<Integer, Country> getAllCountries();
 }

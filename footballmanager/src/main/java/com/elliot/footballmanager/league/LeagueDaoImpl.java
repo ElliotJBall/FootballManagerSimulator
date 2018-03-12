@@ -4,8 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 
@@ -16,8 +16,8 @@ import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 public class LeagueDaoImpl implements LeagueDao {
 
 	@Override
-	public List<League> getAllLeagues(Integer countryId) {
-		List<League> allLeagues = new ArrayList<League>();
+	public Map<Integer, League> getAllLeagues(Integer countryId) {
+		Map<Integer, League> allLeagues = new HashMap<Integer, League>();
 		String query = "SELECT * FROM LEAGUE WHERE COUNTRY_ID = ?";
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
@@ -25,10 +25,9 @@ public class LeagueDaoImpl implements LeagueDao {
 			pstmt.setInt(1, countryId);
 			ResultSet rs = pstmt.executeQuery();
 			
-			allLeagues = new ArrayList<League>();
-			
 			while (rs.next()) {
-				allLeagues.add(new League(rs.getInt("LEAGUE_ID"), rs.getString("LEAGUE_NAME"), rs.getInt("COUNTRY_ID")));
+				League league = new League(rs.getInt("LEAGUE_ID"), rs.getString("LEAGUE_NAME"), rs.getInt("COUNTRY_ID"));
+				allLeagues.put(league.getLeagueId(), league);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.league;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Elliot
@@ -11,8 +11,10 @@ public interface LeagueDao {
 	/**
 	 * @param countryId The Country Id for the Country you want to retrieve 
 	 * all the leagues for.
-	 * @return A list of all the available leagues for that given country.
+	 * @return A Map of all the available leagues for the given CountryId
+	 * Key : leagueId
+	 * Value : League object
 	 */
-	public List<League> getAllLeagues(Integer countryId);
+	public Map<Integer, League> getAllLeagues(Integer countryId);
 	
 }
