@@ -55,4 +55,8 @@ public class Country {
 		}
 		leagues.add(league);
 	}
+	
+	public String printCountryMenuInfo() {
+		return "[" + this.getCountryId() + "]" + " " + this.getCountryName();
+	}
 }

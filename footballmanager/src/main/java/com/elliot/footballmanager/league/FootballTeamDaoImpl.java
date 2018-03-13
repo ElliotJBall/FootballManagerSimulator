@@ -1,0 +1,41 @@
+package com.elliot.footballmanager.league;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
+
+import com.elliot.footballmanager.database.SqliteDatabaseConnector;
+import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.footballteam.FootballTeamDao;
+
+/**
+ * @author Elliot
+ *
+ */
+public class FootballTeamDaoImpl implements FootballTeamDao {
+
+	@Override
+	public Map<Integer, FootballTeam> getAllFootballTeams(Integer leagueId) {
+		Map<Integer, FootballTeam> footballTeams = new HashMap<Integer, FootballTeam>();
+		String query = "SELECT * FROM FOOTBALL_TEAM WHERE LEAGUE_ID = ?";
+		
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			
+			pstmt.setInt(1, leagueId);
+			ResultSet rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				FootballTeam footballTeam = new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getInt("LEAGUE_ID"),
+						rs.getString("TEAM_NAME"));
+				footballTeams.put(footballTeam.getFootballTeamId(), footballTeam);				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return footballTeams;
+	}
+}

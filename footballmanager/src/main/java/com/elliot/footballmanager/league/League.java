@@ -43,4 +43,8 @@ public class League {
 	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
 	}
+	
+	public String printLeagueMenuInfo() {
+		return "[" + this.getLeagueId()  + "]" + " " + this.getLeagueName();
+	}
 }

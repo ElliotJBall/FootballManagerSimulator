@@ -10,6 +10,8 @@ import com.elliot.footballmanager.player.Player;
  */
 public class FootballTeam implements IFootballTeam {
 	
+	private Integer footballTeamId;
+	private Integer leagueId;
 	private String teamName;
 	private List<Player> squad;
 	
@@ -17,8 +19,26 @@ public class FootballTeam implements IFootballTeam {
 
 	}
 
-	public FootballTeam(String teamName) {
+	public FootballTeam(Integer footballTeamId, Integer leagueId, String teamName) {
+		this.footballTeamId = footballTeamId;
+		this.leagueId = leagueId;
 		this.teamName = teamName;
+	}
+
+	public Integer getFootballTeamId() {
+		return footballTeamId;
+	}
+
+	public void setFootballTeamId(Integer footballTeamId) {
+		this.footballTeamId = footballTeamId;
+	}
+
+	public Integer getLeagueId() {
+		return leagueId;
+	}
+
+	public void setLeagueId(Integer leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	public String getTeamName() {
@@ -35,5 +55,9 @@ public class FootballTeam implements IFootballTeam {
 
 	public void setSquad(List<Player> squad) {
 		this.squad = squad;
+	}
+	
+	public String printFootballTeamMenuInfo() {
+		return "[" + this.getFootballTeamId() + "]" + this.getTeamName();
 	}	
 }
