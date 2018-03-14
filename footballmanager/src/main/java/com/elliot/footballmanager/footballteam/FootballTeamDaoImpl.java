@@ -1,4 +1,4 @@
-package com.elliot.footballmanager.league;
+package com.elliot.footballmanager.footballteam;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,8 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
 
 /**
  * @author Elliot

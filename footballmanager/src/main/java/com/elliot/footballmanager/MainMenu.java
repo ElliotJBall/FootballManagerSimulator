@@ -8,7 +8,7 @@ import com.elliot.footballmanager.country.CountryDao;
 import com.elliot.footballmanager.country.CountryDaoImpl;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.league.FootballTeamDaoImpl;
+import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.league.LeagueDao;
 import com.elliot.footballmanager.league.LeagueDaoImpl;
