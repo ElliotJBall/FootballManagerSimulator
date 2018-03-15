@@ -10,6 +10,6 @@ package com.elliot.footballmanager;
 public class App {
 	
     public static void main( String[] args ) {
-    	new MainMenu();
+    	new StartMenu();
     }
 }

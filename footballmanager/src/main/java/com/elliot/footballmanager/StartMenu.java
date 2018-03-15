@@ -21,13 +21,13 @@ import com.elliot.footballmanager.manager.ManagerDaoImpl;
  * The MainMenu class is used to create a new Menu object that displays all 
  * the options that area available to the user
  */
-public class MainMenu {
+public class StartMenu {
 	
 	private GameManager gameManager;
 	private static Scanner scanner  = new Scanner(System.in);
 	private boolean quit = false;
 	
-	public MainMenu() {
+	public StartMenu() {
 		displayMenu();
 	}
 	
@@ -54,6 +54,7 @@ public class MainMenu {
         			quit = true;
         			break;
         		case 2: // [2] Continue Saved Game
+        			
         		default: 
         			System.out.println("Invalid option, please try again.");
         	}
