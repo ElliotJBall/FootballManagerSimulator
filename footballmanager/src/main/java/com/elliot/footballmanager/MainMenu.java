@@ -38,6 +38,7 @@ public class MainMenu {
         System.out.println("Please choose one of the following options:");
         System.out.println("[0] Exit Game! (Please note you can hit 0 at any point to exit the game!");
         System.out.println("[1] Start New Game!");
+        System.out.println("[2] Continue Saved Game!");
         
         boolean quit = false;
         
@@ -52,6 +53,7 @@ public class MainMenu {
         			createNewGame();
         			quit = true;
         			break;
+        		case 2: // [2] Continue Saved Game
         		default: 
         			System.out.println("Invalid option, please try again.");
         	}
@@ -60,6 +62,9 @@ public class MainMenu {
         scanner.close();
 	}
 	
+	/**
+	 * Calls the required methods in order to successfully instantiate a new FootballManager game
+	 */
 	private void createNewGame() {
     	chooseCountry();
     	chooseLeague();
@@ -69,6 +74,10 @@ public class MainMenu {
     	// Leagues, FootballTeams...
 	}
 	
+	/**
+	 * Gets a Map of all available Countries from the database and the <link>Country</link> selected
+	 * by the user is added to the <link>GameManager</link> object
+	 */
 	private void chooseCountry() {
 		System.out.println("Please select the country that you would like to play in:");
 		
@@ -98,6 +107,10 @@ public class MainMenu {
         } while (!quit);
 	}
 	
+	/**
+	 * Gets a Map of all available Leagues for the selected </link>Country</link>. 
+	 * The selected </link>League</link> is added to the <link>GameManager</link> object.
+	 */
 	private void chooseLeague() {
 		System.out.println("Please select the league that you would like to play in:");
 		
@@ -127,6 +140,11 @@ public class MainMenu {
         } while (!quit);
 	}
 	
+	
+	/**
+	 * Gets a Map of all available FootballTeams for the selected <link>Country</link>.
+	 * The selected <link>FootballTeam</link> is added to the <link>GameManager</link> object.
+	 */
 	private void chooseTeam() {
 		System.out.println("Please select the FootballTeam that you would like to play as:");
 		
@@ -155,6 +173,11 @@ public class MainMenu {
 		} while (!quit);
 	}
 	
+	
+	/**
+	 * Given information from the user a new <link>Manager</link> object is created. 
+	 * This is persisted into the database and added to the <link>GameManager</link> object. 
+	 */
 	private void createNewManager() {
 		System.out.println("Please enter the managers first name:");
 		

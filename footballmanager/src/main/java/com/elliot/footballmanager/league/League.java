@@ -1,5 +1,9 @@
 package com.elliot.footballmanager.league;
 
+import java.util.Set;
+
+import com.elliot.footballmanager.footballteam.FootballTeam;
+
 /**
  * @author Elliot
  *
@@ -9,6 +13,7 @@ public class League {
 	private Integer leagueId;
 	private String leagueName;
 	private Integer countryId;
+	private Set<FootballTeam> footballTeams;
 	
 	public League() {
 		
@@ -42,6 +47,14 @@ public class League {
 
 	public void setCountryId(Integer countryId) {
 		this.countryId = countryId;
+	}
+
+	public Set<FootballTeam> getFootballTeams() {
+		return footballTeams;
+	}
+
+	public void setFootballTeams(Set<FootballTeam> footballTeams) {
+		this.footballTeams = footballTeams;
 	}
 	
 	public String printLeagueMenuInfo() {
