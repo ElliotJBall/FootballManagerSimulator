@@ -12,6 +12,9 @@ import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.league.LeagueDao;
 import com.elliot.footballmanager.league.LeagueDaoImpl;
+import com.elliot.footballmanager.manager.Manager;
+import com.elliot.footballmanager.manager.ManagerDao;
+import com.elliot.footballmanager.manager.ManagerDaoImpl;
 
 /**
  * @author Elliot
@@ -61,6 +64,7 @@ public class MainMenu {
     	chooseCountry();
     	chooseLeague();
     	chooseTeam();
+    	createNewManager();
     	//TODO: Add new Classes that connect to the Database and retrieve the information needed such as countries,
     	// Leagues, FootballTeams...
 	}
@@ -149,5 +153,45 @@ public class MainMenu {
 				System.out.println("Invalid option, please try again.");
 			}
 		} while (!quit);
+	}
+	
+	private void createNewManager() {
+		System.out.println("Please enter the managers first name:");
+		
+		String firstName, lastName;
+		quit = false;
+		
+		do {
+			firstName = scanner.next().toUpperCase();
+			System.out.println("Is " + firstName + " correct? (Y/N)");
+			
+			if (scanner.next().equals("Y")) {
+				quit = true;
+			} else {
+				System.out.println("Please enter the managers first name:");
+			}
+		} while (!quit);
+		
+		System.out.println("Please enter the managers last name:");
+		quit = false;
+		
+		do {
+			lastName = scanner.next().toUpperCase();
+			System.out.println("Is " + lastName + " correct? (Y/N)");
+			
+			if (scanner.next().equals("Y")) {
+				quit = true;
+			} else {
+				System.out.println("Please enter the managers last name:");
+			}
+		} while (!quit);
+		
+		// Set the Manager to the GameManager object and insert into the Manager table
+		Manager manager = new Manager(firstName, lastName, gameManager.getCurrentFootballTeam());
+		
+		ManagerDao managerDao = new ManagerDaoImpl();
+		managerDao.insertIntoManagerTable(manager);
+		
+		gameManager.setManager(manager);
 	}
 }
