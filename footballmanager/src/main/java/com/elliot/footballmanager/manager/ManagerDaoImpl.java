@@ -15,9 +15,6 @@ public class ManagerDaoImpl implements ManagerDao {
 
 	@Override
 	public void insertIntoManagerTable(Manager manager) {
-		//TODO: Check if there already is Manager data saved into the table, 
-		//if there is do not insert another Manager object
-		// If there already is a save need to return to the user and ask whether they want to override it
 		String query = "INSERT INTO MANAGER VALUES (?, ?, ?, ?)";
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();

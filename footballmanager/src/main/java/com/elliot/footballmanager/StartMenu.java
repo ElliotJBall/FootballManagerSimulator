@@ -9,6 +9,7 @@ import com.elliot.footballmanager.country.CountryDaoImpl;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.FootballTeamDao;
 import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
+import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.league.LeagueDao;
 import com.elliot.footballmanager.league.LeagueDaoImpl;
@@ -54,7 +55,8 @@ public class StartMenu {
         			quit = true;
         			break;
         		case 2: // [2] Continue Saved Game
-        			
+        			gameManager = new GameManager();
+        			gameManager.loadSavedGame();
         		default: 
         			System.out.println("Invalid option, please try again.");
         	}
@@ -95,7 +97,7 @@ public class StartMenu {
         	
         	if (allCountries.get(choice) != null) {
         		Country country = allCountries.get(choice);
-        		gameManager.setSelectedCountry(country);
+        		gameManager.setCurrentCountry(country);
         		
         		System.out.println("You have selected : " + country.printCountryMenuInfo());
         		quit = true;
@@ -116,7 +118,7 @@ public class StartMenu {
 		System.out.println("Please select the league that you would like to play in:");
 		
 		LeagueDao leagueDao = new LeagueDaoImpl();
-		Map<Integer, League> leagues = leagueDao.getAllLeagues(gameManager.getSelectedCountry().getCountryId());
+		Map<Integer, League> leagues = leagueDao.getAllLeagues(gameManager.getCurrentCountry().getCountryId());
 		
 		for (League league : leagues.values()) {
 			System.out.println(league.printLeagueMenuInfo());

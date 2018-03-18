@@ -1,4 +1,4 @@
-package com.elliot.footballmanager;
+package com.elliot.footballmanager.gamemanager;
 
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.footballteam.FootballTeam;
@@ -12,7 +12,7 @@ import com.elliot.footballmanager.manager.Manager;
  */
 public class GameManager {
 
-	private Country selectedCountry;
+	private Country currentCountry;
 	private League currentLeague;
 	private FootballTeam currentFootballTeam;
 	private Manager manager;
@@ -20,13 +20,21 @@ public class GameManager {
 	public GameManager() {
 
 	}
-
-	public Country getSelectedCountry() {
-		return selectedCountry;
+	
+	/**
+	 * This method retrieves the selected Country, League, FootballTeam and Manager 
+	 * from the database. 
+	 */
+	public void loadSavedGame() {
+		
 	}
 
-	public void setSelectedCountry(Country selectedCountry) {
-		this.selectedCountry = selectedCountry;
+	public Country getCurrentCountry() {
+		return currentCountry;
+	}
+
+	public void setCurrentCountry(Country selectedCountry) {
+		this.currentCountry = selectedCountry;
 	}
 
 	public League getCurrentLeague() {
