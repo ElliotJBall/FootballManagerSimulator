@@ -1,6 +1,7 @@
 package com.elliot.footballmanager.country;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -31,6 +32,27 @@ public class CountryDaoImpl implements CountryDao {
 			e.printStackTrace();
 		}
 		return allCountries;
+	}
+
+	@Override
+	public Country getCountryById(Integer countryId) {
+		String query = "SELECT * FROM COUNTRY WHERE COUNTRY_ID = ?";
+		
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setInt(1, countryId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (!rs.next()) {
+				return null;
+			}
+			
+			return new Country(rs.getInt("COUNTRY_ID"), rs.getString("COUNTRY_NAME"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

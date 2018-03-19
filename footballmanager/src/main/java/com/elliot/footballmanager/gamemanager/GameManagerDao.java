@@ -9,6 +9,6 @@ public interface GameManagerDao {
 
 	public void createNewSaveGame(GameManager gameManager);
 	
-	public void loadSavedGame();
+	public GameManager loadSavedGame();
 	
 }

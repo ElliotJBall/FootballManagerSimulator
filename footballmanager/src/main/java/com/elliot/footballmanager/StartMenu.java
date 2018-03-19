@@ -73,6 +73,8 @@ public class StartMenu {
     	chooseLeague();
     	chooseTeam();
     	createNewManager();
+    	
+    	gameManager.saveGame();
     	//TODO: Add new Classes that connect to the Database and retrieve the information needed such as countries,
     	// Leagues, FootballTeams...
 	}
@@ -188,13 +190,13 @@ public class StartMenu {
 		quit = false;
 		
 		do {
-			firstName = scanner.next().toUpperCase();
+			firstName = scanner.next();
 			System.out.println("Is " + firstName + " correct? (Y/N)");
 			
-			if (scanner.next().equals("Y")) {
+			if (scanner.next().toUpperCase().equals("Y")) {
 				quit = true;
 			} else {
-				System.out.println("Please enter the managers first name:");
+				System.out.println("ERROR. Please enter the managers first name:");
 			}
 		} while (!quit);
 		
@@ -202,18 +204,18 @@ public class StartMenu {
 		quit = false;
 		
 		do {
-			lastName = scanner.next().toUpperCase();
+			lastName = scanner.next();
 			System.out.println("Is " + lastName + " correct? (Y/N)");
 			
-			if (scanner.next().equals("Y")) {
+			if (scanner.next().toUpperCase().equals("Y")) {
 				quit = true;
 			} else {
-				System.out.println("Please enter the managers last name:");
+				System.out.println("ERROR: Please enter the managers last name:");
 			}
 		} while (!quit);
 		
 		// Set the Manager to the GameManager object and insert into the Manager table
-		Manager manager = new Manager(firstName, lastName, gameManager.getCurrentFootballTeam());
+		Manager manager = new Manager(0, firstName, lastName, gameManager.getCurrentFootballTeam());
 		
 		ManagerDao managerDao = new ManagerDaoImpl();
 		managerDao.insertIntoManagerTable(manager);

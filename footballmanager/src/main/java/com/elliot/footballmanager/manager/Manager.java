@@ -11,6 +11,7 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
  */
 public class Manager {
 	
+	private Integer managerId;
 	private String firstName;
 	private String lastName;
 	private FootballTeam currentFootballTeam;
@@ -19,11 +20,19 @@ public class Manager {
 		
 	}
 
-	public Manager(String firstName, String lastName, FootballTeam currentFootballTeam) {
-		super();
+	public Manager(Integer managerId, String firstName, String lastName, FootballTeam currentFootballTeam) {
+		this.setManagerId(managerId);
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.currentFootballTeam = currentFootballTeam;
+	}
+
+	public Integer getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(Integer managerId) {
+		this.managerId = managerId;
 	}
 
 	public String getFirstName() {

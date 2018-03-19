@@ -36,4 +36,25 @@ public class FootballTeamDaoImpl implements FootballTeamDao {
 		}
 		return footballTeams;
 	}
+
+	@Override
+	public FootballTeam getFootballTeamById(Integer footballTeamId) {
+		String query = "SELECT *FROM FOOTBALL_TEAM WHERE FOOTBALL_TEAM_ID = ?";
+		
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setInt(1, footballTeamId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (!rs.next()) {
+				return null;
+			}
+			return new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getInt("LEAGUE_ID"),
+					rs.getString("TEAM_NAME")); 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }

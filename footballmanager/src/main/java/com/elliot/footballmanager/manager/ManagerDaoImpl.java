@@ -6,6 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
+import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.footballteam.FootballTeamDao;
+import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 
 /**
  * @author Elliot
@@ -19,21 +22,43 @@ public class ManagerDaoImpl implements ManagerDao {
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setInt(1, 0);
+			pstmt.setInt(1, 1);
 			pstmt.setString(2, manager.getFirstName());
 			pstmt.setString(3, manager.getLastName());
 			pstmt.setInt(4, manager.getCurrentFootballTeam().getFootballTeamId());
 			
-			int count = pstmt.executeUpdate();
-			
 			// If count != 1 the statement did not successfully persist the Manager data into the database
-			if (count != 1) {
+			if (pstmt.executeUpdate() != 1) {
 				throw new SQLException("The Manager was not successfully inserted into the database!");
 			}
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+	@Override
+	public Manager getManagerById(Integer managerId) {
+		String query = "SELECT * FROM MANAGER WHERE MANAGER_ID = ?";
+
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setInt(1, managerId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (!rs.next()) {
+				return null;
+			}
+			
+			FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
+			FootballTeam footballTeam = footballTeamDao.getFootballTeamById(rs.getInt("ASSIGNED_FOOTBALL_CLUB"));
+			
+			return new Manager(rs.getInt("MANAGER_ID"), rs.getString("FIRST_NAME"), rs.getString("LAST_NAME"),
+					footballTeam);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

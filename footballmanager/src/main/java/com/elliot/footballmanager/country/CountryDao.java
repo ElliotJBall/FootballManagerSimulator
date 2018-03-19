@@ -15,4 +15,10 @@ public interface CountryDao {
 	 * Value : Country object
 	 */
 	public Map<Integer, Country> getAllCountries();
+	
+	/**
+	 * @param countryId The unique ID of the Country you want to retrieve.
+	 * @return The corresponding Country for the given Id.
+	 */
+	public Country getCountryById(Integer countryId);
 }

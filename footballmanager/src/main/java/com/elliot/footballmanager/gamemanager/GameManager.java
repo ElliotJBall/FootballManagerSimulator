@@ -21,12 +21,34 @@ public class GameManager {
 
 	}
 	
+	
+	
+	public GameManager(Country currentCountry, League currentLeague, FootballTeam currentFootballTeam,
+			Manager manager) {
+		this.currentCountry = currentCountry;
+		this.currentLeague = currentLeague;
+		this.currentFootballTeam = currentFootballTeam;
+		this.manager = manager;
+	}
+
+
+
 	/**
-	 * This method retrieves the selected Country, League, FootballTeam and Manager 
-	 * from the database. 
+	 * Retrieves the selected Country, League, FootballTeam and Manager 
+	 * from the database and instantiates a new GameManager object. 
 	 */
 	public void loadSavedGame() {
-		
+		GameManagerDao gameManagerDao = new GameManagerDaoImpl();getClass();
+		gameManagerDao.loadSavedGame();
+	}
+	
+	/**
+	 * Persists the current information stored in the GameManager object 
+	 * into the database.
+	 */
+	public void saveGame() {
+		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+		gameManagerDao.createNewSaveGame(this);
 	}
 
 	public Country getCurrentCountry() {

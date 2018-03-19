@@ -35,4 +35,24 @@ public class LeagueDaoImpl implements LeagueDao {
 		return allLeagues;
 	}
 
+	@Override
+	public League getLeagueById(Integer leagueId) {
+		String query = "SELECT * FROM LEAGUE WHERE LEAGUE_ID = ?";
+		
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setInt(1, leagueId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			
+			if (!rs.next()) {
+				return null;
+			}
+			return new League(rs.getInt("LEAGUE_ID"), rs.getString("LEAGUE_NAME"), rs.getInt("COUNTRY_ID"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
