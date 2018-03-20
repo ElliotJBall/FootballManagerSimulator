@@ -4,6 +4,7 @@ import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.manager.Manager;
+import com.elliot.footballmanager.menu.MainMenu;
 
 /**
  * @author Elliot
@@ -40,6 +41,8 @@ public class GameManager {
 	public void loadSavedGame() {
 		GameManagerDao gameManagerDao = new GameManagerDaoImpl();getClass();
 		gameManagerDao.loadSavedGame();
+		
+		new MainMenu(this);
 	}
 	
 	/**
@@ -49,6 +52,8 @@ public class GameManager {
 	public void saveGame() {
 		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
 		gameManagerDao.createNewSaveGame(this);
+		
+		new MainMenu(this);
 	}
 
 	public Country getCurrentCountry() {

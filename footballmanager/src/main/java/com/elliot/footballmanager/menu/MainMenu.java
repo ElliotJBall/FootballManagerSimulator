@@ -25,6 +25,11 @@ public class MainMenu {
 	}
 	
 	private void beginMainGameLoop() {
+		MenuHelper.clearConsole();
+		System.out.println("Press 0 at any point to save the game and quit!");
 		
+		while (!scanner.next().equals("0")) {
+		
+		}		
 	}
 }

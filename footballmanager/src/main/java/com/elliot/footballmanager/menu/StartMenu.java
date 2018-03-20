@@ -57,6 +57,8 @@ public class StartMenu {
         		case 2: // [2] Continue Saved Game
         			gameManager = new GameManager();
         			gameManager.loadSavedGame();
+        			quit = true;
+        			break;
         		default: 
         			System.out.println("Invalid option, please try again.");
         	}

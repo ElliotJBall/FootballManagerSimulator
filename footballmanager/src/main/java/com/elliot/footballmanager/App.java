@@ -1,6 +1,6 @@
 package com.elliot.footballmanager;
 
-import com.elliot.footballmanager.StartMenu;
+import com.elliot.footballmanager.menu.StartMenu;
 
 /**
  * @author Elliot
