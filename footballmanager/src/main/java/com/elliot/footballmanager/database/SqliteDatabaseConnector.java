@@ -26,8 +26,11 @@ public class SqliteDatabaseConnector {
 		Connection connection = null;
 		
 		try {
+			Class.forName("org.sqlite.JDBC");
 			connection = DriverManager.getConnection(CONNECTION_URL);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 		return connection;
