@@ -41,7 +41,6 @@
           <manifest>
             <addClasspath>true</addClasspath>
             <classpathPrefix>lib/</classpathPrefix>
-            <classpathPrefix>resources/</classpathPrefix>
             <mainClass>com.elliot.footballmanager.App</mainClass>
           </manifest>
         </configuration>

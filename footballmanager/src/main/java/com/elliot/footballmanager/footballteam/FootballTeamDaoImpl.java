@@ -27,8 +27,9 @@ public class FootballTeamDaoImpl implements FootballTeamDao {
 			ResultSet rs = pstmt.executeQuery();
 			
 			while (rs.next()) {
-				FootballTeam footballTeam = new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getInt("LEAGUE_ID"),
-						rs.getString("TEAM_NAME"));
+				FootballTeam footballTeam = new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getString("TEAM_NAME"),
+						rs.getInt("LEAGUE_ID"), rs.getString("LOCATION"), 
+						rs.getString("STADIUM"), rs.getInt("STADIUM_CAPACITY"));
 				footballTeams.put(footballTeam.getFootballTeamId(), footballTeam);				
 			}
 		} catch (SQLException e) {
@@ -50,8 +51,9 @@ public class FootballTeamDaoImpl implements FootballTeamDao {
 			if (!rs.next()) {
 				return null;
 			}
-			return new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getInt("LEAGUE_ID"),
-					rs.getString("TEAM_NAME")); 			
+			return new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getString("TEAM_NAME"),
+					rs.getInt("LEAGUE_ID"), rs.getString("LOCATION"), 
+					rs.getString("STADIUM"), rs.getInt("STADIUM_CAPACITY"));	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

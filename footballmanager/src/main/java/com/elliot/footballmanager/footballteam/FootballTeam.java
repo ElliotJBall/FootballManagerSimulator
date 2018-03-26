@@ -11,18 +11,27 @@ import com.elliot.footballmanager.player.Player;
 public class FootballTeam implements IFootballTeam {
 	
 	private Integer footballTeamId;
-	private Integer leagueId;
 	private String teamName;
+	private Integer leagueId;
+	private String location;
+	private String stadium;
+	private Integer stadiumCapacity;
 	private List<Player> squad;
 	
 	public FootballTeam() {
 
 	}
-
-	public FootballTeam(Integer footballTeamId, Integer leagueId, String teamName) {
+	
+	
+	
+	public FootballTeam(Integer footballTeamId, String teamName, Integer leagueId, 
+			String location, String stadium, Integer stadiumCapacity) {
 		this.footballTeamId = footballTeamId;
-		this.leagueId = leagueId;
 		this.teamName = teamName;
+		this.leagueId = leagueId;
+		this.location = location;
+		this.stadium = stadium;
+		this.stadiumCapacity = stadiumCapacity;
 	}
 
 	public Integer getFootballTeamId() {
@@ -33,6 +42,14 @@ public class FootballTeam implements IFootballTeam {
 		this.footballTeamId = footballTeamId;
 	}
 
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
 	public Integer getLeagueId() {
 		return leagueId;
 	}
@@ -41,12 +58,28 @@ public class FootballTeam implements IFootballTeam {
 		this.leagueId = leagueId;
 	}
 
-	public String getTeamName() {
-		return teamName;
+	public String getLocation() {
+		return location;
 	}
 
-	public void setTeamName(String teamName) {
-		this.teamName = teamName;
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public String getStadium() {
+		return stadium;
+	}
+
+	public void setStadium(String stadium) {
+		this.stadium = stadium;
+	}
+
+	public Integer getStadiumCapacity() {
+		return stadiumCapacity;
+	}
+
+	public void setStadiumCapacity(Integer stadiumCapacity) {
+		this.stadiumCapacity = stadiumCapacity;
 	}
 
 	public List<Player> getSquad() {
@@ -56,7 +89,7 @@ public class FootballTeam implements IFootballTeam {
 	public void setSquad(List<Player> squad) {
 		this.squad = squad;
 	}
-	
+
 	public String printFootballTeamMenuInfo() {
 		return "[" + this.getFootballTeamId() + "]" + this.getTeamName();
 	}	
