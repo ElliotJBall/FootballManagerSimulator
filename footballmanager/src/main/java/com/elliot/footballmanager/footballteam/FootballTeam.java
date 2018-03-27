@@ -91,6 +91,6 @@ public class FootballTeam implements IFootballTeam {
 	}
 
 	public String printFootballTeamMenuInfo() {
-		return "[" + this.getFootballTeamId() + "]" + this.getTeamName();
+		return "[" + this.getFootballTeamId() + "]" + " " + this.getTeamName();
 	}	
 }

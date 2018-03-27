@@ -22,8 +22,6 @@ public class GameManager {
 
 	}
 	
-	
-	
 	public GameManager(Country currentCountry, League currentLeague, FootballTeam currentFootballTeam,
 			Manager manager) {
 		this.currentCountry = currentCountry;
@@ -31,8 +29,6 @@ public class GameManager {
 		this.currentFootballTeam = currentFootballTeam;
 		this.manager = manager;
 	}
-
-
 
 	/**
 	 * Retrieves the selected Country, League, FootballTeam and Manager 
@@ -55,7 +51,7 @@ public class GameManager {
 		
 		new MainMenu(this);
 	}
-
+	
 	public Country getCurrentCountry() {
 		return currentCountry;
 	}
