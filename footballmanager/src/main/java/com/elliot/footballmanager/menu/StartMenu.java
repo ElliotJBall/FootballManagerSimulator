@@ -16,6 +16,8 @@ import com.elliot.footballmanager.league.LeagueDaoImpl;
 import com.elliot.footballmanager.manager.Manager;
 import com.elliot.footballmanager.manager.ManagerDao;
 import com.elliot.footballmanager.manager.ManagerDaoImpl;
+import com.elliot.footballmanager.player.PlayerDao;
+import com.elliot.footballmanager.player.PlayerDaoImpl;
 
 /**
  * @author Elliot
@@ -75,6 +77,9 @@ public class StartMenu {
     	chooseCountry();
     	chooseLeague();
     	chooseTeam();
+    	//TODO: After the user has selected their team display the sqaud and then ask for confirmation if thats 
+    	// who they want to choose?
+    	buildInitialSquad();
     	createNewManager();
     	
     	gameManager.saveGame();
@@ -179,6 +184,10 @@ public class StartMenu {
 		} while (!quit);
 	}
 	
+	private void buildInitialSquad() {
+		PlayerDao pDao = new PlayerDaoImpl();
+		gameManager.getCurrentFootballTeam().setSquad(pDao.getAllPlayersForFootballTeam(gameManager.getCurrentFootballTeam()));
+	}
 	
 	/**
 	 * Given information from the user a new <link>Manager</link> object is created. 

@@ -35,10 +35,22 @@ public class Player implements IPlayer {
 	}
 
 	public Player(Integer id, String name, Integer age, String nationality, Integer overallRating,
+			FootballTeam currentClub, Double value, Double wages, List<Position> preferredPositions) {
+		this.id = id;
+		this.name = name;
+		this.age = age;
+		this.nationality = nationality;
+		this.overallRating = overallRating;
+		this.currentClub = currentClub;
+		this.value = value;
+		this.wages = wages;
+		this.preferredPositions = preferredPositions;
+	}
+
+	public Player(Integer id, String name, Integer age, String nationality, Integer overallRating,
 			FootballTeam currentClub, Double value, Double wages, List<Position> preferredPositions,
 			PhysicalAttributes physicalAttributes, TechnicalAttributes technicalAttributes,
 			MentalAttributes mentalAttributes, GoalkeeperAttributes goalkeeperAttributes) {
-		super();
 		this.id = id;
 		this.name = name;
 		this.age = age;

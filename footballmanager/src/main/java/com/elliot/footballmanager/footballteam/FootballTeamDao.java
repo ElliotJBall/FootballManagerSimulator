@@ -24,4 +24,10 @@ public interface FootballTeamDao {
 	 */ 
 	public FootballTeam getFootballTeamById(Integer footballTeamId);
 
+	/**
+	 * @param footballTeamName The name of the <link>FootballTeam</link> 
+	 * you would like to search in the database for.
+	 * @return A FootballTeam object of the football team name provided.
+	 */
+	public FootballTeam getFootballTeamByName(String footballTeamName);
 }
