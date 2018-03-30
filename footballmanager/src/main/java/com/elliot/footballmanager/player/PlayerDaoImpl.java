@@ -35,7 +35,7 @@ public class PlayerDaoImpl implements PlayerDao {
 			
 			List<Player> squad = new ArrayList<Player>();
 			while (rs.next()) {
-				Player player = buildBasePlayerObject(rs);
+				Player player = buildBasePlayerObject(rs, footballTeam);
 				//TODO: Add attributes objects
 				
 				squad.add(player);
@@ -47,10 +47,7 @@ public class PlayerDaoImpl implements PlayerDao {
 		return new ArrayList<Player>();
 	}
 	
-	private Player buildBasePlayerObject(ResultSet rs) throws SQLException {
-		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
-		FootballTeam footballTeam = footballTeamDao.getFootballTeamByName(rs.getString("CLUB"));
-		
+	private Player buildBasePlayerObject(ResultSet rs, FootballTeam footballTeam) throws SQLException {
 		List<Position> positions = getPositionsFromString(rs.getString("PREFERRED POSITIONS"));
 		
 		return new Player(rs.getInt("PLAYER_ID"), rs.getString("NAME"), rs.getInt("AGE"), rs.getString("NATIONALITY"),

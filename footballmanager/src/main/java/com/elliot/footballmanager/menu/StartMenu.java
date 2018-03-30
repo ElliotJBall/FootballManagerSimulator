@@ -77,9 +77,6 @@ public class StartMenu {
     	chooseCountry();
     	chooseLeague();
     	chooseTeam();
-    	//TODO: After the user has selected their team display the sqaud and then ask for confirmation if thats 
-    	// who they want to choose?
-    	buildInitialSquad();
     	createNewManager();
     	
     	gameManager.saveGame();
@@ -182,11 +179,6 @@ public class StartMenu {
 				System.out.println("Invalid option, please try again.");
 			}
 		} while (!quit);
-	}
-	
-	private void buildInitialSquad() {
-		PlayerDao pDao = new PlayerDaoImpl();
-		gameManager.getCurrentFootballTeam().setSquad(pDao.getAllPlayersForFootballTeam(gameManager.getCurrentFootballTeam()));
 	}
 	
 	/**

@@ -3,6 +3,8 @@ package com.elliot.footballmanager.footballteam;
 import java.util.List;
 
 import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.player.PlayerDao;
+import com.elliot.footballmanager.player.PlayerDaoImpl;
 
 /**
  * @author Elliot
@@ -22,8 +24,6 @@ public class FootballTeam implements IFootballTeam {
 
 	}
 	
-	
-	
 	public FootballTeam(Integer footballTeamId, String teamName, Integer leagueId, 
 			String location, String stadium, Integer stadiumCapacity) {
 		this.footballTeamId = footballTeamId;
@@ -32,6 +32,12 @@ public class FootballTeam implements IFootballTeam {
 		this.location = location;
 		this.stadium = stadium;
 		this.stadiumCapacity = stadiumCapacity;
+		this.squad = getSquad();
+	}
+	
+	private void buildSquad() {
+		PlayerDao pDao = new PlayerDaoImpl();
+		this.setSquad(pDao.getAllPlayersForFootballTeam(this));
 	}
 
 	public Integer getFootballTeamId() {
@@ -83,6 +89,9 @@ public class FootballTeam implements IFootballTeam {
 	}
 
 	public List<Player> getSquad() {
+		if (squad == null) {
+			buildSquad();
+		}
 		return squad;
 	}
 
