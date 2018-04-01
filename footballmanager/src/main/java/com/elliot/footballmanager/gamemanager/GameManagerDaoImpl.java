@@ -1,6 +1,7 @@
 package com.elliot.footballmanager.gamemanager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,31 +29,27 @@ import com.elliot.footballmanager.manager.ManagerDaoImpl;
 public class GameManagerDaoImpl implements GameManagerDao {
 
 	@Override
-	public void createNewSaveGame(GameManager gameManager) {
+	public void saveGame(GameManager gameManager) {
 		//TODO: Confirm whether we only want one Save game available at a time or not.
-		String checkForSaveGame = "SELECT COUNT(*) FROM GAME_MANAGER";
-		String insertNewSave = "INSERT INTO GAME_MANAGER VALUES (?, ?, ?, ?, ?)";
+		String deletePreviousSave = "DELETE FROM GAME_MANAGER";
+		String insertNewSave = "INSERT INTO GAME_MANAGER VALUES (?, ?, ?, ?, ?, ?)";
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement();
-				ResultSet rs = stmt.executeQuery(checkForSaveGame)) {
+				PreparedStatement pDelete = conn.prepareStatement(deletePreviousSave)) {
 			
-			// If there are any resuls there is a game saved in the GAME_MANAGER table
-			if (rs.getInt(1) > 0) {
-				//TODO: Provide the option to delete the saved game here and then let them retry with the saved information
-				System.out.println("There is already a saved game. Please delete this and then try again.");
-				return;
-			}
+			pDelete.executeUpdate();
 			
-			PreparedStatement pstmt = conn.prepareStatement(insertNewSave);
-			pstmt.setInt(1, 1); // GAME_MANAGER_ID
-			pstmt.setInt(2, gameManager.getCurrentCountry().getCountryId()); // SELECTED_COUNTRY_ID
-			pstmt.setInt(3, gameManager.getCurrentLeague().getLeagueId()); // SELECTED_LEAGUE_ID
-			pstmt.setInt(4, gameManager.getCurrentFootballTeam().getFootballTeamId()); // SELECTED_FOOTBALL_TEAM_ID
-			pstmt.setInt(5, 1); // MANAGER_ID
+			PreparedStatement pInsert = conn.prepareStatement(insertNewSave);
+			pInsert.setInt(1, 1); // GAME_MANAGER_ID
+			pInsert.setInt(2, gameManager.getCurrentCountry().getCountryId()); // SELECTED_COUNTRY_ID
+			pInsert.setInt(3, gameManager.getCurrentLeague().getLeagueId()); // SELECTED_LEAGUE_ID
+			pInsert.setInt(4, gameManager.getCurrentFootballTeam().getFootballTeamId()); // SELECTED_FOOTBALL_TEAM_ID
+			pInsert.setInt(5, 1); // MANAGER_ID
+			pInsert.setDate(6, (java.sql.Date) gameManager.getCurrentDate()); // CURRENT_DATE
 			
 			// If count != 1 the statement did not successfully persist the GameManager data into the database
-			if (pstmt.executeUpdate() != 1) {
+			if (pInsert.executeUpdate() != 1) {
 				throw new SQLException("The Game has not successfully been saved! Please try again.");
 			} else {
 				System.out.println("Created successfully!");
@@ -88,11 +85,12 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			ManagerDao managerDao = new ManagerDaoImpl();
 			Manager manager = managerDao.getManagerById(rs.getInt("MANAGER_ID"));
 			
-			return new GameManager(country, league, footballTeam, manager);
+			Date date = rs.getDate("CURRENT_DATE");
+			
+			return new GameManager(country, league, footballTeam, manager, date);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
 }

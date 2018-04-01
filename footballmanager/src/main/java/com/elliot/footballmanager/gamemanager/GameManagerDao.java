@@ -7,8 +7,7 @@ package com.elliot.footballmanager.gamemanager;
  */
 public interface GameManagerDao {
 
-	public void createNewSaveGame(GameManager gameManager);
+	public void saveGame(GameManager gameManager);
 	
 	public GameManager loadSavedGame();
-	
 }

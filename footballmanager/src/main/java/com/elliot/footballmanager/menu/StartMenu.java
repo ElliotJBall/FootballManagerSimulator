@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.menu;
 
+import java.sql.Date;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -16,8 +17,6 @@ import com.elliot.footballmanager.league.LeagueDaoImpl;
 import com.elliot.footballmanager.manager.Manager;
 import com.elliot.footballmanager.manager.ManagerDao;
 import com.elliot.footballmanager.manager.ManagerDaoImpl;
-import com.elliot.footballmanager.player.PlayerDao;
-import com.elliot.footballmanager.player.PlayerDaoImpl;
 
 /**
  * @author Elliot
@@ -79,6 +78,7 @@ public class StartMenu {
     	chooseTeam();
     	createNewManager();
     	
+    	gameManager.setCurrentDate(new Date(1498914000)); // (01/07/2017));
     	gameManager.saveGame();
 	}
 	
@@ -144,7 +144,6 @@ public class StartMenu {
         	} else {        		
         		System.out.println("Invalid option, please try again.");
         	}
-        	
         } while (!quit);
 	}
 	

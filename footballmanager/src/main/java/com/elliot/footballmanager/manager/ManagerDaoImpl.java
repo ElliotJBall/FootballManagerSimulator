@@ -22,7 +22,6 @@ public class ManagerDaoImpl implements ManagerDao {
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setInt(1, 1);
 			pstmt.setString(2, manager.getFirstName());
 			pstmt.setString(3, manager.getLastName());
 			pstmt.setInt(4, manager.getCurrentFootballTeam().getFootballTeamId());

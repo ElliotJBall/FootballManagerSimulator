@@ -1,7 +1,5 @@
 package com.elliot.footballmanager.player;
 
-import java.nio.channels.UnsupportedAddressTypeException;
-
 /**
  * @author Elliot
  * Describes all the possible positions a player can be assigned. 

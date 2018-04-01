@@ -6,12 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.prefs.PreferencesFactory;
-
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 
 /**
  * @author Elliot

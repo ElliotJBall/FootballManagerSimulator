@@ -1,5 +1,7 @@
 package com.elliot.footballmanager.gamemanager;
 
+import java.util.Date;
+
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.league.League;
@@ -17,17 +19,19 @@ public class GameManager {
 	private League currentLeague;
 	private FootballTeam currentFootballTeam;
 	private Manager manager;
+	private Date currentDate;
 	
 	public GameManager() {
 
 	}
 	
 	public GameManager(Country currentCountry, League currentLeague, FootballTeam currentFootballTeam,
-			Manager manager) {
+			Manager manager, Date currentDate) {
 		this.currentCountry = currentCountry;
 		this.currentLeague = currentLeague;
 		this.currentFootballTeam = currentFootballTeam;
 		this.manager = manager;
+		this.setCurrentDate(currentDate);
 	}
 
 	/**
@@ -47,9 +51,13 @@ public class GameManager {
 	 */
 	public void saveGame() {
 		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
-		gameManagerDao.createNewSaveGame(this);
+		gameManagerDao.saveGame(this);
 		
 		new MainMenu(this);
+	}
+	
+	public String getQuickGameInfo() {
+		return "";
 	}
 	
 	public Country getCurrentCountry() {
@@ -74,6 +82,14 @@ public class GameManager {
 
 	public void setCurrentFootballTeam(FootballTeam footballTeam) {
 		this.currentFootballTeam = footballTeam;
+	}
+
+	public Date getCurrentDate() {
+		return currentDate;
+	}
+
+	public void setCurrentDate(Date currentDate) {
+		this.currentDate = currentDate;
 	}
 
 	public Manager getManager() {

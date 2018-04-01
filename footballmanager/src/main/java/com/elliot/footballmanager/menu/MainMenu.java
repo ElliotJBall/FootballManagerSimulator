@@ -45,28 +45,26 @@ public class MainMenu {
 				case 0:
 					this.getGameManager().saveGame();
 					quit = true;
+					break;
 				case 1:
 					break;
 				case 2:
 					break;
 				case 3: 
+					//this.getGameManager().
 					break;	
 			}
 		} while (!quit);
 	}
 	
 	private void displayMainGameOptions() {
-		System.out.println("[1] View next football match options");
+		System.out.println("[1] Simulate / Progress Game");
 		System.out.println("[2] View football team options");
 		//TODO: Print a current timestamp of the date in which the simulation is in option 3
 		// (E.g. 01/01/2020 | Current Team  | League Position)
 		System.out.println("[3] View quick information information");		
 	}
 	
-	private void displayNextFootballMatchOptions() {
-			
-	}
-
 	public GameManager getGameManager() {
 		return gameManager;
 	}
