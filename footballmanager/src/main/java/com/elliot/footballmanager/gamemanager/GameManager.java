@@ -9,9 +9,9 @@ import com.elliot.footballmanager.manager.Manager;
 import com.elliot.footballmanager.menu.MainMenu;
 
 /**
- * @author Elliot
  * The GameManager class handles all the information required to successfully play the Football
  * Manager simulator.
+ * @author Elliot
  */
 public class GameManager {
 

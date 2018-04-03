@@ -1,9 +1,9 @@
 package com.elliot.footballmanager.player.attributes;
 
 /**
- * @author Elliot
  * Collection of all goalkeeper attributes that a player
  * can have.
+ * @author Elliot
  */
 public class GoalkeeperAttributes implements PlayerAttribute {
 

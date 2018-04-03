@@ -3,10 +3,10 @@ package com.elliot.footballmanager.manager;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 
 /**
- * @author Elliot
  * The Manager object is used to represent the person playing the game.
  * Stores information about the current <link>FootballTeam</link> the
  * Manager is assigned to.
+ * @author Elliot
  * 
  */
 public class Manager {

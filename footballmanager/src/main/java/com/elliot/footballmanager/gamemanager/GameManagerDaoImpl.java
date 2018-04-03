@@ -22,9 +22,8 @@ import com.elliot.footballmanager.manager.ManagerDao;
 import com.elliot.footballmanager.manager.ManagerDaoImpl;
 
 /**
+ * The implementation of the <link>GameManagerDao</link> class.
  * @author Elliot
- * This class makes use of the DAO pattern to perform CRUD operations on the 
- * FootballManager database.
  */
 public class GameManagerDaoImpl implements GameManagerDao {
 

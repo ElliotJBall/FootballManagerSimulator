@@ -5,9 +5,9 @@ import java.util.Scanner;
 import com.elliot.footballmanager.gamemanager.GameManager;
 
 /**
- * @author Elliot
  * Once a user has loaded / created a save game the MainMenu class provides 
  * the list of options available throughout the FootballManager simulator.
+ * @author Elliot
  */
 public class MainMenu {
 

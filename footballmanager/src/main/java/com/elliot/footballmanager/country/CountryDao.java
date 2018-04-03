@@ -3,9 +3,9 @@ package com.elliot.footballmanager.country;
 import java.util.Map;
 
 /**
- * @author Elliot
  * This interface holds the list of methods that enable the connectivity 
  * between the application and the database.
+ * @author Elliot
  */
 public interface CountryDao {
 

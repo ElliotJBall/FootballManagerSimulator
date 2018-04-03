@@ -9,9 +9,9 @@ import com.elliot.footballmanager.player.attributes.PhysicalAttributes;
 import com.elliot.footballmanager.player.attributes.TechnicalAttributes;
 
 /**
- * @author Elliot
  * Provides information about a given Player object and stores information
  * about how good they are via the different attributes.
+ * @author Elliot
  */
 public class Player implements IPlayer {
 	

@@ -11,8 +11,8 @@ import java.util.Map;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 
 /**
+ * Implementation of the <link>CountryDao</link> class.
  * @author Elliot
- * 
  */
 public class CountryDaoImpl implements CountryDao {
 	

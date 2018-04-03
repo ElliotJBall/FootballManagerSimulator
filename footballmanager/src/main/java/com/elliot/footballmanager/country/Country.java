@@ -6,8 +6,9 @@ import java.util.Set;
 import com.elliot.footballmanager.league.League;
 
 /**
+ * The Country object stores a Set of all Leagues that play within
+ * that country along with the Country name and Id.
  * @author Elliot
- * 
  */
 public class Country {
 	

@@ -19,9 +19,9 @@ import com.elliot.footballmanager.manager.ManagerDao;
 import com.elliot.footballmanager.manager.ManagerDaoImpl;
 
 /**
- * @author Elliot
  * The MainMenu class is used to create a new Menu object that displays all 
- * the options that area available to the user
+ * the options that area available to the user.
+ * @author Elliot
  */
 public class StartMenu {
 	

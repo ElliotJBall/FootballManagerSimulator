@@ -1,9 +1,9 @@
 package com.elliot.footballmanager.player.attributes;
 
 /**
- * @author Elliot
  * Collection of all the physical attributes that a player
  * can have.
+ * @author Elliot
  */
 public class PhysicalAttributes implements PlayerAttribute {
 	

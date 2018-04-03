@@ -1,10 +1,10 @@
 package com.elliot.footballmanager.player;
 
 /**
- * @author Elliot
  * Describes all the possible positions a player can be assigned. 
  * Note: A player object can have a primary Position they are proficient in and 
  * 0..N secondary positions they can also play.
+ * @author Elliot
  */
 public enum Position {
 	GK ("Goalkeeper"),

@@ -1,9 +1,9 @@
 package com.elliot.footballmanager.menu;
 
 /**
+ * Helper class for methods that can be used across all
+ * the menu classes.
  * @author Elliot
- * Helper class to methods that can be shared across 
- * all menu related classes. 
  */
 public class MenuHelper {
 

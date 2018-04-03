@@ -5,9 +5,9 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 /**
- * @author Elliot
  * Creates a new Connection (Session) to the SQLite3 database. The SqliteDatabaseConnector class
  * will be used throughout the application when data is required regarding the Football Manager Simulation. 
+ * @author Elliot
  */
 public class SqliteDatabaseConnector {
 	
