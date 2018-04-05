@@ -1,7 +1,9 @@
 package com.elliot.footballmanager.league;
 
+import java.util.List;
 import java.util.Set;
 
+import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 
 /**
@@ -13,7 +15,8 @@ public class League {
 	private Integer leagueId;
 	private String leagueName;
 	private Integer countryId;
-	private Set<FootballTeam> footballTeams;
+	private List<FootballTeam> footballTeams;
+	private List<Fixture> upcomingFixtures;
 	
 	public League() {
 		
@@ -49,14 +52,22 @@ public class League {
 		this.countryId = countryId;
 	}
 
-	public Set<FootballTeam> getFootballTeams() {
+	public List<FootballTeam> getFootballTeams() {
 		return footballTeams;
 	}
 
-	public void setFootballTeams(Set<FootballTeam> footballTeams) {
+	public void setFootballTeams(List<FootballTeam> footballTeams) {
 		this.footballTeams = footballTeams;
 	}
 	
+	public List<Fixture> getUpcomingFixtures() {
+		return upcomingFixtures;
+	}
+
+	public void setUpcomingFixtures(List<Fixture> upcomingFixtures) {
+		this.upcomingFixtures = upcomingFixtures;
+	}
+
 	public String printLeagueMenuInfo() {
 		return "[" + this.getLeagueId()  + "]" + " " + this.getLeagueName();
 	}

@@ -123,7 +123,7 @@ public class StartMenu {
 		System.out.println("Please select the league that you would like to play in:");
 		
 		LeagueDao leagueDao = new LeagueDaoImpl();
-		Map<Integer, League> leagues = leagueDao.getAllLeagues(gameManager.getCurrentCountry().getCountryId());
+		Map<Integer, League> leagues = leagueDao.getAllLeaguesById(gameManager.getCurrentCountry().getCountryId());
 		
 		for (League league : leagues.values()) {
 			System.out.println(league.printLeagueMenuInfo());
