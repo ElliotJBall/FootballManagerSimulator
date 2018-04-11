@@ -22,11 +22,13 @@ import com.elliot.footballmanager.league.LeagueDaoImpl;
  */
 public class FixtureGenerator {
 
+	private Integer HALF_GAMES_IN_SEASON;
+	private Integer TOTAL_GAMES_IN_SEASON;
+	
 	private List<League> leaguesForGeneration = new ArrayList<League>();
 	
 	public FixtureGenerator() {
 		prepareFixtureGeneration();
-		
 	}
 	
 	private void prepareFixtureGeneration() {
@@ -55,13 +57,16 @@ public class FixtureGenerator {
 		FootballTeam[] footballTeamsArray = new FootballTeam[footballTeams.size()];
 		footballTeams.toArray(footballTeamsArray);
 		
+		TOTAL_GAMES_IN_SEASON = (footballTeams.size() * footballTeams.size()) - footballTeams.size();
+		HALF_GAMES_IN_SEASON = TOTAL_GAMES_IN_SEASON / 2;
+		
 		// Home Fixtures
 		do {
 			generateFixturesFromArray(allFixtures, footballTeamsArray);
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
 			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
 			
-		} while (allFixtures.size() != 190);
+		} while (allFixtures.size() != HALF_GAMES_IN_SEASON);
 		
 		// Reverse FootballTeams array to generate away Fixtures
 		reverseArrayOrder(footballTeamsArray);
@@ -72,7 +77,7 @@ public class FixtureGenerator {
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
 			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
 			
-		} while (allFixtures.size() != 380);
+		} while (allFixtures.size() != TOTAL_GAMES_IN_SEASON);
 	}
 	
 	private void generateFixturesFromArray(List<Fixture> allFixtures, FootballTeam[] footballTeams) {
