@@ -1,6 +1,7 @@
 package com.elliot.footballmanager.fixture;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -40,36 +41,66 @@ public class FixtureGenerator {
 		}
 		
 		for (League league : this.getLeaguesForGeneration()) {
-			buildRoundRobinFixtures(league.getFootballTeams());
+			buildFixtureList(league.getFootballTeams());
 		}
 	}
 	
-	private void buildRoundRobinFixtures(List<FootballTeam> footballTeams) {	
-		// E.G. 20 Team league = 20 * 20 = 400 - 20 = 380
-		int counter = 0;
-		int totalGamesToPlay = footballTeams.size() * footballTeams.size() - footballTeams.size();
+	private void buildFixtureList(List<FootballTeam> footballTeams) {	
+		if (footballTeams.size() == 0 || footballTeams == null) {
+			return;
+		}
 		Collections.shuffle(footballTeams);
-
-		List<Fixture> allFixtures = new ArrayList<Fixture>();
 		
-		List<FootballTeam> firstHalf, secondHalf;
-		while (counter < totalGamesToPlay) {
-			firstHalf = footballTeams.subList(0, (footballTeams.size() / 2));
-			secondHalf = footballTeams.subList(footballTeams.size() / 2, footballTeams.size());
+		List<Fixture> allFixtures = new ArrayList<Fixture>();	
+		FootballTeam[] footballTeamsArray = new FootballTeam[footballTeams.size()];
+		footballTeams.toArray(footballTeamsArray);
+		
+		// Home Fixtures
+		do {
+			generateFixturesFromArray(allFixtures, footballTeamsArray);
+			// Shift all teams one place to the right (Bar the first one | Round Robin method)
+			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
 			
-			for (int i = 0; i < firstHalf.size(); i++) {
-				allFixtures.add(new Fixture(firstHalf.get(i), secondHalf.get(i), new Date()));
-			}
-			shuffleFootballTeamList(footballTeams);
-			counter = allFixtures.size();
-		}
-
+		} while (allFixtures.size() != 190);
+		
+		// Reverse FootballTeams array to generate away Fixtures
+		reverseArrayOrder(footballTeamsArray);
+		
+		// Away Fixtures
+		do {
+			generateFixturesFromArray(allFixtures, footballTeamsArray);
+			// Shift all teams one place to the right (Bar the first one | Round Robin method)
+			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
+			
+		} while (allFixtures.size() != 380);
 	}
 	
-	private void shuffleFootballTeamList(List<FootballTeam> footballTeams) {
-		
+	private void generateFixturesFromArray(List<Fixture> allFixtures, FootballTeam[] footballTeams) {
+		int halfway = footballTeams.length / 2;
+		for (int i = 0; i < footballTeams.length / 2; i++) {
+			allFixtures.add(new Fixture(footballTeams[i], footballTeams[halfway], 
+					new Date()));
+			halfway++;
+		}
 	}
 
+	private void shiftFootballTeamArray(FootballTeam[] footballTeams) {
+		FootballTeam[] shiftedFootballTeams = new FootballTeam[footballTeams.length];
+		for (int i = 0; i < footballTeams.length - 1; i++) {
+			shiftedFootballTeams[i + 1] = footballTeams[i];
+		}
+		shiftedFootballTeams[0] = footballTeams[footballTeams.length - 1];
+		footballTeams = shiftedFootballTeams;
+	}
+	
+	private void reverseArrayOrder(FootballTeam[] footballTeams) {
+		for (int i = 0; i < footballTeams.length / 2; i++) {
+			FootballTeam temp = footballTeams[i];
+			footballTeams[i] = footballTeams[footballTeams.length - i - 1];
+			footballTeams[footballTeams.length - i - 1] = temp;
+		}
+	}
+	
 	public List<League> getLeaguesForGeneration() {
 		return leaguesForGeneration;
 	}
