@@ -22,13 +22,15 @@ import com.elliot.footballmanager.league.LeagueDaoImpl;
  */
 public class FixtureGenerator {
 
-	private Integer HALF_GAMES_IN_SEASON;
 	private Integer TOTAL_GAMES_IN_SEASON;
+	private Integer HALF_GAMES_IN_SEASON;
 	
 	private List<League> leaguesForGeneration = new ArrayList<League>();
+	private List<String> allFixtures = new ArrayList<String>();	
 	
 	public FixtureGenerator() {
 		prepareFixtureGeneration();
+		addFixturesToDatabase();
 	}
 	
 	private void prepareFixtureGeneration() {
@@ -43,17 +45,18 @@ public class FixtureGenerator {
 		}
 		
 		for (League league : this.getLeaguesForGeneration()) {
-			buildFixtureList(league.getFootballTeams());
+			allFixtures.addAll(buildFixtureList(league.getFootballTeams()));
 		}
 	}
 	
-	private void buildFixtureList(List<FootballTeam> footballTeams) {	
+	private List<String> buildFixtureList(List<FootballTeam> footballTeams) {	
 		if (footballTeams.size() == 0 || footballTeams == null) {
-			return;
+			return new ArrayList<String>();
 		}
 		Collections.shuffle(footballTeams);
 		
-		List<Fixture> allFixtures = new ArrayList<Fixture>();	
+		List<String> selectedLeagueFixtures = new ArrayList<String>();	
+		
 		FootballTeam[] footballTeamsArray = new FootballTeam[footballTeams.size()];
 		footballTeams.toArray(footballTeamsArray);
 		
@@ -61,29 +64,29 @@ public class FixtureGenerator {
 		HALF_GAMES_IN_SEASON = TOTAL_GAMES_IN_SEASON / 2;
 		
 		// Home Fixtures
-		do {
-			generateFixturesFromArray(allFixtures, footballTeamsArray);
+		while (selectedLeagueFixtures.size() != HALF_GAMES_IN_SEASON) {
+			generateFixturesFromArray(selectedLeagueFixtures, footballTeamsArray);
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
 			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
-			
-		} while (allFixtures.size() != HALF_GAMES_IN_SEASON);
+		} 
 		
 		// Reverse FootballTeams array to generate away Fixtures
 		reverseArrayOrder(footballTeamsArray);
 		
 		// Away Fixtures
-		do {
-			generateFixturesFromArray(allFixtures, footballTeamsArray);
+		 while (selectedLeagueFixtures.size() != TOTAL_GAMES_IN_SEASON) {
+			generateFixturesFromArray(selectedLeagueFixtures, footballTeamsArray);
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
 			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
-			
-		} while (allFixtures.size() != TOTAL_GAMES_IN_SEASON);
+		};
+		
+		return selectedLeagueFixtures;
 	}
 	
-	private void generateFixturesFromArray(List<Fixture> allFixtures, FootballTeam[] footballTeams) {
+	private void generateFixturesFromArray(List<String> allFixtures, FootballTeam[] footballTeams) {
 		int halfway = footballTeams.length / 2;
 		for (int i = 0; i < footballTeams.length / 2; i++) {
-			allFixtures.add(new Fixture(footballTeams[i], footballTeams[halfway], 
+			allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
 					new Date()));
 			halfway++;
 		}
@@ -106,11 +109,31 @@ public class FixtureGenerator {
 		}
 	}
 	
+	private String createFixtureInsertStatement(FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture) {
+		//TODO: Improve the creation of the INSERT method (String.format?)
+		return "INSERT INTO FIXTURE (HOME_TEAM, AWAY_TEAM, DATE_OF_MATCH, LEAGUE_ID) "
+				+ "VALUES ('"+homeTeam.getTeamName()+"', '"+awayTeam.getTeamName()+"'"
+				+ ", '"+dateOfFixture+"', "+homeTeam.getLeagueId()+")";
+	}
+	
+	private void addFixturesToDatabase() {
+		FixtureDao fixtureDao = new FixtureDaoImpl();
+		fixtureDao.insertFixturesIntoDatabase(allFixtures);
+	}
+	
 	public List<League> getLeaguesForGeneration() {
 		return leaguesForGeneration;
 	}
 
 	private void setLeaguesForGeneration(List<League> leaguesForGeneration) {
 		this.leaguesForGeneration = leaguesForGeneration;
+	}
+
+	public List<String> getAllFixtures() {
+		return allFixtures;
+	}
+
+	public void setAllFixtures(List<String> allFixtures) {
+		this.allFixtures = allFixtures;
 	}
 }

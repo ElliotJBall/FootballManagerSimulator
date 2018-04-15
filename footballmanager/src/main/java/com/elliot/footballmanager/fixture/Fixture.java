@@ -14,15 +14,17 @@ public class Fixture {
 	private FootballTeam homeTeam;
 	private FootballTeam awayTeam;
 	private Date dateOfFixture;
+	private Integer leagueId;
 	
 	public Fixture() {
 		
 	}
-
-	public Fixture(FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture) {
+	
+	public Fixture(FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture, Integer leagueId) {
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.dateOfFixture = dateOfFixture;
+		this.leagueId = leagueId;
 	}
 
 	public FootballTeam getHomeTeam() {
@@ -47,6 +49,14 @@ public class Fixture {
 
 	public void setDateOfFixture(Date dateOfFixture) {
 		this.dateOfFixture = dateOfFixture;
+	}
+
+	public Integer getLeagueId() {
+		return leagueId;
+	}
+
+	public void setLeagueId(Integer leagueId) {
+		this.leagueId = leagueId;
 	}
 
 	@Override

@@ -1,7 +1,6 @@
 package com.elliot.footballmanager.league;
 
 import java.util.List;
-import java.util.Set;
 
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.footballteam.FootballTeam;
