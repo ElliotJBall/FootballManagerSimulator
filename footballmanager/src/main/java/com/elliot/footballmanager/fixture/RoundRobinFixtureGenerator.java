@@ -2,8 +2,10 @@ package com.elliot.footballmanager.fixture;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
@@ -21,17 +23,41 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 	private Integer TOTAL_GAMES_IN_SEASON;
 	private Integer HALF_GAMES_IN_SEASON;
 	
+	// TODO: Create a more generalised Start of the Season 
+	// (This is currently set to the start of the premier league)
+	private Date fixtureDate = new GregorianCalendar(2018, Calendar.AUGUST, 11).getTime();
+	
 	public RoundRobinFixtureGenerator() {
 
 	}
 	
 	private void generateFixturesFromArray(List<String> allFixtures, FootballTeam[] footballTeams) {
+		// Games stored in array at index 8 or higher will be generated as Sunday fixtures
+		int gamesForSunday = 8;
 		int halfway = footballTeams.length / 2;
 		for (int i = 0; i < footballTeams.length / 2; i++) {
-			allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
-					new Date()));
+			if (i < gamesForSunday) {
+				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
+						this.getFixtureDate()));				
+			} else {
+				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
+						moveFixtureToNextDay(this.getFixtureDate())));		
+			}
 			halfway++;
 		}
+		
+		// Add a Week onto the Fixture date
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fixtureDate);
+		calendar.add(Calendar.DATE, 7);
+		fixtureDate = calendar.getTime();
+	}
+	
+	private Date moveFixtureToNextDay(Date fixtureDate) {
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(fixtureDate);
+		calendar.add(Calendar.DATE, 1);
+		return calendar.getTime();
 	}
 
 	private void shiftFootballTeamArray(FootballTeam[] footballTeams) {
@@ -101,5 +127,13 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 	public void insertFixturesIntoDatabase(List<String> fixtures) {
 		FixtureDao fixtureDao = new FixtureDaoImpl();
 		fixtureDao.insertFixturesIntoDatabase(fixtures);
+	}
+
+	public Date getFixtureDate() {
+		return fixtureDate;
+	}
+
+	public void setFixtureDate(Date fixtureDate) {
+		this.fixtureDate = fixtureDate;
 	}
 }
