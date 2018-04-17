@@ -36,6 +36,9 @@ public class GameManagerDaoImpl implements GameManagerDao {
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement();
 				PreparedStatement pDelete = conn.prepareStatement(deletePreviousSave)) {
+			if (gameManager.getCurrentFootballTeam() == null) {
+				return;
+			}
 			
 			pDelete.executeUpdate();
 			

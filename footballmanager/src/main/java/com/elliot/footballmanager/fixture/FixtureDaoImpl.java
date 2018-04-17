@@ -33,6 +33,10 @@ public class FixtureDaoImpl implements FixtureDao {
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				PreparedStatement pstmt = conn.prepareStatement(query)) {
+			if (footballTeam == null) {
+				return new ArrayList<Fixture>();
+			}
+			
 			pstmt.setString(1, footballTeam.getTeamName());
 			pstmt.setString(2, footballTeam.getTeamName());
 			

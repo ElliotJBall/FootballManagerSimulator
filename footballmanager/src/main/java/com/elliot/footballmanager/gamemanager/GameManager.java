@@ -64,6 +64,16 @@ public class GameManager {
 		new MainMenu(this);
 	}
 	
+	
+	/**
+	 * Persists the current information stored in the GameManager object
+	 * into the database and then exits the program.
+	 */
+	public void saveGameAndExit() {
+		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+		gameManagerDao.saveGame(this);
+	}
+	
 	public String getQuickGameInfo() {
 		return "";
 	}

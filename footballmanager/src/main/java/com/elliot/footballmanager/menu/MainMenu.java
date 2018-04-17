@@ -43,7 +43,7 @@ public class MainMenu {
 		do {	
 			switch (scanner.nextInt()) {
 				case 0:
-					this.getGameManager().saveGame();
+					this.getGameManager().saveGameAndExit();
 					quit = true;
 					break;
 				case 1:
