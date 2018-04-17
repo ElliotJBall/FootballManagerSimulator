@@ -1,12 +1,19 @@
 package com.elliot.footballmanager.menu;
 
 import java.sql.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.country.CountryDao;
 import com.elliot.footballmanager.country.CountryDaoImpl;
+import com.elliot.footballmanager.database.SqliteDatabaseConnector;
+import com.elliot.footballmanager.fixture.FixtureDao;
+import com.elliot.footballmanager.fixture.FixtureDaoImpl;
+import com.elliot.footballmanager.fixture.FixtureGenerator;
+import com.elliot.footballmanager.fixture.FixtureGeneratorFactory;
+import com.elliot.footballmanager.fixture.FixtureGeneratorType;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.FootballTeamDao;
 import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
@@ -52,6 +59,7 @@ public class StartMenu {
 	        		break;
         		case 1: // [1] Start New Game
         			gameManager = new GameManager();
+        			clearPreviousSaveData();        			
         			createNewGame();
         			quit = true;
         			break;
@@ -69,6 +77,14 @@ public class StartMenu {
 	}
 	
 	/**
+	 * Remove any artifacts from the database that reference the 
+	 * save game that is being deleted.
+	 */
+	private void clearPreviousSaveData() {
+		SqliteDatabaseConnector.deleteSavedGameArtifacts();
+	}
+	
+	/**
 	 * Calls the required methods in order to successfully instantiate a new FootballManager game.
 	 * The new details are persisted into the database via the <link>GameManager</link> class. 
 	 */
@@ -78,8 +94,11 @@ public class StartMenu {
     	chooseTeam();
     	createNewManager();
     	
+    	setupFixtures();
+    	
     	gameManager.setCurrentDate(new Date(1498914000)); // (01/07/2017));
     	gameManager.saveGame();
+    	
 	}
 	
 	/**
@@ -224,5 +243,12 @@ public class StartMenu {
 		managerDao.insertIntoManagerTable(manager);
 		
 		gameManager.setManager(manager);
+	}
+	
+	private void setupFixtures() {
+		FixtureGeneratorFactory fixtureGeneratorFactory = new FixtureGeneratorFactory();
+		FixtureGenerator fixtureGenerator = fixtureGeneratorFactory.getFixtureGenerator(FixtureGeneratorType.ROUND_ROBIN);
+		List<String> fixtureCreateStatements = fixtureGenerator.generateFixtureInsertStatements();
+		fixtureGenerator.insertFixturesIntoDatabase(fixtureCreateStatements);
 	}
 }

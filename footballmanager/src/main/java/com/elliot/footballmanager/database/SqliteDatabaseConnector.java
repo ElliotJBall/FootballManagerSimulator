@@ -4,6 +4,9 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 /**
  * Creates a new Connection (Session) to the SQLite3 database. The SqliteDatabaseConnector class
  * will be used throughout the application when data is required regarding the Football Manager Simulation. 
@@ -44,6 +47,33 @@ public class SqliteDatabaseConnector {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Runs a series of SQL statements that remove artifacts so that a 
+	 * new saved game can be created. Note: Deletes vital information 
+	 * about a save game, not reversible.
+	 */
+	public static void deleteSavedGameArtifacts() {
+		List<String> deleteStatements = new ArrayList<String>();
+		deleteStatements.add("DELETE FROM GAME_MANAGER");
+		deleteStatements.add("DELETE FROM MANAGER");
+		deleteStatements.add("DELETE FROM FIXTURE");
+
+		try (Connection conn = SqliteDatabaseConnector.connect();
+				Statement stmt = conn.createStatement()) {
+			
+			for (String statement : deleteStatements) {
+				int result = stmt.executeUpdate(statement);
+				if (result > 0) {
+					System.out.println(statement + " Run successfully.");
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+				
 	}
 	
 	/**

@@ -1,8 +1,12 @@
 package com.elliot.footballmanager.gamemanager;
 
 import java.util.Date;
+import java.util.List;
 
 import com.elliot.footballmanager.country.Country;
+import com.elliot.footballmanager.fixture.Fixture;
+import com.elliot.footballmanager.fixture.FixtureDao;
+import com.elliot.footballmanager.fixture.FixtureDaoImpl;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.manager.Manager;
@@ -20,6 +24,7 @@ public class GameManager {
 	private FootballTeam currentFootballTeam;
 	private Manager manager;
 	private Date currentDate;
+	private List<Fixture> upcomingFixtures;
 	
 	public GameManager() {
 
@@ -31,7 +36,7 @@ public class GameManager {
 		this.currentLeague = currentLeague;
 		this.currentFootballTeam = currentFootballTeam;
 		this.manager = manager;
-		this.setCurrentDate(currentDate);
+		this.currentDate = currentDate;
 	}
 
 	/**
@@ -41,6 +46,9 @@ public class GameManager {
 	public void loadSavedGame() {
 		GameManagerDao gameManagerDao = new GameManagerDaoImpl();getClass();
 		gameManagerDao.loadSavedGame();
+		
+		FixtureDao fixtureDao = new FixtureDaoImpl();
+		this.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(this.getCurrentFootballTeam()));
 		
 		new MainMenu(this);
 	}
@@ -98,5 +106,13 @@ public class GameManager {
 
 	public void setManager(Manager manager) {
 		this.manager = manager;
+	}
+
+	public List<Fixture> getUpcomingFixtures() {
+		return upcomingFixtures;
+	}
+
+	public void setUpcomingFixtures(List<Fixture> upcomingFixtures) {
+		this.upcomingFixtures = upcomingFixtures;
 	}
 }
