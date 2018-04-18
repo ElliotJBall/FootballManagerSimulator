@@ -2,8 +2,6 @@ package com.elliot.footballmanager.fixture;
 
 import java.util.List;
 
-import com.elliot.footballmanager.footballteam.FootballTeam;
-
 /**
  * Provides the ability to generate a collection of 
  * Fixture's using a group tournament algorithm

@@ -39,7 +39,6 @@ public abstract class AbstractFixtureFactory {
 	}
 	
 	protected String createFixtureInsertStatement(FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture) {
-		//TODO: Improve the creation of the INSERT method (String.format?)
 		return "INSERT INTO FIXTURE (HOME_TEAM, AWAY_TEAM, DATE_OF_MATCH, LEAGUE_ID) "
 				+ "VALUES ('"+homeTeam.getTeamName()+"', '"+awayTeam.getTeamName()+"'"
 				+ ", '"+dateOfFixture+"', "+homeTeam.getLeagueId()+")";

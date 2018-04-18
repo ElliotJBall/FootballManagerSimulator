@@ -17,9 +17,9 @@ public class FixtureGeneratorFactory {
 			return null;
 		}
 		
-		if (fixtureGeneratorType.ROUND_ROBIN.equals(fixtureGeneratorType)) {
+		if (FixtureGeneratorType.ROUND_ROBIN.equals(fixtureGeneratorType)) {
 			return new RoundRobinFixtureGenerator();
-		} else if (fixtureGeneratorType.GROUP_TOURNAMENT.equals(fixtureGeneratorType)) {
+		} else if (FixtureGeneratorType.GROUP_TOURNAMENT.equals(fixtureGeneratorType)) {
 			return new GroupTouramentFixtureGenerator();
 		} else {
 			return null;
