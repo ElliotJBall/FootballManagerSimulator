@@ -8,6 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.player.attributes.GoalkeeperAttributes;
+import com.elliot.footballmanager.player.attributes.MentalAttributes;
+import com.elliot.footballmanager.player.attributes.PhysicalAttributes;
+import com.elliot.footballmanager.player.attributes.TechnicalAttributes;
 
 /**
  * @author Elliot
@@ -44,10 +48,17 @@ public class PlayerDaoImpl implements PlayerDao {
 	}
 	
 	private Player buildBasePlayerObject(ResultSet rs, FootballTeam footballTeam) throws SQLException {
-		List<Position> positions = getPositionsFromString(rs.getString("PREFERRED POSITIONS"));
+		List<Position> positions = getPositionsFromString(rs.getString("PREFERRED_POSITIONS"));
 		
-		return new Player(rs.getInt("PLAYER_ID"), rs.getString("NAME"), rs.getInt("AGE"), rs.getString("NATIONALITY"),
+		Player player = new Player(rs.getInt("PLAYER_ID"), rs.getString("NAME"), rs.getInt("AGE"), rs.getString("NATIONALITY"),
 				rs.getInt("OVERALL"), footballTeam, rs.getDouble("VALUE"), rs.getDouble("WAGE"), positions);
+		
+		player.setGoalkeeperAttributes(buildGoalkeeperAttributes(rs));
+		player.setMentalAttributes(buildMentalAttributes(rs));
+		player.setPhysicalAttributes(buildPhysicalAttributes(rs));
+		player.setTechnicalAttributes(buildTechnicalAttributes(rs));
+		
+		return player;
 	}
 	
 	private List<Position> getPositionsFromString(String positionsAsString) {
@@ -62,5 +73,30 @@ public class PlayerDaoImpl implements PlayerDao {
 			preferredPositions.add(Position.getPositionFromString(string));
 		}
 		return preferredPositions;
+	}
+	
+	private GoalkeeperAttributes buildGoalkeeperAttributes(ResultSet rs) throws SQLException {
+		return new GoalkeeperAttributes(rs.getInt("GK_DIVING"), rs.getInt("GK_HANDLING"), rs.getInt("GK_KICKING"),
+				rs.getInt("GK_POSITIONING"), rs.getInt("GK_REFLEXES"));
+	}
+	
+	private MentalAttributes buildMentalAttributes(ResultSet rs) throws SQLException {
+		return new MentalAttributes(rs.getInt("POSITIONING"), rs.getInt("VISION"), rs.getInt("COMPOSURE"),
+				rs.getInt("INTERCEPTIONS"), rs.getInt("AGGRESSION"));
+	}
+	
+	private PhysicalAttributes buildPhysicalAttributes(ResultSet rs) throws SQLException {
+		return new PhysicalAttributes(rs.getInt("ACCELERATION"), rs.getInt("SPRINT_SPEED"), rs.getInt("AGILITY"), 
+				rs.getInt("BALANCE"), rs.getInt("REACTIONS"), rs.getInt("JUMPING"), 
+				rs.getInt("STAMINA"), rs.getInt("STRENGTH"));
+	}
+	
+	private TechnicalAttributes buildTechnicalAttributes(ResultSet rs) throws SQLException {
+		return new TechnicalAttributes(rs.getInt("FINISHING"), rs.getInt("LONG_SHOTS"), rs.getInt("PENALTIES"), 
+				rs.getInt("SHOT_POWER"), rs.getInt("VOLLEYS"), rs.getInt("CROSSING"), 
+				rs.getInt("CURVE"), rs.getInt("FREE_KICK_ACCURACY"), rs.getInt("LONG_PASSING"), 
+				rs.getInt("SHORT_PASSING"), rs.getInt("BALL_CONTROL"), rs.getInt("DRIBBLING"), 
+				rs.getInt("HEADING_ACCURACY"), rs.getInt("MARKING"), rs.getInt("SLIDING_TACKLE"), 
+				rs.getInt("STANDING_TACKLE"));
 	}
 }

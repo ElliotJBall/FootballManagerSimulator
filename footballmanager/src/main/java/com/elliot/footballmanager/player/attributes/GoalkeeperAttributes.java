@@ -12,21 +12,18 @@ public class GoalkeeperAttributes implements PlayerAttribute {
 	private Integer kicking;
 	private Integer positioning;
 	private Integer reflexes;
-	private Integer speed;
 	
 	public GoalkeeperAttributes() {
 		
 	}
 
 	public GoalkeeperAttributes(Integer diving, Integer handling, Integer kicking, Integer positioning,
-			Integer reflexes, Integer speed) {
-		super();
+			Integer reflexes) {
 		this.diving = diving;
 		this.handling = handling;
 		this.kicking = kicking;
 		this.positioning = positioning;
 		this.reflexes = reflexes;
-		this.speed = speed;
 	}
 
 	public Integer getDiving() {
@@ -67,13 +64,5 @@ public class GoalkeeperAttributes implements PlayerAttribute {
 
 	public void setReflexes(Integer reflexes) {
 		this.reflexes = reflexes;
-	}
-
-	public Integer getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(Integer speed) {
-		this.speed = speed;
 	}
 }
