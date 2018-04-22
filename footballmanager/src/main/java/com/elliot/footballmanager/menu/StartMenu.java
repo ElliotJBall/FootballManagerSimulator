@@ -9,6 +9,8 @@ import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.country.CountryDao;
 import com.elliot.footballmanager.country.CountryDaoImpl;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
+import com.elliot.footballmanager.fixture.FixtureDao;
+import com.elliot.footballmanager.fixture.FixtureDaoImpl;
 import com.elliot.footballmanager.fixture.FixtureGenerator;
 import com.elliot.footballmanager.fixture.FixtureGeneratorFactory;
 import com.elliot.footballmanager.fixture.FixtureGeneratorType;
@@ -248,5 +250,8 @@ public class StartMenu {
 		FixtureGenerator fixtureGenerator = fixtureGeneratorFactory.getFixtureGenerator(FixtureGeneratorType.ROUND_ROBIN);
 		List<String> fixtureCreateStatements = fixtureGenerator.generateFixtureInsertStatements();
 		fixtureGenerator.insertFixturesIntoDatabase(fixtureCreateStatements);
+		
+		FixtureDao fixtureDao = new FixtureDaoImpl();
+		gameManager.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(gameManager.getCurrentFootballTeam()));
 	}
 }
