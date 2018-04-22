@@ -62,7 +62,7 @@ public class GameManagerDaoImpl implements GameManagerDao {
 	}
 
 	@Override
-	public GameManager loadSavedGame() {
+	public void loadSavedGame(GameManager gameManager) {
 		String query = "SELECT * FROM GAME_MANAGER WHERE GAME_MANAGER_ID = 1";
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
@@ -72,7 +72,7 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			// No results found
 			if (!rs.next()) {
 				System.out.println("No save game found! Please create a new game first.");
-				return null;
+				return;
 			}
 			
 			CountryDao countryDao = new CountryDaoImpl();
@@ -89,10 +89,13 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			
 			Date date = rs.getDate("CURRENT_DATE");
 			
-			return new GameManager(country, league, footballTeam, manager, date);
+			gameManager.setCurrentCountry(country);
+			gameManager.setCurrentLeague(league);
+			gameManager.setCurrentFootballTeam(footballTeam);
+			gameManager.setManager(manager);
+			gameManager.setCurrentDate(date);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
 	}
 }

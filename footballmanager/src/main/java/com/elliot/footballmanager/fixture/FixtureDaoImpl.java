@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
@@ -14,6 +17,8 @@ import com.elliot.footballmanager.footballteam.FootballTeamDao;
 import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 
 public class FixtureDaoImpl implements FixtureDao {
+	
+	private static SimpleDateFormat FIXTURE_DATE_FORMAT = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 	
 	@Override
 	public void insertFixturesIntoDatabase(List<String> allFixtures) {
@@ -52,11 +57,16 @@ public class FixtureDaoImpl implements FixtureDao {
 				FootballTeam homeTeam = footballTeamDao.getFootballTeamByName(rs.getString("HOME_TEAM"));
 				FootballTeam awayTeam = footballTeamDao.getFootballTeamByName(rs.getString("AWAY_TEAM"));
 				
+				String dateString = rs.getString("DATE_OF_MATCH");
+				Date date = FIXTURE_DATE_FORMAT.parse(dateString);
+				
 				upcomingFixtures.add(new Fixture(homeTeam, awayTeam,
-						rs.getDate("DATE_OF_MATCH"), rs.getInt("LEAGUE_ID")));
+						date, rs.getInt("LEAGUE_ID")));
 			}
 			return upcomingFixtures;
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return new ArrayList<Fixture>();

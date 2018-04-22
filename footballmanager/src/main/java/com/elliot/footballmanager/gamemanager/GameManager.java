@@ -44,8 +44,8 @@ public class GameManager {
 	 * from the database and instantiates a new GameManager object. 
 	 */
 	public void loadSavedGame() {
-		GameManagerDao gameManagerDao = new GameManagerDaoImpl();getClass();
-		gameManagerDao.loadSavedGame();
+		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+		gameManagerDao.loadSavedGame(this);
 		
 		FixtureDao fixtureDao = new FixtureDaoImpl();
 		this.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(this.getCurrentFootballTeam()));

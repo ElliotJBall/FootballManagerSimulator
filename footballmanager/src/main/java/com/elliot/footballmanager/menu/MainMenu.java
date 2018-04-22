@@ -2,6 +2,7 @@ package com.elliot.footballmanager.menu;
 
 import java.util.Scanner;
 
+import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
 
 /**
@@ -51,8 +52,10 @@ public class MainMenu {
 				case 2:
 					break;
 				case 3: 
-					//this.getGameManager().
+					getUpcomingFixtures();
 					break;	
+				case 4:
+					break;
 			}
 		} while (!quit);
 	}
@@ -60,12 +63,23 @@ public class MainMenu {
 	private void displayMainGameOptions() {
 		System.out.println("[1] Simulate / Progress Game");
 		System.out.println("[2] View football team options");
+		System.out.println("[3] View upcoming fixtures");		
 		//TODO: Print a current timestamp of the date in which the simulation is in option 3
 		// (E.g. 01/01/2020 | Current Team  | League Position)
-		System.out.println("[3] View quick information information");		
+		System.out.println("[4] View quick information information");		
 	}
 	
 	public GameManager getGameManager() {
 		return gameManager;
+	}
+	
+	private void getUpcomingFixtures() {
+		for (Fixture fixture : this.getGameManager().getUpcomingFixtures()) {
+			System.out.println(fixture.getHomeTeam().getTeamName() 
+					+ " " + "VS" + " "
+					+ fixture.getAwayTeam().getTeamName()
+					+ " " + "|"
+					+ fixture.getDateOfFixture());
+		}
 	}
 }

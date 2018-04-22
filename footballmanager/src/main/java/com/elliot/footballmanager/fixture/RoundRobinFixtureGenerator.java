@@ -34,16 +34,16 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 	private void generateFixturesFromArray(List<String> allFixtures, FootballTeam[] footballTeams) {
 		// Games stored in array at index 8 or higher will be generated as Sunday fixtures
 		int gamesForSunday = 8;
-		int halfway = footballTeams.length / 2;
+		int total = footballTeams.length - 1;
 		for (int i = 0; i < footballTeams.length / 2; i++) {
 			if (i < gamesForSunday) {
-				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
+				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[total], 
 						this.getFixtureDate()));				
 			} else {
-				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[halfway], 
+				allFixtures.add(createFixtureInsertStatement(footballTeams[i], footballTeams[total], 
 						moveFixtureToNextDay(this.getFixtureDate())));		
 			}
-			halfway++;
+			total--;
 		}
 		
 		// Add a Week onto the Fixture date
@@ -60,13 +60,20 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 		return calendar.getTime();
 	}
 
-	private void shiftFootballTeamArray(FootballTeam[] footballTeams) {
+	private FootballTeam[] shiftFootballTeamArray(FootballTeam[] footballTeams, FootballTeam firstTeam) {
 		FootballTeam[] shiftedFootballTeams = new FootballTeam[footballTeams.length];
 		for (int i = 0; i < footballTeams.length - 1; i++) {
 			shiftedFootballTeams[i + 1] = footballTeams[i];
 		}
 		shiftedFootballTeams[0] = footballTeams[footballTeams.length - 1];
-		footballTeams = shiftedFootballTeams;
+		
+		FootballTeam[] updatedFootballTeams = new FootballTeam[footballTeams.length + 1];
+		updatedFootballTeams[0] = firstTeam;
+		for (int i = 0; i < updatedFootballTeams.length - 1; i++) {
+			updatedFootballTeams[i + 1] = shiftedFootballTeams[i];
+		}
+		
+		return updatedFootballTeams;
 	}
 	
 	private void reverseArrayOrder(FootballTeam[] footballTeams) {
@@ -96,7 +103,7 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 		while (selectedLeagueFixtures.size() != HALF_GAMES_IN_SEASON) {
 			generateFixturesFromArray(selectedLeagueFixtures, footballTeamsArray);
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
-			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
+			footballTeamsArray = shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length), footballTeamsArray[0]);
 		} 
 		
 		// Reverse FootballTeams array to generate away Fixtures
@@ -106,7 +113,7 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 		 while (selectedLeagueFixtures.size() != TOTAL_GAMES_IN_SEASON) {
 			generateFixturesFromArray(selectedLeagueFixtures, footballTeamsArray);
 			// Shift all teams one place to the right (Bar the first one | Round Robin method)
-			shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length));
+			footballTeamsArray = shiftFootballTeamArray(Arrays.copyOfRange(footballTeamsArray, 1, footballTeamsArray.length), footballTeamsArray[0]);
 		};
 		
 		return selectedLeagueFixtures;
