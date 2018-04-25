@@ -75,7 +75,8 @@ public class GameManager {
 	}
 	
 	public String getQuickGameInfo() {
-		return "";
+		return this.getCurrentDate().toString() + " " + this.getCurrentFootballTeam().getTeamName() + " " 
+				+ this.getCurrentLeague().getLeagueName();
 	}
 	
 	public Country getCurrentCountry() {

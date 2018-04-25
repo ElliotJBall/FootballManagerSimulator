@@ -246,6 +246,8 @@ public class StartMenu {
 	}
 	
 	private void setupFixtures() {
+		System.out.println("Generating Fixtures");
+		
 		FixtureGeneratorFactory fixtureGeneratorFactory = new FixtureGeneratorFactory();
 		FixtureGenerator fixtureGenerator = fixtureGeneratorFactory.getFixtureGenerator(FixtureGeneratorType.ROUND_ROBIN);
 		List<String> fixtureCreateStatements = fixtureGenerator.generateFixtureInsertStatements();

@@ -55,6 +55,7 @@ public class MainMenu {
 					getUpcomingFixtures();
 					break;	
 				case 4:
+					displayQuickInfo();
 					break;
 			}
 		} while (!quit);
@@ -67,6 +68,10 @@ public class MainMenu {
 		//TODO: Print a current timestamp of the date in which the simulation is in option 3
 		// (E.g. 01/01/2020 | Current Team  | League Position)
 		System.out.println("[4] View quick information information");		
+	}
+	
+	private void displayQuickInfo() {
+		this.getGameManager().getQuickGameInfo();
 	}
 	
 	public GameManager getGameManager() {
