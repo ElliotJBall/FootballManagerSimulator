@@ -71,7 +71,7 @@ public class MainMenu {
 	}
 	
 	private void displayQuickInfo() {
-		this.getGameManager().getQuickGameInfo();
+		System.out.println(this.getGameManager().getQuickGameInfo());
 	}
 	
 	public GameManager getGameManager() {

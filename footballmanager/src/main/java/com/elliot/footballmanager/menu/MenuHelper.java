@@ -17,8 +17,6 @@ public class MenuHelper {
 	 * Helper method that will remove all previous contents from the console.
 	 */
 	public static void clearConsole() {
-		for (int i = 0; i < 25; i++) {
-			System.out.println();
-		}
+
 	}
 }
