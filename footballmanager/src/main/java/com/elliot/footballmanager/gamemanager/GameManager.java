@@ -3,6 +3,7 @@ package com.elliot.footballmanager.gamemanager;
 import java.util.Date;
 import java.util.List;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.fixture.FixtureDao;
@@ -77,6 +78,13 @@ public class GameManager {
 	public String getQuickGameInfo() {
 		return this.getCurrentDate().toString() + " " + this.getCurrentFootballTeam().getTeamName() + " " 
 				+ this.getCurrentLeague().getLeagueName();
+	}
+
+	public void simulateGame() {
+		while (currentDate.before(this.getUpcomingFixtures().get(0).getDateOfFixture())) {
+			currentDate = DateUtils.addDays(currentDate, 1);
+			System.out.println("Current date : " + currentDate.toString());
+		}
 	}
 	
 	public Country getCurrentCountry() {

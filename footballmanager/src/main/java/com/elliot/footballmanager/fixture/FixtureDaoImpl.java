@@ -11,14 +11,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.FootballTeamDao;
 import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 
 public class FixtureDaoImpl implements FixtureDao {
-	
-	private static SimpleDateFormat FIXTURE_DATE_FORMAT = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
 	
 	@Override
 	public void insertFixturesIntoDatabase(List<String> allFixtures) {
@@ -58,7 +57,7 @@ public class FixtureDaoImpl implements FixtureDao {
 				FootballTeam awayTeam = footballTeamDao.getFootballTeamByName(rs.getString("AWAY_TEAM"));
 				
 				String dateString = rs.getString("DATE_OF_MATCH");
-				Date date = FIXTURE_DATE_FORMAT.parse(dateString);
+				Date date = DateUtils.FIXTURE_DATE_FORMAT.parse(dateString);
 				
 				upcomingFixtures.add(new Fixture(homeTeam, awayTeam,
 						date, rs.getInt("LEAGUE_ID")));

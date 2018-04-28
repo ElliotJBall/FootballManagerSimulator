@@ -1,6 +1,8 @@
 package com.elliot.footballmanager.menu;
 
-import java.sql.Date;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
@@ -35,6 +37,7 @@ public class StartMenu {
 	private GameManager gameManager;
 	private static Scanner scanner  = new Scanner(System.in);
 	private boolean quit = false;
+	private Date newGameStartDate = new GregorianCalendar(2018, Calendar.JULY, 1).getTime(); // (01/07/2018)
 	
 	public StartMenu() {
 		displayMenu();
@@ -96,7 +99,8 @@ public class StartMenu {
     	
     	setupFixtures();
     	
-    	gameManager.setCurrentDate(new Date(1498914000)); // (01/07/2017));
+
+    	gameManager.setCurrentDate(newGameStartDate); 
     	gameManager.saveGame();
     	
 	}
@@ -246,7 +250,7 @@ public class StartMenu {
 	}
 	
 	private void setupFixtures() {
-		System.out.println("Generating Fixtures");
+		System.out.println("Generating Fixtures...");
 		
 		FixtureGeneratorFactory fixtureGeneratorFactory = new FixtureGeneratorFactory();
 		FixtureGenerator fixtureGenerator = fixtureGeneratorFactory.getFixtureGenerator(FixtureGeneratorType.ROUND_ROBIN);

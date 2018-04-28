@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.league.League;
 
@@ -47,17 +48,12 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 		}
 		
 		// Add a Week onto the Fixture date
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(fixtureDate);
-		calendar.add(Calendar.DATE, 7);
-		fixtureDate = calendar.getTime();
+		fixtureDate = DateUtils.addDays(fixtureDate, 7);
 	}
 	
 	private Date moveFixtureToNextDay(Date fixtureDate) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(fixtureDate);
-		calendar.add(Calendar.DATE, 1);
-		return calendar.getTime();
+		fixtureDate = DateUtils.addDays(fixtureDate, 1);
+		return fixtureDate;
 	}
 
 	private FootballTeam[] shiftFootballTeamArray(FootballTeam[] footballTeams, FootballTeam firstTeam) {

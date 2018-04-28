@@ -1,12 +1,14 @@
 package com.elliot.footballmanager.gamemanager;
 
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.util.Date;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.country.CountryDao;
 import com.elliot.footballmanager.country.CountryDaoImpl;
@@ -48,7 +50,7 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			pInsert.setInt(3, gameManager.getCurrentLeague().getLeagueId()); // SELECTED_LEAGUE_ID
 			pInsert.setInt(4, gameManager.getCurrentFootballTeam().getFootballTeamId()); // SELECTED_FOOTBALL_TEAM_ID
 			pInsert.setInt(5, 1); // MANAGER_ID
-			pInsert.setDate(6, (java.sql.Date) gameManager.getCurrentDate()); // CURRENT_DATE
+			pInsert.setString(6, gameManager.getCurrentDate().toString()); // CURRENT_DATE
 			
 			// If count != 1 the statement did not successfully persist the GameManager data into the database
 			if (pInsert.executeUpdate() != 1) {
@@ -87,14 +89,17 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			ManagerDao managerDao = new ManagerDaoImpl();
 			Manager manager = managerDao.getManagerById(rs.getInt("MANAGER_ID"));
 			
-			Date date = rs.getDate("CURRENT_DATE");
-			
+			String dateString = rs.getString("CURRENT_DATE");
+			Date date = DateUtils.FIXTURE_DATE_FORMAT.parse(dateString);
+
 			gameManager.setCurrentCountry(country);
 			gameManager.setCurrentLeague(league);
 			gameManager.setCurrentFootballTeam(footballTeam);
 			gameManager.setManager(manager);
 			gameManager.setCurrentDate(date);
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}

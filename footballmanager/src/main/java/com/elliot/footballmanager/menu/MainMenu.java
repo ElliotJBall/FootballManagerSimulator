@@ -30,9 +30,10 @@ public class MainMenu {
 	 * pieces of information required.
 	 * The options provided are: 
 	 * [0] : Save and quit
-	 * [1] : View next football match options 
+	 * [1] : Simulate Game
 	 * [2] : View football team options
-	 * [3] : View quick information information
+	 * [3] : -
+	 * [4] : View quick information information
 	 */
 	private void beginMainGameLoop() {
 		MenuHelper.clearConsole();
@@ -48,6 +49,7 @@ public class MainMenu {
 					quit = true;
 					break;
 				case 1:
+					this.getGameManager().simulateGame();
 					break;
 				case 2:
 					break;
