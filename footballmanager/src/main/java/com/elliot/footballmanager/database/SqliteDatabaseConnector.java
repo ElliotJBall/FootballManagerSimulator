@@ -82,6 +82,6 @@ public class SqliteDatabaseConnector {
 	 * This has been done to remove any hard coded value for the database connection string.
 	 */
 	private static void getDatabaseFileLocation() {
-		 CONNECTION_URL = "jdbc:sqlite:" + new File(System.getProperty("user.dir")).getParentFile().toString() + "\\FootballManagerDatabase";
+		CONNECTION_URL = "jdbc:sqlite:" + new File(System.getProperty("user.dir")).getParentFile().toString() + "\\FootballManagerDatabase";
 	}
 }

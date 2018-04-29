@@ -12,6 +12,7 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.manager.Manager;
 import com.elliot.footballmanager.menu.MainMenu;
+import com.elliot.footballmanager.menu.MatchDayMenu;
 
 /**
  * The GameManager class handles all the information required to successfully play the Football
@@ -64,8 +65,7 @@ public class GameManager {
 		
 		new MainMenu(this);
 	}
-	
-	
+
 	/**
 	 * Persists the current information stored in the GameManager object
 	 * into the database and then exits the program.
@@ -76,16 +76,35 @@ public class GameManager {
 	}
 	
 	public String getQuickGameInfo() {
-		return this.getCurrentDate().toString() + " " + this.getCurrentFootballTeam().getTeamName() + " " 
-				+ this.getCurrentLeague().getLeagueName();
+		return  DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(this.getCurrentDate())
+				+ " " + this.getCurrentFootballTeam().getTeamName()
+				+ " " + this.getCurrentLeague().getLeagueName();
 	}
 
+	/**
+	 * Advances the currentDate by a day until a new Fixture is found.
+	 */
 	public void simulateGame() {
 		while (currentDate.before(this.getUpcomingFixtures().get(0).getDateOfFixture())) {
 			currentDate = DateUtils.addDays(currentDate, 1);
-			System.out.println("Current date : " + currentDate.toString());
+			System.out.println("Current date : " + DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(currentDate));
+		}
+
+		// Match day
+		if (currentDate.equals(this.getUpcomingFixtures().get(0).getDateOfFixture())) {
+			MatchDayMenu matchDayMenu = new MatchDayMenu(this);
+			matchDayMenu.beginMenuSelectionLoop();
 		}
 	}
+
+	public void beginMatchDaySimulation() {
+
+	}
+
+	public boolean isMatchDay() {
+		return this.getCurrentDate().equals(this.getUpcomingFixtures().get(0).getDateOfFixture());
+	}
+
 	
 	public Country getCurrentCountry() {
 		return currentCountry;

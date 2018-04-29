@@ -32,7 +32,7 @@ import com.elliot.footballmanager.manager.ManagerDaoImpl;
  * the options that area available to the user.
  * @author Elliot
  */
-public class StartMenu {
+public class StartMenu implements GameMenu {
 	
 	private GameManager gameManager;
 	private static Scanner scanner  = new Scanner(System.in);
@@ -40,20 +40,13 @@ public class StartMenu {
 	private Date newGameStartDate = new GregorianCalendar(2018, Calendar.JULY, 1).getTime(); // (01/07/2018)
 	
 	public StartMenu() {
-		displayMenu();
+		beginMenuSelectionLoop();
 	}
 	
-	public void displayMenu() {
-        System.out.println("------------------------------------------------------------");
-        System.out.println("Elliots Java Football Manager!");
-        System.out.println("------------------------------------------------------------");
-        System.out.println("Please choose one of the following options:");
-        System.out.println("[0] Exit Game! (Please note you can hit 0 at any point to exit the game!");
-        System.out.println("[1] Start New Game!");
-        System.out.println("[2] Continue Saved Game!");
-        
+	public void beginMenuSelectionLoop() {
+		displayMenuOptions();
+
         boolean quit = false;
-        
         do {
         	switch (scanner.nextInt()) {
 	        	case 0: // [0] Exit Game
@@ -78,6 +71,16 @@ public class StartMenu {
         
         scanner.close();
 	}
+
+	public void displayMenuOptions() {
+		System.out.println("------------------------------------------------------------");
+		System.out.println("Elliots Java Football Manager!");
+		System.out.println("------------------------------------------------------------");
+		System.out.println("Please choose one of the following options:");
+		System.out.println("[0] Exit Game! (Please note you can hit 0 at any point to exit the game!");
+		System.out.println("[1] Start New Game!");
+		System.out.println("[2] Continue Saved Game!");
+	}
 	
 	/**
 	 * Remove any artifacts from the database that reference the 
@@ -98,11 +101,9 @@ public class StartMenu {
     	createNewManager();
     	
     	setupFixtures();
-    	
 
     	gameManager.setCurrentDate(newGameStartDate); 
     	gameManager.saveGame();
-    	
 	}
 	
 	/**

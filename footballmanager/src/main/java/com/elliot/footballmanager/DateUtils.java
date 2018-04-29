@@ -12,6 +12,7 @@ import java.util.Date;
 public class DateUtils {
 
 	public static SimpleDateFormat FIXTURE_DATE_FORMAT = new SimpleDateFormat("EEE MMM d HH:mm:ss zzz yyyy");
+	public static SimpleDateFormat FIXTURE_DATE_DISPLAY_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
     private static final Calendar calendar = Calendar.getInstance();
 
     public DateUtils() {

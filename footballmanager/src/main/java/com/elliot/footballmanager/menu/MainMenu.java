@@ -2,6 +2,7 @@ package com.elliot.footballmanager.menu;
 
 import java.util.Scanner;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
 
@@ -10,7 +11,7 @@ import com.elliot.footballmanager.gamemanager.GameManager;
  * the list of options available throughout the FootballManager simulator.
  * @author Elliot
  */
-public class MainMenu {
+public class MainMenu implements GameMenu {
 
 	private static Scanner scanner  = new Scanner(System.in);
 	private GameManager gameManager;
@@ -22,7 +23,7 @@ public class MainMenu {
 	public MainMenu(GameManager gameManager) {
 		this.gameManager = gameManager;
 		
-		beginMainGameLoop();
+		beginMenuSelectionLoop();
 	}
 	
 	/**
@@ -34,12 +35,13 @@ public class MainMenu {
 	 * [2] : View football team options
 	 * [3] : -
 	 * [4] : View quick information information
+	 * [5] : Go to match day menu
 	 */
-	private void beginMainGameLoop() {
+	public void beginMenuSelectionLoop() {
 		MenuHelper.clearConsole();
 		
 		System.out.println("Press 0 at any point to save the game and quit!");
-		displayMainGameOptions();
+		displayMenuOptions();
 		
 		boolean quit = false;
 		do {	
@@ -59,34 +61,48 @@ public class MainMenu {
 				case 4:
 					displayQuickInfo();
 					break;
+				case 5:
+					openMatchDayMenu();
 			}
 		} while (!quit);
 	}
 	
-	private void displayMainGameOptions() {
+	public void displayMenuOptions() {
 		System.out.println("[1] Simulate / Progress Game");
 		System.out.println("[2] View football team options");
-		System.out.println("[3] View upcoming fixtures");		
-		//TODO: Print a current timestamp of the date in which the simulation is in option 3
+		System.out.println("[3] View upcoming fixtures");
 		// (E.g. 01/01/2020 | Current Team  | League Position)
 		System.out.println("[4] View quick information information");		
+		System.out.println("[5] Open match day menu");
 	}
 	
 	private void displayQuickInfo() {
 		System.out.println(this.getGameManager().getQuickGameInfo());
 	}
 	
-	public GameManager getGameManager() {
+	private GameManager getGameManager() {
 		return gameManager;
 	}
 	
 	private void getUpcomingFixtures() {
 		for (Fixture fixture : this.getGameManager().getUpcomingFixtures()) {
-			System.out.println(fixture.getHomeTeam().getTeamName() 
+			System.out.println(DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(fixture.getDateOfFixture())
 					+ " " + "VS" + " "
-					+ fixture.getAwayTeam().getTeamName()
-					+ " " + "|"
-					+ fixture.getDateOfFixture());
+					+ fixture.getHomeTeam().getTeamName()
+					+ " " + "|" + " "
+					+ fixture.getAwayTeam().getTeamName());
 		}
+	}
+
+	private void openMatchDayMenu() {
+		if (!this.getGameManager().isMatchDay()) {
+			System.out.println("There is no match to play! It is not currently a Match day. " +
+					"Please simulate the game to a Match day first.");
+			displayMenuOptions();
+			return;
+		}
+
+		GameMenu matchDayMenu = new MatchDayMenu(gameManager);
+		matchDayMenu.beginMenuSelectionLoop();
 	}
 }

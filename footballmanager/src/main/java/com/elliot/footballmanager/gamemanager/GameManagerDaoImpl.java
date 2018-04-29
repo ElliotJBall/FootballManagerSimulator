@@ -56,7 +56,7 @@ public class GameManagerDaoImpl implements GameManagerDao {
 			if (pInsert.executeUpdate() != 1) {
 				throw new SQLException("The Game has not successfully been saved! Please try again.");
 			} else {
-				System.out.println("Created successfully!");
+				System.out.println("Saved successfully!");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
