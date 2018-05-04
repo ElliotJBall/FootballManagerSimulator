@@ -19,6 +19,8 @@ public class FootballTeam implements IFootballTeam {
 	private String stadium;
 	private Integer stadiumCapacity;
 	private List<Player> squad;
+
+	private FootballTeamMatchSetup matchSetup;
 	
 	public FootballTeam() {
 
@@ -98,6 +100,15 @@ public class FootballTeam implements IFootballTeam {
 	public void setSquad(List<Player> squad) {
 		this.squad = squad;
 	}
+
+	public FootballTeamMatchSetup getMatchSetup() {
+		return matchSetup;
+	}
+
+	public void setMatchSetup(FootballTeamMatchSetup matchSetup) {
+		this.matchSetup = matchSetup;
+	}
+
 
 	public String printFootballTeamMenuInfo() {
 		return "[" + this.getFootballTeamId() + "]" + " " + this.getTeamName();

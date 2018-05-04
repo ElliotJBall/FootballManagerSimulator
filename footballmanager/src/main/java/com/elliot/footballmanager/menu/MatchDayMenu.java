@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.menu;
 
+import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
 
@@ -48,9 +49,12 @@ public class MatchDayMenu implements GameMenu {
     private void displayMatchDayMenuScreen() {
         Fixture fixture = this.getGameManager().getUpcomingFixtures().get(0);
         System.out.println("M A T C H D A Y");
-        System.out.println(fixture.getHomeTeam().getTeamName()
+        System.out.println(DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(fixture.getDateOfFixture())
+            + " " + "|" + " "
+            + fixture.getHomeTeam().getTeamName()
             + " " + "VS" + " "
             + fixture.getAwayTeam().getTeamName());
+        System.out.println(fixture.getHomeTeam().getStadium());
     }
 
     public void displayMenuOptions() {
