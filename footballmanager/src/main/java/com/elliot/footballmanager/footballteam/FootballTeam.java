@@ -2,6 +2,7 @@ package com.elliot.footballmanager.footballteam;
 
 import java.util.List;
 
+import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
 import com.elliot.footballmanager.player.Player;
 import com.elliot.footballmanager.player.PlayerDao;
 import com.elliot.footballmanager.player.PlayerDaoImpl;
@@ -19,7 +20,6 @@ public class FootballTeam implements IFootballTeam {
 	private String stadium;
 	private Integer stadiumCapacity;
 	private List<Player> squad;
-
 	private FootballTeamMatchSetup matchSetup;
 	
 	public FootballTeam() {

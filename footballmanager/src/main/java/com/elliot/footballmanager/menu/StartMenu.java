@@ -99,8 +99,10 @@ public class StartMenu implements GameMenu {
     	chooseLeague();
     	chooseTeam();
     	createNewManager();
-    	
+
+    	//TODO: Implement the builder pattern to create get/create everything needed for a new season
     	setupFixtures();
+    	setupTeamsMatchInfo();
 
     	gameManager.setCurrentDate(newGameStartDate); 
     	gameManager.saveGame();
@@ -260,5 +262,11 @@ public class StartMenu implements GameMenu {
 		
 		FixtureDao fixtureDao = new FixtureDaoImpl();
 		gameManager.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(gameManager.getCurrentFootballTeam()));
+	}
+
+	private void setupTeamsMatchInfo() {
+		System.out.println("Generating FootballTeams Match day data...");
+
+
 	}
 }
