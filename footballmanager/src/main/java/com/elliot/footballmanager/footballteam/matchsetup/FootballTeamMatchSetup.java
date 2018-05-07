@@ -9,7 +9,7 @@ import com.elliot.footballmanager.player.Player;
  */
 public class FootballTeamMatchSetup {
 
-    private Integer MAXIMUM_STORED_FORMATIONS = 3;
+    private static final Integer MAXIMUM_STORED_FORMATIONS = 3;
 
     private FootballTeamFormation selectedFormation;
     private FootballTeamFormation[] availableFormations = new FootballTeamFormation[MAXIMUM_STORED_FORMATIONS];
@@ -20,14 +20,6 @@ public class FootballTeamMatchSetup {
 
     public FootballTeamMatchSetup() {
 
-    }
-
-    public Integer getMAXIMUM_STORED_FORMATIONS() {
-        return MAXIMUM_STORED_FORMATIONS;
-    }
-
-    public void setMAXIMUM_STORED_FORMATIONS(Integer MAXIMUM_STORED_FORMATIONS) {
-        this.MAXIMUM_STORED_FORMATIONS = MAXIMUM_STORED_FORMATIONS;
     }
 
     public FootballTeamFormation getSelectedFormation() {
