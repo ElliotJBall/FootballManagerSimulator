@@ -1,11 +1,6 @@
 package com.elliot.footballmanager.menu;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
 
 import com.elliot.footballmanager.country.Country;
 import com.elliot.footballmanager.country.CountryDao;
@@ -267,6 +262,11 @@ public class StartMenu implements GameMenu {
 
 	private void setupTeamsMatchInfo() {
 		System.out.println("Generating FootballTeams Match day data...");
+
+
+		Integer leagueId = gameManager.getCurrentLeague().getLeagueId();
+		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
+		gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId).values()));
 
 		for (FootballTeam footballTeam : gameManager.getCurrentLeague().getFootballTeams()) {
 			footballTeam.setMatchSetup(FootballTeamMatchSetupBuilder.buildNewMatchSetup(footballTeam));
