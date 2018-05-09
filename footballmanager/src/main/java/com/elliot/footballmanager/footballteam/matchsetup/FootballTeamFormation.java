@@ -1,14 +1,27 @@
 package com.elliot.footballmanager.footballteam.matchsetup;
 
-//TODO: Change to a class and have the enum as a inner class
-//TODO: Add the ability to set players in a certain position
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+
 public enum FootballTeamFormation {
     //TODO: Add more possible formations
-    //TODO: How am I going to limit them to 4 defenders if they play 4-4-2?
-    // Parse the selected formation and then build a starting squad + subs
-    // E.g. Squad[0] = Choose Starting GK 'Pickford' 'Rooney' ...
-    FOUR_FOUR_TWO,
-    FOUR_THREE_THREE,
-    THREE_FIVE_ONE;
-}
+    FOUR_FOUR_TWO("4-4-2"),
+    FOUR_THREE_THREE("4-3-3"),
+    THREE_FIVE_ONE("3-5-1");
 
+    private String formationName;
+
+    FootballTeamFormation(String formationName) {
+        this.formationName = formationName;
+    }
+
+    private static final List<FootballTeamFormation> ALL_FORMATIONS = Collections.unmodifiableList(Arrays.asList(FootballTeamFormation.values()));
+    private static final Integer NUMBER_OF_FORMATIONS_IN_ENUM = ALL_FORMATIONS.size();
+    private static final Random random = new Random();
+
+    public static FootballTeamFormation getRandomFormation() {
+        return ALL_FORMATIONS.get(random.nextInt(NUMBER_OF_FORMATIONS_IN_ENUM));
+    }
+}

@@ -9,10 +9,10 @@ import com.elliot.footballmanager.player.Player;
  */
 public class FootballTeamMatchSetup {
 
-    private static final Integer MAXIMUM_STORED_FORMATIONS = 3;
+    public static final Integer MAXIMUM_STORED_FORMATIONS = 3;
 
-    private FootballTeamFormation selectedFormation;
-    private FootballTeamFormation[] availableFormations = new FootballTeamFormation[MAXIMUM_STORED_FORMATIONS];
+    private MatchDaySquadInformation selectedFormation;
+    private MatchDaySquadInformation[] availableFormations = new MatchDaySquadInformation[MAXIMUM_STORED_FORMATIONS];
 
     private Player freekickTaker;
     private Player penaltyTaker;
@@ -22,19 +22,19 @@ public class FootballTeamMatchSetup {
 
     }
 
-    public FootballTeamFormation getSelectedFormation() {
+    public MatchDaySquadInformation getSelectedFormation() {
         return selectedFormation;
     }
 
-    public void setSelectedFormation(FootballTeamFormation selectedFormation) {
+    public void setSelectedFormation(MatchDaySquadInformation selectedFormation) {
         this.selectedFormation = selectedFormation;
     }
 
-    public FootballTeamFormation[] getAvailableFormations() {
+    public MatchDaySquadInformation[] getAvailableFormations() {
         return availableFormations;
     }
 
-    public void setAvailableFormations(FootballTeamFormation[] availableFormations) {
+    public void setAvailableFormations(MatchDaySquadInformation[] availableFormations) {
         this.availableFormations = availableFormations;
     }
 
