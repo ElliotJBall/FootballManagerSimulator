@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.footballteam;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
@@ -11,7 +12,7 @@ import com.elliot.footballmanager.player.PlayerDaoImpl;
  * @author Elliot
  *
  */
-public class FootballTeam implements IFootballTeam {
+public class FootballTeam implements Serializable, IFootballTeam {
 	
 	private Integer footballTeamId;
 	private String teamName;

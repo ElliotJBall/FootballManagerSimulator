@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.player;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
@@ -13,7 +14,7 @@ import com.elliot.footballmanager.player.attributes.TechnicalAttributes;
  * about how good they are via the different attributes.
  * @author Elliot
  */
-public class Player implements IPlayer {
+public class Player implements Serializable, IPlayer {
 	
 	private Integer id;
 	private String name;

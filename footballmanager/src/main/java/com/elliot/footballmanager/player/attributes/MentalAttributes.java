@@ -1,11 +1,13 @@
 package com.elliot.footballmanager.player.attributes;
 
+import java.io.Serializable;
+
 /**
  * Collection of all mental attributes that a player
  * can have.
  * @author Elliot
  */
-public class MentalAttributes implements PlayerAttribute {
+public class MentalAttributes implements Serializable, PlayerAttribute {
 	
 	private Integer positioning;
 	private Integer vision;

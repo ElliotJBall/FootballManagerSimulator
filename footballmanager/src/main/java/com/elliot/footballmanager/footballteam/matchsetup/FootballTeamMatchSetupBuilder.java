@@ -14,6 +14,8 @@ import java.util.Set;
  */
 public class FootballTeamMatchSetupBuilder {
 
+    private static String FORMATION_SPLIT_CHARACTER = "-";
+
     public FootballTeamMatchSetupBuilder() {
 
     }
@@ -27,8 +29,11 @@ public class FootballTeamMatchSetupBuilder {
      */
     public static FootballTeamMatchSetup buildNewMatchSetup(FootballTeam footballTeam) {
         FootballTeamMatchSetup footballTeamMatchSetup = new FootballTeamMatchSetup();
-        footballTeamMatchSetup.setSelectedFormation(generateFormations(footballTeamMatchSetup,
-                footballTeam));
+
+        MatchDaySquadInformation[] matchDaySquads = generateFormations(footballTeamMatchSetup, footballTeam);
+
+        footballTeamMatchSetup.setSelectedFormation(matchDaySquads[0]);
+        footballTeamMatchSetup.setAvailableFormations(matchDaySquads);
 
         footballTeamMatchSetup.setFreekickTaker(getBestFreekickTaker(footballTeam.getSquad()));
         footballTeamMatchSetup.setPenaltyTaker(getBestPenaltyTaker(footballTeam.getSquad()));
@@ -45,10 +50,10 @@ public class FootballTeamMatchSetupBuilder {
      * @param footballTeam
      * @return
      */
-    private static MatchDaySquadInformation generateFormations(FootballTeamMatchSetup footballTeamMatchSetup,
+    private static MatchDaySquadInformation[] generateFormations(FootballTeamMatchSetup footballTeamMatchSetup,
                                                                FootballTeam footballTeam) {
         Set<FootballTeamFormation> uniqueFormations = new HashSet<FootballTeamFormation>();
-        MatchDaySquadInformation[] MatchDaySquads = new MatchDaySquadInformation[FootballTeamMatchSetup.MAXIMUM_STORED_FORMATIONS];
+        MatchDaySquadInformation[] matchDaySquads = new MatchDaySquadInformation[FootballTeamMatchSetup.MAXIMUM_STORED_FORMATIONS];
 
         for (int i = 0; i < FootballTeamMatchSetup.MAXIMUM_STORED_FORMATIONS; i++) {
             MatchDaySquadInformation matchDaySquadInformation = new MatchDaySquadInformation();
@@ -58,12 +63,11 @@ public class FootballTeamMatchSetupBuilder {
 
             matchDaySquadInformation.setFormation(formation);
             // Parse the FootballTeamFormation String value and add the required number of players from that position
-            matchDaySquadInformation.setStartingLineup(getStartingLineUp(footballTeam, formation));
+            matchDaySquadInformation.setStartingLineup(buildStartingLineup(footballTeam, formation));
+
+            matchDaySquads[i] = matchDaySquadInformation;
         }
-
-
-        //TODO: Generate primary and secondary formations
-       return MatchDaySquadInformation.FOUR_FOUR_TWO;
+        return matchDaySquads;
     }
 
     private static FootballTeamFormation getUniqueFormation(Set<FootballTeamFormation> uniqueFormations) {
@@ -79,7 +83,34 @@ public class FootballTeamMatchSetupBuilder {
         }
     }
 
-    private static Player[] getStartingLineUp(FootballTeam footballTeam, FootballTeamFormation footballTeamFormation) {
+    private static Player[] buildStartingLineup(FootballTeam footballTeam, FootballTeamFormation footballTeamFormation) {
+        //TODO: Find an alternative that will work with more complex formations (E.g. 4-1-2-1-2)
+        //TODO: Change Squad variable inside FootballTeam into its own separate class (Can add HashMap for Defender - SubList of Squad | Attacker - SubList)
+        Player[] startingLineup = new Player[MatchDaySquadInformation.MATCH_DAY_SQUAD];
+        Player[] substitutes = new Player[MatchDaySquadInformation.MATCH_DAY_SUBSTITUTIONS];
+        String[] formationParts = footballTeamFormation.getFormationName().split(FORMATION_SPLIT_CHARACTER);
+
+        addBestGoalKeeper(startingLineup, footballTeam.getSquad());
+        addBestDefenders(startingLineup, footballTeam.getSquad(), Integer.valueOf(formationParts[0]));
+        addBestMidfielders(startingLineup, footballTeam.getSquad(), Integer.valueOf(formationParts[1]));
+        addBestStrikers(startingLineup, footballTeam.getSquad(), Integer.valueOf(formationParts[2]));
+
+        return startingLineup;
+    }
+
+    private static void addBestGoalKeeper(Player[] startingLineup, List<Player> footballTeamSquad) {
+
+    }
+
+    private static void addBestDefenders(Player[] startingLineup, List<Player> footballTeamSquad, Integer numberOfDefenders) {
+
+    }
+
+    private static void addBestMidfielders(Player[] startingLineup, List<Player> footballTeamSquad, Integer numberOfMidfielders) {
+
+    }
+
+    private static void addBestStrikers(Player[] startingLineup, List<Player> footballTeamSquad, Integer numberOfStrikers) {
 
     }
 

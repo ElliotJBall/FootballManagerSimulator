@@ -1,11 +1,13 @@
 package com.elliot.footballmanager.player.attributes;
 
+import java.io.Serializable;
+
 /**
  * Collection of all goalkeeper attributes that a player
  * can have.
  * @author Elliot
  */
-public class GoalkeeperAttributes implements PlayerAttribute {
+public class GoalkeeperAttributes implements Serializable, PlayerAttribute {
 
 	private Integer diving;
 	private Integer handling;

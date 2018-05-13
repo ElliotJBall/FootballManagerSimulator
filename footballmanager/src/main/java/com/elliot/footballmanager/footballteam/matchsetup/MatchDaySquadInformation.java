@@ -2,12 +2,14 @@ package com.elliot.footballmanager.footballteam.matchsetup;
 
 import com.elliot.footballmanager.player.Player;
 
+import java.io.Serializable;
+
 //TODO: Change to a class and have the enum as a inner class
 //TODO: Add the ability to set players in a certain position
-public class MatchDaySquadInformation {
+public class MatchDaySquadInformation implements Serializable {
 
-    private static final Integer MATCH_DAY_SQUAD = 11;
-    private static final Integer MATCH_DAY_SUBSTITUTIONS = 7;
+    public static final Integer MATCH_DAY_SQUAD = 11;
+    public static final Integer MATCH_DAY_SUBSTITUTIONS = 7;
 
     private Player[] startingLineup;
     private Player[] substitutions;

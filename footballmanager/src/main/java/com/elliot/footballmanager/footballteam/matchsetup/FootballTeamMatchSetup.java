@@ -2,12 +2,15 @@ package com.elliot.footballmanager.footballteam.matchsetup;
 
 import com.elliot.footballmanager.player.Player;
 
+import java.io.Serializable;
+import java.util.Arrays;
+
 /**
  * This class is used to store a FootballTeam objects current
  * formation and information about the FootballTeam's setup.
  * @author elliot
  */
-public class FootballTeamMatchSetup {
+public class FootballTeamMatchSetup implements Serializable {
 
     public static final Integer MAXIMUM_STORED_FORMATIONS = 3;
 
@@ -60,5 +63,16 @@ public class FootballTeamMatchSetup {
 
     public void setCornerTaker(Player cornerTaker) {
         this.cornerTaker = cornerTaker;
+    }
+
+    @Override
+    public String toString() {
+        return "FootballTeamMatchSetup{" +
+                "selectedFormation=" + selectedFormation +
+                ", availableFormations=" + Arrays.toString(availableFormations) +
+                ", freekickTaker=" + freekickTaker +
+                ", penaltyTaker=" + penaltyTaker +
+                ", cornerTaker=" + cornerTaker +
+                '}';
     }
 }

@@ -24,4 +24,8 @@ public enum FootballTeamFormation {
     public static FootballTeamFormation getRandomFormation() {
         return ALL_FORMATIONS.get(random.nextInt(NUMBER_OF_FORMATIONS_IN_ENUM));
     }
+
+    public String getFormationName() {
+        return formationName;
+    }
 }

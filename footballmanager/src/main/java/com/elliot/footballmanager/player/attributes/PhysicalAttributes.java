@@ -1,11 +1,13 @@
 package com.elliot.footballmanager.player.attributes;
 
+import java.io.Serializable;
+
 /**
  * Collection of all the physical attributes that a player
  * can have.
  * @author Elliot
  */
-public class PhysicalAttributes implements PlayerAttribute {
+public class PhysicalAttributes implements Serializable, PlayerAttribute {
 	
 	private Integer acceleration;
 	private Integer sprintSpeed;

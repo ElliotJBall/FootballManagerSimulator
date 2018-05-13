@@ -1,11 +1,13 @@
 package com.elliot.footballmanager.player.attributes;
 
+import java.io.Serializable;
+
 /**
  * Collection of all the technical attributes that a player
  * can have.
  * @author Elliot
  */
-public class TechnicalAttributes implements PlayerAttribute {
+public class TechnicalAttributes implements Serializable, PlayerAttribute {
 
 	private Integer finishing;
 	private Integer longShots;

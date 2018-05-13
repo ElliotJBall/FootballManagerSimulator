@@ -15,6 +15,8 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.FootballTeamDao;
 import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupBuilder;
+import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
+import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDaoImpl;
 import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.league.League;
 import com.elliot.footballmanager.league.LeagueDao;
@@ -263,13 +265,15 @@ public class StartMenu implements GameMenu {
 	private void setupTeamsMatchInfo() {
 		System.out.println("Generating FootballTeams Match day data...");
 
-
 		Integer leagueId = gameManager.getCurrentLeague().getLeagueId();
 		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
 		gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId).values()));
 
+		FootballTeamMatchSetupDao footballTeamMatchSetupDao = new FootballTeamMatchSetupDaoImpl();
+
 		for (FootballTeam footballTeam : gameManager.getCurrentLeague().getFootballTeams()) {
 			footballTeam.setMatchSetup(FootballTeamMatchSetupBuilder.buildNewMatchSetup(footballTeam));
+			footballTeamMatchSetupDao.persistFootballTeamMatchSetup(footballTeam);
 		}
 	}
 }
