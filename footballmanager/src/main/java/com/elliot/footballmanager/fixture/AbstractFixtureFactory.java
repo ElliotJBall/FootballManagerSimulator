@@ -32,9 +32,7 @@ public abstract class AbstractFixtureFactory {
 		
 		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
 		for (League league : this.getLeaguesForGeneration()) {
-			//TODO: Create a simpler way of getting the set of FootballTeams?
-			// Can create the method in League or change SELECT statement
-			league.setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(league.getLeagueId()).values()));
+			league.setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(league.getLeagueId())));
 		}
 	}
 	

@@ -180,7 +180,7 @@ public class StartMenu implements GameMenu {
 		System.out.println("Please select the FootballTeam that you would like to play as:");
 		
 		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
-		Map<Integer, FootballTeam> footballTeams = footballTeamDao.getAllFootballTeams(gameManager.getCurrentLeague().getLeagueId());
+		Map<Integer, FootballTeam> footballTeams = MenuHelper.buildFootballTeamMapDisplay(gameManager);
 		
 		for (FootballTeam footballTeam: footballTeams.values()) {
 			System.out.println(footballTeam.printFootballTeamMenuInfo());
@@ -267,7 +267,7 @@ public class StartMenu implements GameMenu {
 
 		Integer leagueId = gameManager.getCurrentLeague().getLeagueId();
 		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
-		gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId).values()));
+		gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId)));
 
 		FootballTeamMatchSetupDao footballTeamMatchSetupDao = new FootballTeamMatchSetupDaoImpl();
 

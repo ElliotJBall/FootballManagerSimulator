@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.footballteam;
 
-import java.util.Map;
+import java.util.Collection;
 
 /**
  * @author Elliot
@@ -16,7 +16,7 @@ public interface FootballTeamDao {
 	 * Key : footballTeamId
 	 * Value : FootballTeam object
 	 */
-	public Map<Integer, FootballTeam> getAllFootballTeams(Integer leagueId);
+	public Collection<FootballTeam> getAllFootballTeams(Integer leagueId);
 	
 	/**
 	 * @param footballTeamId The unique Id for the FootballTeam you want to retrieve.
