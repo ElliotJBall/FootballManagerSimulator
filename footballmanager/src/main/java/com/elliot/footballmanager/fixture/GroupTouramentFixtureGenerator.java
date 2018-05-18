@@ -23,7 +23,6 @@ public class GroupTouramentFixtureGenerator extends AbstractFixtureFactory imple
 	@Override
 	public void insertFixturesIntoDatabase(List<String> fixtures) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

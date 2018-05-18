@@ -59,13 +59,11 @@ public class FootballTeamMatchSetupBuilder {
 
         for (int i = 0; i < FootballTeamMatchSetup.MAXIMUM_STORED_FORMATIONS; i++) {
             MatchDaySquad matchDaySquadInformation = new MatchDaySquad();
-            // Need to get a random FootballTeamFormation and then work backwards
-            // Adding the right amount of players to each 'Position (E.g. 4-4-2 4 Defenders, Midfielders, 2 Attackers)
             FootballTeamFormation formation = getUniqueFormation(uniqueFormations);
 
             matchDaySquadInformation.setFormation(formation);
-            // Parse the FootballTeamFormation String value and add the required number of players from that position
             matchDaySquadInformation.setStartingLineup(buildStartingLineup(formation));
+            matchDaySquadInformation.setSubstitutions(buildSubstitutions(matchDaySquadInformation));
 
             matchDaySquads[i] = matchDaySquadInformation;
         }
@@ -147,6 +145,20 @@ public class FootballTeamMatchSetupBuilder {
                 startingLineup.add(player);
             }
         }
+    }
+
+    private static Player[] buildSubstitutions(MatchDaySquad matchDaySquad) {
+        Set<Player> ineligiblePlayers = new HashSet<Player>(Arrays.asList(matchDaySquad.getStartingLineup()));
+        Player[] substitutions = new Player[MatchDaySquad.MATCH_DAY_SUBSTITUTIONS];
+        int remainingPlayers = 0;
+
+        for (Player player : footballTeamSquad) {
+            if (!ineligiblePlayers.contains(player) && remainingPlayers < MatchDaySquad.MATCH_DAY_SUBSTITUTIONS) {
+                substitutions[remainingPlayers] = player;
+                remainingPlayers++;
+            }
+        }
+        return substitutions;
     }
 
     private static Player getBestFreekickTaker(List<Player> squad) {

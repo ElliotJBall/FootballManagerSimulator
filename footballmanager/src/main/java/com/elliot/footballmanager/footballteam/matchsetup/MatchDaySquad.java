@@ -5,8 +5,6 @@ import com.elliot.footballmanager.player.Player;
 import java.io.Serializable;
 import java.util.Arrays;
 
-//TODO: Change to a class and have the enum as a inner class
-//TODO: Add the ability to set players in a certain position
 public class MatchDaySquad implements Serializable {
 
     public static final Integer MATCH_DAY_SQUAD = 11;
