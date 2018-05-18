@@ -3,10 +3,11 @@ package com.elliot.footballmanager.footballteam.matchsetup;
 import com.elliot.footballmanager.player.Player;
 
 import java.io.Serializable;
+import java.util.Arrays;
 
 //TODO: Change to a class and have the enum as a inner class
 //TODO: Add the ability to set players in a certain position
-public class MatchDaySquadInformation implements Serializable {
+public class MatchDaySquad implements Serializable {
 
     public static final Integer MATCH_DAY_SQUAD = 11;
     public static final Integer MATCH_DAY_SUBSTITUTIONS = 7;
@@ -15,11 +16,11 @@ public class MatchDaySquadInformation implements Serializable {
     private Player[] substitutions;
     private FootballTeamFormation formation;
 
-    public MatchDaySquadInformation() {
+    public MatchDaySquad() {
 
     }
 
-    public MatchDaySquadInformation(Player[] startingLineup, Player[] substitutions, FootballTeamFormation formation) {
+    public MatchDaySquad(Player[] startingLineup, Player[] substitutions, FootballTeamFormation formation) {
         this.startingLineup = startingLineup;
         this.substitutions = substitutions;
         this.formation = formation;
@@ -47,6 +48,15 @@ public class MatchDaySquadInformation implements Serializable {
 
     public void setFormation(FootballTeamFormation formation) {
         this.formation = formation;
+    }
+
+    @Override
+    public String toString() {
+        return "MatchDaySquad{" +
+                "startingLineup=" + Arrays.toString(startingLineup) +
+                ", substitutions=" + Arrays.toString(substitutions) +
+                ", formation=" + formation +
+                '}';
     }
 }
 

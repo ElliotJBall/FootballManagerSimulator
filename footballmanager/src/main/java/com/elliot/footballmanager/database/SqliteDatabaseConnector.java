@@ -59,6 +59,7 @@ public class SqliteDatabaseConnector {
 		deleteStatements.add("DELETE FROM GAME_MANAGER");
 		deleteStatements.add("DELETE FROM MANAGER");
 		deleteStatements.add("DELETE FROM FIXTURE");
+		deleteStatements.add("DELETE FROM FOOTBALL_TEAM_MATCH_SETUP");
 
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement()) {

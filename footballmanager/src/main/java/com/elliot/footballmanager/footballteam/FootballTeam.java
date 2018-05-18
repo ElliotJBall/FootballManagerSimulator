@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
+import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
+import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDaoImpl;
 import com.elliot.footballmanager.player.Player;
 import com.elliot.footballmanager.player.PlayerDao;
 import com.elliot.footballmanager.player.PlayerDaoImpl;
@@ -41,6 +43,11 @@ public class FootballTeam implements Serializable, IFootballTeam {
 	private void buildSquad() {
 		PlayerDao pDao = new PlayerDaoImpl();
 		this.setSquad(pDao.getAllPlayersForFootballTeam(this));
+	}
+
+	private void getMatchSetupFromDatabase() {
+		FootballTeamMatchSetupDao footballTeamMatchSetupDao = new FootballTeamMatchSetupDaoImpl();
+		this.setMatchSetup(footballTeamMatchSetupDao.getFootballTeamMatchSetup(footballTeamId));
 	}
 
 	public Integer getFootballTeamId() {
@@ -103,6 +110,10 @@ public class FootballTeam implements Serializable, IFootballTeam {
 	}
 
 	public FootballTeamMatchSetup getMatchSetup() {
+		if (matchSetup == null) {
+			getMatchSetupFromDatabase();
+		}
+
 		return matchSetup;
 	}
 

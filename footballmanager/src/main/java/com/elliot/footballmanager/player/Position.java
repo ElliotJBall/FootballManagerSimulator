@@ -1,5 +1,8 @@
 package com.elliot.footballmanager.player;
 
+import java.util.*;
+
+
 /**
  * Describes all the possible positions a player can be assigned. 
  * Note: A player object can have a primary Position they are proficient in and 
@@ -7,6 +10,7 @@ package com.elliot.footballmanager.player;
  * @author Elliot
  */
 public enum Position {
+
 	GK ("Goalkeeper"),
 	RWB ("Right Wing Back"),   
 	LWB ("Left Wing Back"),
@@ -36,9 +40,80 @@ public enum Position {
 	CF ("Centre Forward");
 	
 	private String positionFullName;
-	
+
+	private static Map<Position, GeneralisedPosition> generalisedDefenderPositions;
+	private static Map<Position, GeneralisedPosition> generalisedMidfielderPositions ;
+	private static Map<Position, GeneralisedPosition> generalisedStrikerPositions;
+
 	Position(String positionFullName) {
 		this.setPositionFullName(positionFullName);
+	}
+
+	private static void initalizeGeneralisedPositions() {
+		initalizeGeneralisedDefenderPositions();
+		initializeGeneralisedMidfielderPositions();
+		initializeGeneralisedStrikerPositions();
+	}
+
+	private static void initalizeGeneralisedDefenderPositions() {
+		generalisedDefenderPositions = new HashMap<Position, GeneralisedPosition>();
+		generalisedDefenderPositions.put(Position.RWB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.LWB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.RB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.LB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.RCB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.LCB, GeneralisedPosition.DEFENDER);
+		generalisedDefenderPositions.put(Position.CB, GeneralisedPosition.DEFENDER);
+
+
+	}
+
+	private static void initializeGeneralisedMidfielderPositions() {
+		generalisedMidfielderPositions = new HashMap<Position, GeneralisedPosition>();
+
+		generalisedMidfielderPositions.put(Position.RDM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.LDM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.RM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.LM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.RCM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.LCM,  GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.CDM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.CM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.RAM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.LAM, GeneralisedPosition.MIDFIELDER);
+		generalisedMidfielderPositions.put(Position.CAM, GeneralisedPosition.MIDFIELDER);
+	}
+
+	private static void initializeGeneralisedStrikerPositions() {
+		generalisedStrikerPositions = new HashMap<Position, GeneralisedPosition>();
+
+		generalisedStrikerPositions.put(Position.RW, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.LW, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.RF, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.LF, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.RS, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.LS, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.ST, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.CF, GeneralisedPosition.STRIKER);
+	}
+
+	public static GeneralisedPosition getGeneralPositionBySpecificPosition(Position position) {
+		if (generalisedDefenderPositions == null || generalisedMidfielderPositions == null || generalisedStrikerPositions == null) {
+			initalizeGeneralisedPositions();
+		}
+
+		if (generalisedDefenderPositions.containsKey(position)) {
+			return GeneralisedPosition.DEFENDER;
+		}
+
+		if (generalisedMidfielderPositions.containsKey(position)) {
+			return GeneralisedPosition.MIDFIELDER;
+		}
+
+		if (generalisedStrikerPositions.containsKey(position)) {
+			return GeneralisedPosition.STRIKER;
+		}
+		return GeneralisedPosition.GOALKEEPER;
 	}
 
 	public String getPositionFullName() {
@@ -110,5 +185,12 @@ public enum Position {
 				// Construct player with empty position?
 				throw new IllegalArgumentException("Cannot create Position: " + positionAsString);
 		}
+	}
+
+	public enum GeneralisedPosition {
+		GOALKEEPER,
+		DEFENDER,
+		MIDFIELDER,
+		STRIKER;
 	}
 }

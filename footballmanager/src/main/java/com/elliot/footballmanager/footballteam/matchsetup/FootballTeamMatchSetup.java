@@ -14,8 +14,8 @@ public class FootballTeamMatchSetup implements Serializable {
 
     public static final Integer MAXIMUM_STORED_FORMATIONS = 3;
 
-    private MatchDaySquadInformation selectedFormation;
-    private MatchDaySquadInformation[] availableFormations = new MatchDaySquadInformation[MAXIMUM_STORED_FORMATIONS];
+    private MatchDaySquad selectedFormation;
+    private MatchDaySquad[] availableFormations = new MatchDaySquad[MAXIMUM_STORED_FORMATIONS];
 
     private Player freekickTaker;
     private Player penaltyTaker;
@@ -25,19 +25,19 @@ public class FootballTeamMatchSetup implements Serializable {
 
     }
 
-    public MatchDaySquadInformation getSelectedFormation() {
+    public MatchDaySquad getSelectedFormation() {
         return selectedFormation;
     }
 
-    public void setSelectedFormation(MatchDaySquadInformation selectedFormation) {
+    public void setSelectedFormation(MatchDaySquad selectedFormation) {
         this.selectedFormation = selectedFormation;
     }
 
-    public MatchDaySquadInformation[] getAvailableFormations() {
+    public MatchDaySquad[] getAvailableFormations() {
         return availableFormations;
     }
 
-    public void setAvailableFormations(MatchDaySquadInformation[] availableFormations) {
+    public void setAvailableFormations(MatchDaySquad[] availableFormations) {
         this.availableFormations = availableFormations;
     }
 
@@ -63,16 +63,5 @@ public class FootballTeamMatchSetup implements Serializable {
 
     public void setCornerTaker(Player cornerTaker) {
         this.cornerTaker = cornerTaker;
-    }
-
-    @Override
-    public String toString() {
-        return "FootballTeamMatchSetup{" +
-                "selectedFormation=" + selectedFormation +
-                ", availableFormations=" + Arrays.toString(availableFormations) +
-                ", freekickTaker=" + freekickTaker +
-                ", penaltyTaker=" + penaltyTaker +
-                ", cornerTaker=" + cornerTaker +
-                '}';
     }
 }

@@ -24,6 +24,7 @@ public class Player implements Serializable, IPlayer {
 	private FootballTeam currentClub;
 	private Double value;
 	private Double wages;
+	//TODO: Change this to a set
 	private List<Position> preferredPositions;
 	
 	private PhysicalAttributes physicalAttributes;
