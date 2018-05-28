@@ -31,7 +31,6 @@ public class GameManagerDaoImpl implements GameManagerDao {
 
 	@Override
 	public void saveGame(GameManager gameManager) {
-		//TODO: Confirm whether we only want one Save game available at a time or not.
 		String deletePreviousSave = "DELETE FROM GAME_MANAGER";
 		String insertNewSave = "INSERT INTO GAME_MANAGER VALUES (?, ?, ?, ?, ?, ?)";
 		
@@ -70,8 +69,6 @@ public class GameManagerDaoImpl implements GameManagerDao {
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(query)) {
-			//TODO: Provide the dialog to create a new game from here
-			// No results found
 			if (!rs.next()) {
 				System.out.println("No save game found! Please create a new game first.");
 				return;

@@ -23,9 +23,6 @@ public class RoundRobinFixtureGenerator extends AbstractFixtureFactory implement
 
 	private Integer TOTAL_GAMES_IN_SEASON;
 	private Integer HALF_GAMES_IN_SEASON;
-	
-	// TODO: Create a more generalised Start of the Season 
-	// (This is currently set to the start of the premier league)
 	private Date fixtureDate = new GregorianCalendar(2018, Calendar.AUGUST, 11).getTime();
 	
 	public RoundRobinFixtureGenerator() {

@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.player.attributes.GoalkeeperAttributes;
@@ -36,8 +39,6 @@ public class PlayerDaoImpl implements PlayerDao {
 			List<Player> squad = new ArrayList<Player>();
 			while (rs.next()) {
 				Player player = buildBasePlayerObject(rs, footballTeam);
-				//TODO: Add attributes objects
-				
 				squad.add(player);
 			}
 			return squad;
@@ -48,7 +49,7 @@ public class PlayerDaoImpl implements PlayerDao {
 	}
 	
 	private Player buildBasePlayerObject(ResultSet rs, FootballTeam footballTeam) throws SQLException {
-		List<Position> positions = getPositionsFromString(rs.getString("PREFERRED_POSITIONS"));
+		Set<Position> positions = getPositionsFromString(rs.getString("PREFERRED_POSITIONS"));
 		
 		Player player = new Player(rs.getInt("PLAYER_ID"), rs.getString("NAME"), rs.getInt("AGE"), rs.getString("NATIONALITY"),
 				rs.getInt("OVERALL"), footballTeam, rs.getDouble("VALUE"), rs.getDouble("WAGE"), positions);
@@ -61,16 +62,21 @@ public class PlayerDaoImpl implements PlayerDao {
 		return player;
 	}
 	
-	private List<Position> getPositionsFromString(String positionsAsString) {
+	private Set<Position> getPositionsFromString(String positionsAsString) {
 		String[] parts = positionsAsString.split(" ");
 		
 		if (parts.length == 0 || parts == null) {
-			return new ArrayList<Position>();
+			return new HashSet<Position>();
 		}
 		
-		List<Position> preferredPositions = new ArrayList<Position>();
+		Set<Position> preferredPositions = new HashSet<Position>();
 		for (String string : parts) {
-			preferredPositions.add(Position.getPositionFromString(string));
+			try {
+				preferredPositions.add(Position.getPositionFromString(string));
+			} catch (IllegalArgumentException exception) {
+				exception.printStackTrace();
+				preferredPositions.add(Position.CM);
+			}
 		}
 		return preferredPositions;
 	}

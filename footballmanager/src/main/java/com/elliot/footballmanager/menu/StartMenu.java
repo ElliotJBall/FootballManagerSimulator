@@ -24,6 +24,7 @@ import com.elliot.footballmanager.league.LeagueDaoImpl;
 import com.elliot.footballmanager.manager.Manager;
 import com.elliot.footballmanager.manager.ManagerDao;
 import com.elliot.footballmanager.manager.ManagerDaoImpl;
+import com.elliot.footballmanager.season.NewSeasonBuilder;
 
 /**
  * The MainMenu class is used to create a new Menu object that displays all 
@@ -98,9 +99,7 @@ public class StartMenu implements GameMenu {
     	chooseTeam();
     	createNewManager();
 
-    	//TODO: Implement the builder pattern to create get/create everything needed for a new season
-    	setupFixtures();
-    	setupTeamsMatchInfo();
+		NewSeasonBuilder.setupNewSeason(gameManager);
 
     	gameManager.setCurrentDate(newGameStartDate); 
     	gameManager.saveGame();
@@ -238,42 +237,13 @@ public class StartMenu implements GameMenu {
 				System.out.println("ERROR: Please enter the managers last name:");
 			}
 		} while (!quit);
-		
-		// Set the Manager to the GameManager object and insert into the Manager table
-		//TODO: Remove hard coded ID value, this is currently in place to limit
-		// the number of managers to one (Will throw SQL Exception if duplicate is found currently)
+
+		// Only allow one manager at the moment - This will need expanding when multiple save games are enabled
 		Manager manager = new Manager(1, firstName, lastName, gameManager.getCurrentFootballTeam());
 		
 		ManagerDao managerDao = new ManagerDaoImpl();
 		managerDao.insertIntoManagerTable(manager);
 		
 		gameManager.setManager(manager);
-	}
-	
-	private void setupFixtures() {
-		System.out.println("Generating Fixtures...");
-		
-		FixtureGeneratorFactory fixtureGeneratorFactory = new FixtureGeneratorFactory();
-		FixtureGenerator fixtureGenerator = fixtureGeneratorFactory.getFixtureGenerator(FixtureGeneratorType.ROUND_ROBIN);
-		List<String> fixtureCreateStatements = fixtureGenerator.generateFixtureInsertStatements();
-		fixtureGenerator.insertFixturesIntoDatabase(fixtureCreateStatements);
-		
-		FixtureDao fixtureDao = new FixtureDaoImpl();
-		gameManager.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(gameManager.getCurrentFootballTeam()));
-	}
-
-	private void setupTeamsMatchInfo() {
-		System.out.println("Generating FootballTeams Match day data...");
-
-		Integer leagueId = gameManager.getCurrentLeague().getLeagueId();
-		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
-		gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId)));
-
-		FootballTeamMatchSetupDao footballTeamMatchSetupDao = new FootballTeamMatchSetupDaoImpl();
-
-		for (FootballTeam footballTeam : gameManager.getCurrentLeague().getFootballTeams()) {
-			footballTeam.setMatchSetup(FootballTeamMatchSetupBuilder.buildNewMatchSetup(footballTeam));
-			footballTeamMatchSetupDao.persistFootballTeamMatchSetup(footballTeam);
-		}
 	}
 }

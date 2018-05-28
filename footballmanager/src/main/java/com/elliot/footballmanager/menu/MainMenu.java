@@ -38,8 +38,6 @@ public class MainMenu implements GameMenu {
 	 * [5] : Go to match day menu
 	 */
 	public void beginMenuSelectionLoop() {
-		MenuHelper.clearConsole();
-		
 		System.out.println("Press 0 at any point to save the game and quit!");
 		displayMenuOptions();
 		

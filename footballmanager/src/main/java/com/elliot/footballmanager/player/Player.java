@@ -2,6 +2,7 @@ package com.elliot.footballmanager.player;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.player.attributes.GoalkeeperAttributes;
@@ -24,8 +25,7 @@ public class Player implements Serializable, IPlayer {
 	private FootballTeam currentClub;
 	private Double value;
 	private Double wages;
-	//TODO: Change this to a set
-	private List<Position> preferredPositions;
+	private Set<Position> preferredPositions;
 	
 	private PhysicalAttributes physicalAttributes;
 	private TechnicalAttributes technicalAttributes;
@@ -37,7 +37,7 @@ public class Player implements Serializable, IPlayer {
 	}
 
 	public Player(Integer id, String name, Integer age, String nationality, Integer overallRating,
-			FootballTeam currentClub, Double value, Double wages, List<Position> preferredPositions) {
+			FootballTeam currentClub, Double value, Double wages, Set<Position> preferredPositions) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -50,7 +50,7 @@ public class Player implements Serializable, IPlayer {
 	}
 
 	public Player(Integer id, String name, Integer age, String nationality, Integer overallRating,
-			FootballTeam currentClub, Double value, Double wages, List<Position> preferredPositions,
+			FootballTeam currentClub, Double value, Double wages, Set<Position> preferredPositions,
 			PhysicalAttributes physicalAttributes, TechnicalAttributes technicalAttributes,
 			MentalAttributes mentalAttributes, GoalkeeperAttributes goalkeeperAttributes) {
 		this.id = id;
@@ -132,11 +132,11 @@ public class Player implements Serializable, IPlayer {
 		this.wages = wages;
 	}
 
-	public List<Position> getPreferredPositions() {
+	public Set<Position> getPreferredPositions() {
 		return preferredPositions;
 	}
 
-	public void setPreferredPositions(List<Position> preferredPositions) {
+	public void setPreferredPositions(Set<Position> preferredPositions) {
 		this.preferredPositions = preferredPositions;
 	}
 

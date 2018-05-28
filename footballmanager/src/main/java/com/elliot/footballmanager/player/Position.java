@@ -124,7 +124,7 @@ public enum Position {
 		this.positionFullName = positionFullName;
 	}
 	
-	public static Position getPositionFromString(String positionAsString) {
+	public static Position getPositionFromString(String positionAsString) throws IllegalArgumentException {
 		switch (positionAsString) {
 			case "GK":
 				return Position.GK;
@@ -181,9 +181,7 @@ public enum Position {
 			case "CF":
 				return Position.CF;
 			default:
-				//TODO: Find a more graceful way of doing this? Maybe just log to console and 
-				// Construct player with empty position?
-				throw new IllegalArgumentException("Cannot create Position: " + positionAsString);
+				throw new IllegalArgumentException("Cannot create Position: " + positionAsString + " Assigning default position (CM).");
 		}
 	}
 

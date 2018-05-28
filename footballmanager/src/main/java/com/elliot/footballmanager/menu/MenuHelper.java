@@ -30,13 +30,4 @@ public class MenuHelper {
 		}
 		return footballTeamToIds;
 	}
-
-	/**
-	 * TODO: Find an alternative method to removing previous contents 
-	 * from the console.
-	 * Helper method that will remove all previous contents from the console.
-	 */
-	public static void clearConsole() {
-
-	}
 }

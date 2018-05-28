@@ -37,7 +37,6 @@ public class MatchDayMenu implements GameMenu {
                     break;
                 case 7:
                     displaySquadOptions();
-                    //TODO: Add the ability to change the formation / team setup
                     break;
                 case 8:
                     GameMenu mainMenu = new MainMenu(gameManager);
