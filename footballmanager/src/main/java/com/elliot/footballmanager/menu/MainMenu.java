@@ -73,6 +73,7 @@ public class MainMenu implements GameMenu {
 				scanner.next();
 			}
 		} while (!quit);
+		scanner.close();
 	}
 	
 	public void displayMenuOptions() {

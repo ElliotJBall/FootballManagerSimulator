@@ -52,6 +52,7 @@ public class MatchDayMenu implements GameMenu {
                 scanner.next();
             }
         } while (!quit);
+        scanner.close();
     }
 
     private void displayMatchDayMenuScreen() {
