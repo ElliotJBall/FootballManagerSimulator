@@ -4,6 +4,7 @@ import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -31,17 +32,24 @@ public class MatchDayMenu implements GameMenu {
 
         boolean quit = false;
         do {
-            switch (scanner.nextInt()) {
-                case 6:
-
-                    break;
-                case 7:
-                    displaySquadOptions();
-                    break;
-                case 8:
-                    GameMenu mainMenu = new MainMenu(gameManager);
-                    mainMenu.beginMenuSelectionLoop();
-                    break;
+            try {
+                switch (scanner.nextInt()) {
+                    case 6:
+                        break;
+                    case 7:
+                        displaySquadOptions();
+                        break;
+                    case 8:
+                        GameMenu mainMenu = new MainMenu(gameManager);
+                        mainMenu.beginMenuSelectionLoop();
+                        break;
+                    default:
+                        System.out.println("Invalid selection! Please try again.");
+                        break;
+                }
+            } catch (InputMismatchException e ) {
+                System.out.println("Invalid selection! Please try again.");
+                scanner.next();
             }
         } while (!quit);
     }

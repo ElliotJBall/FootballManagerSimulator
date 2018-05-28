@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.menu;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.elliot.footballmanager.DateUtils;
@@ -42,25 +43,34 @@ public class MainMenu implements GameMenu {
 		displayMenuOptions();
 		
 		boolean quit = false;
-		do {	
-			switch (scanner.nextInt()) {
-				case 0:
-					this.getGameManager().saveGameAndExit();
-					quit = true;
-					break;
-				case 1:
-					this.getGameManager().simulateGame();
-					break;
-				case 2:
-					break;
-				case 3: 
-					getUpcomingFixtures();
-					break;	
-				case 4:
-					displayQuickInfo();
-					break;
-				case 5:
-					openMatchDayMenu();
+		do {
+			try {
+				switch (scanner.nextInt()) {
+					case 0:
+						this.getGameManager().saveGameAndExit();
+						quit = true;
+						break;
+					case 1:
+						this.getGameManager().simulateGame();
+						break;
+					case 2:
+						break;
+					case 3:
+						getUpcomingFixtures();
+						break;
+					case 4:
+						displayQuickInfo();
+						break;
+					case 5:
+						openMatchDayMenu();
+						break;
+					default:
+						System.out.println("Invalid selection! Please try again.");
+						break;
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid selection! Please try again.");
+				scanner.next();
 			}
 		} while (!quit);
 	}

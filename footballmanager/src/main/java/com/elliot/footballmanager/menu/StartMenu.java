@@ -47,27 +47,32 @@ public class StartMenu implements GameMenu {
 
         boolean quit = false;
         do {
-        	switch (scanner.nextInt()) {
-	        	case 0: // [0] Exit Game
-	        		System.out.println("Thanks for playing!");
-	        		quit = true;
-	        		break;
-        		case 1: // [1] Start New Game
-        			gameManager = new GameManager();
-        			clearPreviousSaveData();        			
-        			createNewGame();
-        			quit = true;
-        			break;
-        		case 2: // [2] Continue Saved Game
-        			gameManager = new GameManager();
-        			gameManager.loadSavedGame();
-        			quit = true;
-        			break;
-        		default: 
-        			System.out.println("Invalid option, please try again.");
-        	}
+        	try {
+				switch (scanner.nextInt()) {
+					case 0: // [0] Exit Game
+						System.out.println("Thanks for playing!");
+						quit = true;
+						break;
+					case 1: // [1] Start New Game
+						gameManager = new GameManager();
+						clearPreviousSaveData();
+						createNewGame();
+						quit = true;
+						break;
+					case 2: // [2] Continue Saved Game
+						gameManager = new GameManager();
+						gameManager.loadSavedGame();
+						quit = true;
+						break;
+					default:
+						System.out.println("Invalid option, please try again.");
+				}
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid selection! Please try again.");
+				scanner.next();
+			}
+
         } while (!quit);
-        
         scanner.close();
 	}
 
