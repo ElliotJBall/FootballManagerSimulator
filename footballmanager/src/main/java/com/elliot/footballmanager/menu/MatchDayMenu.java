@@ -3,6 +3,7 @@ package com.elliot.footballmanager.menu;
 import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.match.MatchEngine;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -35,6 +36,9 @@ public class MatchDayMenu implements GameMenu {
             try {
                 switch (scanner.nextInt()) {
                     case 6:
+                        Fixture fixture = this.getGameManager().getUpcomingFixtures().get(0);
+                        MatchEngine.simulateFootballMatch(fixture.getHomeTeam(), fixture.getAwayTeam());
+                        //TODO: Continue with simulation, show post game stats then continue into the main menu / post game conference
                         break;
                     case 7:
                         displaySquadOptions();
