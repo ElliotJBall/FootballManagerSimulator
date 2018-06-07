@@ -2,6 +2,7 @@ package com.elliot.footballmanager.gamemanager;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Queue;
 
 import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.country.Country;
@@ -26,7 +27,7 @@ public class GameManager {
 	private FootballTeam currentFootballTeam;
 	private Manager manager;
 	private Date currentDate;
-	private List<Fixture> upcomingFixtures;
+	private Queue<Fixture> upcomingFixtures;
 	
 	public GameManager() {
 
@@ -85,13 +86,13 @@ public class GameManager {
 	 * Advances the currentDate by a day until a new Fixture is found.
 	 */
 	public void simulateGame() {
-		while (currentDate.before(this.getUpcomingFixtures().get(0).getDateOfFixture())) {
+		while (currentDate.before(this.getUpcomingFixtures().peek().getDateOfFixture())) {
 			currentDate = DateUtils.addDays(currentDate, 1);
 			System.out.println("Current date : " + DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(currentDate));
 		}
 
 		// Match day
-		if (currentDate.equals(this.getUpcomingFixtures().get(0).getDateOfFixture())) {
+		if (currentDate.equals(this.getUpcomingFixtures().peek().getDateOfFixture())) {
 			MatchDayMenu matchDayMenu = new MatchDayMenu(this);
 			matchDayMenu.beginMenuSelectionLoop();
 		}
@@ -102,7 +103,7 @@ public class GameManager {
 	}
 
 	public boolean isMatchDay() {
-		return this.getCurrentDate().equals(this.getUpcomingFixtures().get(0).getDateOfFixture());
+		return this.getCurrentDate().equals(this.getUpcomingFixtures().peek().getDateOfFixture());
 	}
 
 	
@@ -146,11 +147,11 @@ public class GameManager {
 		this.manager = manager;
 	}
 
-	public List<Fixture> getUpcomingFixtures() {
+	public Queue<Fixture> getUpcomingFixtures() {
 		return upcomingFixtures;
 	}
 
-	public void setUpcomingFixtures(List<Fixture> upcomingFixtures) {
+	public void setUpcomingFixtures(Queue<Fixture> upcomingFixtures) {
 		this.upcomingFixtures = upcomingFixtures;
 	}
 }

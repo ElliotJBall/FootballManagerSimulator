@@ -1,6 +1,7 @@
 package com.elliot.footballmanager.fixture;
 
 import java.util.List;
+import java.util.Queue;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
 
@@ -12,5 +13,5 @@ public interface FixtureDao {
 	
 	public void insertFixturesIntoDatabase(List<String> allFixtures);
 	
-	public List<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam);
+	public Queue<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam);
 }

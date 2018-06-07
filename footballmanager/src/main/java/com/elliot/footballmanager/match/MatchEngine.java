@@ -1,6 +1,8 @@
 package com.elliot.footballmanager.match;
 
+import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.gamemanager.GameManager;
 
 /**
  * The MatchEngine is where a simulation of a football
@@ -10,6 +12,7 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
  */
 public class MatchEngine {
 
+    private static Fixture fixture;
     private static FootballTeam homeTeam;
     private static FootballTeam awayTeam;
 
@@ -19,8 +22,8 @@ public class MatchEngine {
     }
 
 
-    public static MatchResult simulateFootballMatch(FootballTeam incomingHomeTeam, FootballTeam incomingAwayTeam) {
-        setFootballTeams(incomingHomeTeam, incomingAwayTeam);
+    public static MatchResult simulateFootballMatch(GameManager gameManager) {
+        initialiseFixtureInformation(gameManager);
 
 
 
@@ -29,13 +32,15 @@ public class MatchEngine {
         return matchResult;
     }
 
+    private static void initialiseFixtureInformation(GameManager gameManager) {
+        fixture = gameManager.getUpcomingFixtures().remove();
+
+        homeTeam = fixture.getHomeTeam();
+        awayTeam = fixture.getAwayTeam();
+    }
+
     private static void persistResultToDatabase(MatchResult matchResult) {
         MatchEngineDao matchEngineDao = new MatchEngineDaoImpl();
         matchEngineDao.persistResultToDatabase(matchResult);
-    }
-
-    private static void setFootballTeams(FootballTeam incomingHomeTeam, FootballTeam incomingAwayTeam) {
-        homeTeam = incomingHomeTeam;
-        awayTeam = incomingAwayTeam;
     }
 }
