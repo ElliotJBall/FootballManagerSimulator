@@ -7,9 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
@@ -32,13 +30,13 @@ public class FixtureDaoImpl implements FixtureDao {
 	}
 
 	@Override
-	public List<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam) {
+	public Queue<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam) {
 		String query = "SELECT * FROM FIXTURE WHERE HOME_TEAM = ? OR AWAY_TEAM = ?";
 		
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				PreparedStatement pstmt = conn.prepareStatement(query)) {
 			if (footballTeam == null) {
-				return new ArrayList<Fixture>();
+				return new LinkedList<Fixture>();
 			}
 			
 			pstmt.setString(1, footballTeam.getTeamName());
@@ -47,10 +45,10 @@ public class FixtureDaoImpl implements FixtureDao {
 			ResultSet rs = pstmt.executeQuery();
 			
 			if (!rs.next()) {
-				return new ArrayList<Fixture>();
+				return new LinkedList<Fixture>();
 			}
 			
-			List<Fixture> upcomingFixtures = new ArrayList<Fixture>();
+			Queue<Fixture> upcomingFixtures = new LinkedList<Fixture>();
 			FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
 			while (rs.next()) {
 				FootballTeam homeTeam = footballTeamDao.getFootballTeamByName(rs.getString("HOME_TEAM"));
@@ -68,6 +66,6 @@ public class FixtureDaoImpl implements FixtureDao {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<Fixture>();
+		return new LinkedList<Fixture>();
 	}
 }

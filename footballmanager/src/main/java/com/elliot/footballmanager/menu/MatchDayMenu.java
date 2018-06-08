@@ -36,8 +36,7 @@ public class MatchDayMenu implements GameMenu {
             try {
                 switch (scanner.nextInt()) {
                     case 6:
-                        Fixture fixture = this.getGameManager().getUpcomingFixtures().get(0);
-                        MatchEngine.simulateFootballMatch(fixture.getHomeTeam(), fixture.getAwayTeam());
+                        MatchEngine.simulateFootballMatch(gameManager);
                         //TODO: Continue with simulation, show post game stats then continue into the main menu / post game conference
                         break;
                     case 7:
@@ -60,7 +59,7 @@ public class MatchDayMenu implements GameMenu {
     }
 
     private void displayMatchDayMenuScreen() {
-        Fixture fixture = this.getGameManager().getUpcomingFixtures().get(0);
+        Fixture fixture = this.getGameManager().getUpcomingFixtures().peek();
         System.out.println("M A T C H D A Y");
         System.out.println(DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(fixture.getDateOfFixture())
             + " " + "|" + " "
