@@ -36,7 +36,7 @@ public class MatchDayMenu implements GameMenu {
             try {
                 switch (scanner.nextInt()) {
                     case 6:
-                        MatchEngine.simulateFootballMatch(gameManager);
+                        MatchEngine.beginFootballMatchSimulator(gameManager);
                         //TODO: Continue with simulation, show post game stats then continue into the main menu / post game conference
                         break;
                     case 7:

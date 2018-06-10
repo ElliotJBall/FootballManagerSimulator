@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.match;
 
+import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 
 /**
@@ -9,34 +10,27 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
  */
 public class MatchResult {
 
-    //TODO: Expand the amount of information that is captured in a MatchResult
-    private final FootballTeam homeTeam;
-    private final FootballTeam awayTeam;
+    private final Fixture fixture;
 
-    private final Integer homeTeamGoals;
-    private final Integer awayTeamGoals;
+    private final FootballTeamMatchStats homeTeamMatchStats;
+    private final FootballTeamMatchStats awayTeamMatchStats;
 
-    public MatchResult(FootballTeam homeTeam, FootballTeam awayTeam,
-                       Integer homeTeamGoals, Integer awayTeamGoals) {
-        this.homeTeam = homeTeam;
-        this.awayTeam = awayTeam;
-        this.homeTeamGoals = homeTeamGoals;
-        this.awayTeamGoals = awayTeamGoals;
+    public MatchResult(Fixture fixture, FootballTeamMatchStats homeTeamMatchStats,
+                       FootballTeamMatchStats awayTeamMatchStats) {
+        this.fixture = fixture;
+        this.homeTeamMatchStats = homeTeamMatchStats;
+        this.awayTeamMatchStats = awayTeamMatchStats;
     }
 
-    public FootballTeam getHomeTeam() {
-        return homeTeam;
+    public Fixture getFixture() {
+        return fixture;
     }
 
-    public FootballTeam getAwayTeam() {
-        return awayTeam;
+    public FootballTeamMatchStats getHomeTeamMatchStats() {
+        return homeTeamMatchStats;
     }
 
-    public Integer getHomeTeamGoals() {
-        return homeTeamGoals;
-    }
-
-    public Integer getAwayTeamGoals() {
-        return awayTeamGoals;
+    public FootballTeamMatchStats getAwayTeamMatchStats() {
+        return awayTeamMatchStats;
     }
 }
