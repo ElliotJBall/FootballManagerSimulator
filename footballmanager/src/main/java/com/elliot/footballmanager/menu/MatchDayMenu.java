@@ -3,7 +3,7 @@ package com.elliot.footballmanager.menu;
 import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.gamemanager.GameManager;
-import com.elliot.footballmanager.match.MatchEngine;
+import com.elliot.footballmanager.match.engine.MatchEngine;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

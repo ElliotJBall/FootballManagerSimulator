@@ -6,6 +6,7 @@ import com.elliot.footballmanager.player.Player;
  * @author Elliot
  */
 public class Football {
+    
     private Player playerInPossession;
 
     public Football() {

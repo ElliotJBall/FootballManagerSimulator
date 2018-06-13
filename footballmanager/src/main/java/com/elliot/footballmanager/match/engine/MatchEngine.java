@@ -1,9 +1,14 @@
-package com.elliot.footballmanager.match;
+package com.elliot.footballmanager.match.engine;
 
 import com.elliot.footballmanager.fixture.Fixture;
 import com.elliot.footballmanager.footballteam.FootballTeam;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
 import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.match.FootballTeamMatchStats;
+import com.elliot.footballmanager.match.MatchResult;
+import com.elliot.footballmanager.match.model.pitch.FootballPitch;
+import com.elliot.footballmanager.match.model.pitch.FootballPitchHelper;
+import com.elliot.footballmanager.match.model.pitch.OutFieldPitch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +31,8 @@ public class MatchEngine {
 
     private static Map<FootballTeam, FootballTeamMatchStats> footballTeamToMatchStats;
 
+    private static FootballPitch[][] footballPitch;
+
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
 
@@ -35,7 +42,7 @@ public class MatchEngine {
     public static MatchResult beginFootballMatchSimulator(GameManager gameManager) {
         beginPreMatchSetup(gameManager);
 
-        
+        buildFootballPitch();
 
 
         return null;
@@ -45,6 +52,10 @@ public class MatchEngine {
         initialiseFixtureInformation(gameManager);
         initialiseFootballTeamMatchStatMap();
         initialiseFootballTeamSquads();
+    }
+
+    private static void buildFootballPitch() {
+        footballPitch = FootballPitchHelper.buildNewFootballPitch();
     }
 
     private static void initialiseFixtureInformation(GameManager gameManager) {
