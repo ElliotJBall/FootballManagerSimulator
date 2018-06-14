@@ -8,7 +8,6 @@ import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchHelper;
-import com.elliot.footballmanager.match.model.pitch.OutFieldPitch;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,12 +25,12 @@ public class MatchEngine {
     private static FootballTeam homeTeam;
     private static FootballTeam awayTeam;
 
-    private static FootballTeamMatchSetup homeTeamMatchSetup;
-    private static FootballTeamMatchSetup awayTeamMatchSetup;
+    public static FootballTeamMatchSetup homeTeamMatchSetup;
+    public static FootballTeamMatchSetup awayTeamMatchSetup;
 
     private static Map<FootballTeam, FootballTeamMatchStats> footballTeamToMatchStats;
 
-    private static FootballPitch[][] footballPitch;
+    public static FootballPitch[][] footballPitch;
 
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
@@ -43,7 +42,7 @@ public class MatchEngine {
         beginPreMatchSetup(gameManager);
 
         buildFootballPitch();
-
+        addPlayersToPitch();
 
         return null;
     }
@@ -58,6 +57,10 @@ public class MatchEngine {
         footballPitch = FootballPitchHelper.buildNewFootballPitch();
     }
 
+    private static void addPlayersToPitch() {
+        FootballPitchHelper.addPlayersToFootballPitch();
+    }
+
     private static void initialiseFixtureInformation(GameManager gameManager) {
         fixture = gameManager.getUpcomingFixtures().remove();
 
@@ -65,7 +68,7 @@ public class MatchEngine {
         awayTeam = fixture.getAwayTeam();
     }
 
-    private static void initialiseFootballTeamMatchStatMap() {
+      private static void initialiseFootballTeamMatchStatMap() {
         footballTeamToMatchStats = new HashMap<FootballTeam, FootballTeamMatchStats>();
         footballTeamToMatchStats.put(homeTeam, new FootballTeamMatchStats(homeTeam));
         footballTeamToMatchStats.put(awayTeam, new FootballTeamMatchStats(awayTeam));

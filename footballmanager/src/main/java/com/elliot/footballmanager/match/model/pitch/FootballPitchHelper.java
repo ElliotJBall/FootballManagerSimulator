@@ -1,6 +1,8 @@
 package com.elliot.footballmanager.match.model.pitch;
 
+import com.elliot.footballmanager.match.engine.MatchEngine;
 import com.elliot.footballmanager.match.engine.MatchEngineConstants;
+import com.elliot.footballmanager.player.Player;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -26,7 +28,7 @@ public class FootballPitchHelper {
     }
 
     public static FootballPitch[][] buildNewFootballPitch() {
-        footballPitch = new FootballPitch[MatchEngineConstants.LENGTH_OF_FOOTBALL_PITCH][MatchEngineConstants.WIDTH_OF_FOOTBALL_PITCH];
+        footballPitch = new FootballPitch[FootballPitchHelperConstants.LENGTH_OF_FOOTBALL_PITCH][FootballPitchHelperConstants.WIDTH_OF_FOOTBALL_PITCH];
 
         setupHomeTeamGoalkeepingAreaCoOrdinates();
         setupAwayTeamGoalkeepingAreaCoOrdinates();
@@ -96,4 +98,25 @@ public class FootballPitchHelper {
             }
         }
     }
+
+    public static void addPlayersToFootballPitch() {
+        footballPitch = MatchEngine.footballPitch;
+
+        Player[] awayTeamStartingLineup = MatchEngine.homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+
+        addHomeTeamPlayersToPitch();
+
+    }
+
+    private static void addHomeTeamPlayersToPitch() {
+        Player[] homeTeamStartingLineup = MatchEngine.homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+
+        addHomeTeamGoalkeeperToPitch(homeTeamStartingLineup);
+    }
+
+    private static void addHomeTeamGoalkeeperToPitch(Player[] startingLineup) {
+
+    }
+
+
 }

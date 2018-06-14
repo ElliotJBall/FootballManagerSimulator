@@ -11,6 +11,7 @@ public abstract class Pitch implements FootballPitch {
 
     private Integer xCoordinate;
     private Integer yCoordinate;
-    protected Collection<Player> playersWithinThisTile;
+
+    private Collection<Player> playersWithinThisTile;
 
 }
