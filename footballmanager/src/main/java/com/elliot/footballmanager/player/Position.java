@@ -49,13 +49,13 @@ public enum Position {
 		this.setPositionFullName(positionFullName);
 	}
 
-	private static void initalizeGeneralisedPositions() {
+	private static void initializeGeneralisedPositions() {
 		initalizeGeneralisedDefenderPositions();
 		initializeGeneralisedMidfielderPositions();
 		initializeGeneralisedStrikerPositions();
 	}
 
-	private static void initalizeGeneralisedDefenderPositions() {
+	private static void initializeGeneralisedDefenderPositions() {
 		generalisedDefenderPositions = new HashMap<Position, GeneralisedPosition>();
 		generalisedDefenderPositions.put(Position.RWB, GeneralisedPosition.DEFENDER);
 		generalisedDefenderPositions.put(Position.LWB, GeneralisedPosition.DEFENDER);
@@ -99,7 +99,7 @@ public enum Position {
 
 	public static GeneralisedPosition getGeneralPositionBySpecificPosition(Position position) {
 		if (generalisedDefenderPositions == null || generalisedMidfielderPositions == null || generalisedStrikerPositions == null) {
-			initalizeGeneralisedPositions();
+			initializeGeneralisedPositions();
 		}
 
 		if (generalisedDefenderPositions.containsKey(position)) {
