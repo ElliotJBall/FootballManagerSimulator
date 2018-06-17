@@ -50,7 +50,7 @@ public enum Position {
 	}
 
 	private static void initializeGeneralisedPositions() {
-		initalizeGeneralisedDefenderPositions();
+		initializeGeneralisedDefenderPositions();
 		initializeGeneralisedMidfielderPositions();
 		initializeGeneralisedStrikerPositions();
 	}
