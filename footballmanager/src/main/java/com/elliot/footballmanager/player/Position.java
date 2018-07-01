@@ -87,14 +87,14 @@ public enum Position {
 	private static void initializeGeneralisedStrikerPositions() {
 		generalisedStrikerPositions = new HashMap<Position, GeneralisedPosition>();
 
-		generalisedStrikerPositions.put(Position.RW, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.LW, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.RF, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.LF, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.RS, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.LS, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.ST, GeneralisedPosition.STRIKER);
-		generalisedStrikerPositions.put(Position.CF, GeneralisedPosition.STRIKER);
+		generalisedStrikerPositions.put(Position.RW, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.LW, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.RF, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.LF, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.RS, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.LS, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.ST, GeneralisedPosition.ATTACKER);
+		generalisedStrikerPositions.put(Position.CF, GeneralisedPosition.ATTACKER);
 	}
 
 	public static GeneralisedPosition getGeneralPositionBySpecificPosition(Position position) {
@@ -111,7 +111,7 @@ public enum Position {
 		}
 
 		if (generalisedStrikerPositions.containsKey(position)) {
-			return GeneralisedPosition.STRIKER;
+			return GeneralisedPosition.ATTACKER;
 		}
 		return GeneralisedPosition.GOALKEEPER;
 	}
@@ -189,6 +189,6 @@ public enum Position {
 		GOALKEEPER,
 		DEFENDER,
 		MIDFIELDER,
-		STRIKER;
+		ATTACKER;
 	}
 }

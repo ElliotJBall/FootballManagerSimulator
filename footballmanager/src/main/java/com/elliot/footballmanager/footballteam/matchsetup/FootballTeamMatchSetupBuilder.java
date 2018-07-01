@@ -119,7 +119,7 @@ public class FootballTeamMatchSetupBuilder {
     }
 
     private static void addBestStrikers(List<Player> startingLineup, Integer numberOfStrikers) {
-        List<Player> strikers  = buildGeneralPositionsByPreferredPositions(Position.GeneralisedPosition.STRIKER);
+        List<Player> strikers  = buildGeneralPositionsByPreferredPositions(Position.GeneralisedPosition.ATTACKER);
         addPlayerToStartingLineup(startingLineup, strikers, numberOfStrikers);
     }
 
