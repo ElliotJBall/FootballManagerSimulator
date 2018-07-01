@@ -37,7 +37,6 @@ public class MatchEngine {
 
     }
 
-
     public static MatchResult beginFootballMatchSimulator(GameManager gameManager) {
         beginPreMatchSetup(gameManager);
 

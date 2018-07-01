@@ -205,16 +205,7 @@ public class FootballPitchHelper {
         int leftSide = FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW - 2;
         int rightSide = FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW + 2;
 
-        //TODO: Simplify this down into a single method removing duplicated code.
-        while (playersToPlace.size() > 0) {
-            rowToInsertInto[leftSide].addPlayerToTile(playersToPlace.get(0));
-            playersToPlace.remove(0);
-            leftSide -= 2;
-
-            rowToInsertInto[rightSide].addPlayerToTile(playersToPlace.get(0));
-            playersToPlace.remove(0);
-            rightSide += 2;
-        }
+        addPlayerToGivenFootballRow(playersToPlace, rowToInsertInto, leftSide, rightSide);
     }
 
     private static void addEvenNumberOfPlayersToFootballPitch(List<Player> playersToPlace, FootballPitch[] rowToInsertInto) {
@@ -222,6 +213,10 @@ public class FootballPitchHelper {
         int leftSide = FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW - 1;
         int rightSide = FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW + 1;
 
+        addPlayerToGivenFootballRow(playersToPlace, rowToInsertInto, leftSide, rightSide);
+    }
+
+    private static void addPlayerToGivenFootballRow(List<Player> playersToPlace, FootballPitch[] rowToInsertInto, Integer leftSide, Integer rightSide) {
         while (playersToPlace.size() > 0) {
             rowToInsertInto[leftSide].addPlayerToTile(playersToPlace.get(0));
             playersToPlace.remove(0);
