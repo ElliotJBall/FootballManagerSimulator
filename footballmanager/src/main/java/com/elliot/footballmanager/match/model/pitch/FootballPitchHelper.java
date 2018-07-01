@@ -72,29 +72,31 @@ public class FootballPitchHelper {
     private static void addOutfieldToPitch() {
         for (int i = 0; i < footballPitch.length; i++) {
             for (int j = 0; j < footballPitch[i].length; j++) {
-                footballPitch[i][j] = new OutFieldPitch();
+                footballPitch[i][j] = new OutFieldPitch(i, j);
             }
         }
     }
 
     private static void addHomeTeamGoalkeepingArea() {
         for (Integer[] coordinates : homeTeamGoalkeepingAreaCoOrdinates) {
-            addPitch(coordinates, new GoalkeepingPitch());
+            addPitch(coordinates, new GoalkeepingPitch(coordinates[0], coordinates[1]));
         }
     }
 
     private static void addAwayTeamGoalkeepingArea() {
         for (Integer[] coordinates : awayTeamGoalkeepingAreaCoOrdinates) {
-            addPitch(coordinates, new GoalkeepingPitch());
+            addPitch(coordinates, new GoalkeepingPitch(coordinates[0], coordinates[1]));
         }
     }
 
     private static void addHomeTeamGoal() {
-        addPitch(FootballPitchHelperConstants.homeTeamGoalCoOrdinates, new GoalPitch());
+        addPitch(FootballPitchHelperConstants.homeTeamGoalCoOrdinates,
+                new GoalPitch(FootballPitchHelperConstants.homeTeamGoalCoOrdinates[0], FootballPitchHelperConstants.homeTeamGoalCoOrdinates[1]));
     }
 
     private static void addAwayTeamGoal() {
-        addPitch(FootballPitchHelperConstants.awayTeamGoalCoOrdinates, new GoalPitch());
+        addPitch(FootballPitchHelperConstants.awayTeamGoalCoOrdinates,
+                new GoalPitch(FootballPitchHelperConstants.awayTeamGoalCoOrdinates[0], FootballPitchHelperConstants.awayTeamGoalCoOrdinates[1]));
     }
 
     private static void  addPitch(Integer[] coordinates, FootballPitch pitchToAdd) {
