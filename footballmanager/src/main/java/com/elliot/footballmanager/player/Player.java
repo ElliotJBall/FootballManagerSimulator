@@ -32,6 +32,9 @@ public class Player implements Serializable, IPlayer {
 	private MentalAttributes mentalAttributes;
 	private GoalkeeperAttributes goalkeeperAttributes;
 
+	private Integer xCoordinate;
+	private Integer yCoordinate;
+
 	public Player() {
 
 	}
@@ -170,5 +173,21 @@ public class Player implements Serializable, IPlayer {
 
 	public void setGoalkeeperAttributes(GoalkeeperAttributes goalkeeperAttributes) {
 		this.goalkeeperAttributes = goalkeeperAttributes;
+	}
+
+	public Integer getxCoordinate() {
+		return xCoordinate;
+	}
+
+	public void setxCoordinate(Integer xCoordinate) {
+		this.xCoordinate = xCoordinate;
+	}
+
+	public Integer getyCoordinate() {
+		return yCoordinate;
+	}
+
+	public void setyCoordinate(Integer yCoordinate) {
+		this.yCoordinate = yCoordinate;
 	}
 }
