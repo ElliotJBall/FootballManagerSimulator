@@ -24,6 +24,8 @@ public class FootballPitchHelper {
 
     private static FootballPitch[][] footballPitch;
 
+    private static List<Player> alreadyPlacedPlayers = new ArrayList<Player>();
+
     private FootballPitchHelper() {
 
     }
@@ -111,7 +113,9 @@ public class FootballPitchHelper {
     }
 
     private static void addHomeTeamPlayersToPitch() {
-       MatchDaySquad homeTeamMatchDaySquad = MatchEngine.homeTeamMatchSetup.getSelectedFormation();
+        MatchDaySquad homeTeamMatchDaySquad = MatchEngine.homeTeamMatchSetup.getSelectedFormation();
+
+        alreadyPlacedPlayers = new ArrayList<Player>();
 
         addTeamGoalkeeperToPitch(homeTeamMatchDaySquad, FootballPitchHelperConstants.ROW_FOR_HOME_TEAM_GOALKEEPER);
         addTeamDefendersToPitch(homeTeamMatchDaySquad, FootballPitchHelperConstants.ROW_FOR_HOME_TEAM_DEFENDERS);
@@ -121,6 +125,8 @@ public class FootballPitchHelper {
 
     private static void addAwayTeamPlayersToPitch() {
         MatchDaySquad awayTeamMatchDaySquad = MatchEngine.awayTeamMatchSetup.getSelectedFormation();
+
+        alreadyPlacedPlayers = new ArrayList<Player>();
 
         addTeamGoalkeeperToPitch(awayTeamMatchDaySquad, FootballPitchHelperConstants.ROW_FOR_AWAY_TEAM_GOALKEEPER);
         addTeamDefendersToPitch(awayTeamMatchDaySquad, FootballPitchHelperConstants.ROW_FOR_AWAY_TEAM_DEFENDERS);
@@ -164,8 +170,10 @@ public class FootballPitchHelper {
             }
 
             for (Position position : player.getPreferredPositions()) {
-                if (Position.getGeneralPositionBySpecificPosition(position).equals(requiredGeneralPosition)) {
+                if (Position.getGeneralPositionBySpecificPosition(position).equals(requiredGeneralPosition) && !alreadyPlacedPlayers.contains(player)) {
+                    alreadyPlacedPlayers.add(player);
                     playersForGeneralisedPosition.add(player);
+                    break;
                 }
             }
         }

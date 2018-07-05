@@ -8,7 +8,11 @@ import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchHelper;
+import com.elliot.footballmanager.match.model.pitch.FootballPitchHelperConstants;
+import com.elliot.footballmanager.player.Movement;
+import com.elliot.footballmanager.player.Player;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +47,10 @@ public class MatchEngine {
         buildFootballPitch();
         addPlayersToPitch();
 
+        //moveHomeTea
+
+        //TODO: The indexing is not working correctly (Player x/y)
+
         return null;
     }
 
@@ -50,14 +58,6 @@ public class MatchEngine {
         initialiseFixtureInformation(gameManager);
         initialiseFootballTeamMatchStatMap();
         initialiseFootballTeamSquads();
-    }
-
-    private static void buildFootballPitch() {
-        footballPitch = FootballPitchHelper.buildNewFootballPitch();
-    }
-
-    private static void addPlayersToPitch() {
-        FootballPitchHelper.addPlayersToFootballPitch();
     }
 
     private static void initialiseFixtureInformation(GameManager gameManager) {
@@ -76,6 +76,24 @@ public class MatchEngine {
     private static void initialiseFootballTeamSquads() {
         homeTeamMatchSetup = homeTeam.getMatchSetup();
         awayTeamMatchSetup = awayTeam.getMatchSetup();
+    }
+
+    private static void buildFootballPitch() {
+        footballPitch = FootballPitchHelper.buildNewFootballPitch();
+    }
+
+    private static void addPlayersToPitch() {
+        FootballPitchHelper.addPlayersToFootballPitch();
+    }
+
+    private static void moveHomeTeamPlayerToCentreForKickoff() {
+        Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+        Player playerToKickOffGame = players[10];
+        footballPitch[playerToKickOffGame.getxCoordinate()][playerToKickOffGame.getyCoordinate()].removePlayerFromTile(playerToKickOffGame);
+
+        playerToKickOffGame.setxCoordinate(FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW);
+        playerToKickOffGame.setyCoordinate(FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_COLUMN);
+        footballPitch[playerToKickOffGame.getxCoordinate()][playerToKickOffGame.getyCoordinate()].addPlayerToTile(playerToKickOffGame);
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {

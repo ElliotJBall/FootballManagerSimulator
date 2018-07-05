@@ -35,4 +35,14 @@ public abstract class Pitch implements FootballPitch {
         playersWithinThisTile.add(player);
     }
 
+    @Override
+    public void removePlayerFromTile(Player player) {
+        playersWithinThisTile.remove(player);
+    }
+
+    @Override
+    public Collection<Player> getPlayersWithinThisTile() {
+        return playersWithinThisTile;
+    }
+
 }

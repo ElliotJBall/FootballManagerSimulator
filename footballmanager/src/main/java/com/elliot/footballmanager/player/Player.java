@@ -190,4 +190,8 @@ public class Player implements Serializable, IPlayer {
 	public void setyCoordinate(Integer yCoordinate) {
 		this.yCoordinate = yCoordinate;
 	}
+
+	public void movePlayer(Movement.Direction directionToMoveIn) {
+		Movement.movePlayerInDirectionSpecified(this, directionToMoveIn);
+	}
 }

@@ -14,6 +14,7 @@ public class FootballPitchHelperConstants {
     public static final Integer WIDTH_OF_FOOTBALL_PITCH = 11;
 
     public static final Integer MIDDLE_OF_A_FOOTBALL_PITCH_ROW = 5;
+    public static final Integer MIDDLE_OF_A_FOOTBALL_PITCH_COLUMN = 7;
 
     public static final Integer ROW_FOR_HOME_TEAM_GOALKEEPER = 0;
     public static final Integer ROW_FOR_HOME_TEAM_DEFENDERS = 3;
