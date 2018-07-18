@@ -27,4 +27,8 @@ public class RandomNumberGenerator {
     public static Integer getRandomNumberBetweenZeroAndWidthOfFootballPitch() {
         return random.nextInt(FootballPitchBuilderConstants.WIDTH_OF_FOOTBALL_PITCH + 1);
     }
+
+    public static Integer getRandomNumberBetweenZeroAnGivenNumber(int highestNumber) {
+        return random.nextInt(highestNumber);
+    }
 }

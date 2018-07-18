@@ -11,10 +11,7 @@ import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilderConstants;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
-import com.elliot.footballmanager.player.Movement;
 import com.elliot.footballmanager.player.Player;
-import com.elliot.footballmanager.player.Position;
-import com.elliot.footballmanager.player.attributes.TechnicalAttributes;
 
 import java.util.*;
 
@@ -126,14 +123,61 @@ public class MatchEngine {
                 e.printStackTrace();
             }
 
-            System.out.println(football.getCurrentXCoordinate().intValue() + " " + football.getCurrentYCoordinate().intValue());
+            System.out.println(football.getPlayerInPossession().getName() + " " + football.getCurrentXCoordinate() + " " + football.getCurrentYCoordinate());
 
             timeRemainingInHalf -= 0.10D;
         }
     }
 
     private static void determineNextGameAction() {
+        passToAnotherTeamMate();
+    }
 
+    private static void passToAnotherTeamMate() {
+        List<Player> playersAvailableToPassTo = new ArrayList<Player>();
+        if (RandomNumberGenerator.getRandomNumberBetweenZeroAndOneHundred() < 60) {
+            playersAvailableToPassTo = getPlayersWithinSpecifiedPassingRange(MatchEngineConstants.SHORT_PASSING_RANGE);
+        } else {
+            playersAvailableToPassTo = getPlayersWithinSpecifiedPassingRange(MatchEngineConstants.LONG_PASSING_RANGE);
+        }
+
+        football.setPlayerInPossession(playersAvailableToPassTo.get(RandomNumberGenerator.getRandomNumberBetweenZeroAnGivenNumber(playersAvailableToPassTo.size())));
+    }
+
+    private static List<Player> getPlayersWithinSpecifiedPassingRange(String passingRange) {
+        List<Player> playersInShortRange = new ArrayList<Player>();
+        List<Player> playersInLongRange = new ArrayList<Player>();
+        for (Player player : squadCurrentlyInPossession()) {
+            if (player.equals(football.getPlayerInPossession())) {
+                continue;
+            }
+
+            if (isWithinShortRangePassingDistance(player)) {
+                playersInShortRange.add(player);
+            } else {
+                playersInLongRange.add(player);
+            }
+        }
+
+        if (passingRange.equals(MatchEngineConstants.SHORT_PASSING_RANGE)) {
+            return playersInShortRange;
+        } else {
+            return playersInLongRange;
+        }
+
+    }
+
+    private static List<Player> squadCurrentlyInPossession() {
+        if (football.getPlayerInPossession().getCurrentClub().getTeamName().equals(homeTeam.getTeamName())) {
+            return Arrays.asList(homeTeamMatchSetup.getSelectedFormation().getStartingLineup());
+        } else {
+            return Arrays.asList(awayTeamMatchSetup.getSelectedFormation().getStartingLineup());
+        }
+    }
+
+    private static boolean isWithinShortRangePassingDistance(Player player) {
+        return football.getCurrentXCoordinate() - player.getxCoordinate() <= MatchEngineConstants.SHORT_RANGE_PASSING_DISTANCE
+                && football.getCurrentYCoordinate() - player.getyCoordinate() <= MatchEngineConstants.SHORT_RANGE_PASSING_DISTANCE;
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {
