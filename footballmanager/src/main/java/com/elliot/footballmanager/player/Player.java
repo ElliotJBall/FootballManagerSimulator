@@ -32,8 +32,11 @@ public class Player implements Serializable, IPlayer {
 	private MentalAttributes mentalAttributes;
 	private GoalkeeperAttributes goalkeeperAttributes;
 
+
 	private Integer xCoordinate;
 	private Integer yCoordinate;
+
+	private Integer[] opposingTeamsGoal = new Integer[2];
 
 	public Player() {
 
@@ -191,7 +194,11 @@ public class Player implements Serializable, IPlayer {
 		this.yCoordinate = yCoordinate;
 	}
 
-	public void movePlayer(Movement.Direction directionToMoveIn) {
-		Movement.movePlayerInDirectionSpecified(this, directionToMoveIn);
+	public Integer[] getOpposingTeamsGoal() {
+		return opposingTeamsGoal;
+	}
+
+	public void setOpposingTeamsGoal(Integer[] opposingTeamsGoal) {
+		this.opposingTeamsGoal = opposingTeamsGoal;
 	}
 }

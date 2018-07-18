@@ -6,15 +6,17 @@ import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup
 import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
+import com.elliot.footballmanager.match.model.Football;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
-import com.elliot.footballmanager.match.model.pitch.FootballPitchHelper;
-import com.elliot.footballmanager.match.model.pitch.FootballPitchHelperConstants;
+import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
+import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilderConstants;
+import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Movement;
 import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.player.Position;
+import com.elliot.footballmanager.player.attributes.TechnicalAttributes;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * The MatchEngine is where a simulation of a football
@@ -35,6 +37,10 @@ public class MatchEngine {
     private static Map<FootballTeam, FootballTeamMatchStats> footballTeamToMatchStats;
 
     public static FootballPitch[][] footballPitch;
+    private static Football football;
+
+    private static FootballTeamMatchStats matchStats;
+
 
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
@@ -47,16 +53,17 @@ public class MatchEngine {
         buildFootballPitch();
         addPlayersToPitch();
 
-        //moveHomeTea
+        giveATeamTheFootball();
 
-        //TODO: The indexing is not working correctly (Player x/y)
+        simulateOneHalfOfFootball();
+        simulateOneHalfOfFootball();
 
         return null;
     }
 
     private static void beginPreMatchSetup(GameManager gameManager) {
         initialiseFixtureInformation(gameManager);
-        initialiseFootballTeamMatchStatMap();
+        initialiseFootballTeamMatchStats();
         initialiseFootballTeamSquads();
     }
 
@@ -67,7 +74,7 @@ public class MatchEngine {
         awayTeam = fixture.getAwayTeam();
     }
 
-      private static void initialiseFootballTeamMatchStatMap() {
+      private static void initialiseFootballTeamMatchStats() {
         footballTeamToMatchStats = new HashMap<FootballTeam, FootballTeamMatchStats>();
         footballTeamToMatchStats.put(homeTeam, new FootballTeamMatchStats(homeTeam));
         footballTeamToMatchStats.put(awayTeam, new FootballTeamMatchStats(awayTeam));
@@ -79,21 +86,54 @@ public class MatchEngine {
     }
 
     private static void buildFootballPitch() {
-        footballPitch = FootballPitchHelper.buildNewFootballPitch();
+        footballPitch = FootballPitchBuilder.buildNewFootballPitch();
     }
 
     private static void addPlayersToPitch() {
-        FootballPitchHelper.addPlayersToFootballPitch();
+        FootballPitchPlayerPlacer.addPlayersToFootballPitch();
     }
 
-    private static void moveHomeTeamPlayerToCentreForKickoff() {
-        Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
-        Player playerToKickOffGame = players[10];
-        footballPitch[playerToKickOffGame.getxCoordinate()][playerToKickOffGame.getyCoordinate()].removePlayerFromTile(playerToKickOffGame);
+    private static void giveATeamTheFootball() {
+        if (football == null) {
+            Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+            Player playerToKickOffGame = players[6];
 
-        playerToKickOffGame.setxCoordinate(FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW);
-        playerToKickOffGame.setyCoordinate(FootballPitchHelperConstants.MIDDLE_OF_A_FOOTBALL_PITCH_COLUMN);
-        footballPitch[playerToKickOffGame.getxCoordinate()][playerToKickOffGame.getyCoordinate()].addPlayerToTile(playerToKickOffGame);
+            football = new Football(playerToKickOffGame.getxCoordinate(), playerToKickOffGame.getyCoordinate(),
+                    playerToKickOffGame);
+            return;
+        }
+
+        if (football.getPlayerInPossession().getCurrentClub().equals(homeTeam)) {
+            Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+            football.setPlayerInPossession(players[6]);
+        } else {
+            Player[] players = awayTeamMatchSetup.getSelectedFormation().getStartingLineup();
+            football.setPlayerInPossession(players[6]);
+        }
+
+    }
+
+    private static void simulateOneHalfOfFootball() {
+        double timeRemainingInHalf = MatchEngineConstants.MINUTES_REMAINING_IN_HALF;
+
+        // TODO: Look into alternative for Double due to precision issues, BigDecimal suitable replacement?
+        while (timeRemainingInHalf > 0D) {
+            determineNextGameAction();
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            System.out.println(football.getCurrentXCoordinate().intValue() + " " + football.getCurrentYCoordinate().intValue());
+
+            timeRemainingInHalf -= 0.10D;
+        }
+    }
+
+    private static void determineNextGameAction() {
+
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {

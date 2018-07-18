@@ -5,7 +5,7 @@ package com.elliot.footballmanager.match.model.pitch;
  * and population of new FootballPitch in this class.
  * @author Elliot
  */
-public class FootballPitchHelperConstants {
+public class FootballPitchBuilderConstants {
 
     public static final Integer[] homeTeamGoalCoOrdinates = new Integer[] {0, 5};
     public static final Integer[] awayTeamGoalCoOrdinates = new Integer[] {14, 5};

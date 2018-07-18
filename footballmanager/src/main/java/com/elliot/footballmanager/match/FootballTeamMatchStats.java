@@ -10,6 +10,7 @@ public class FootballTeamMatchStats {
     private FootballTeam footballTeam;
 
     // Stats that are usually tracked in a real football match
+    private Integer goals = 0;
     private Integer shots = 0;
     private Integer shotsOnTarget = 0;
     private Integer corners = 0;
@@ -32,6 +33,14 @@ public class FootballTeamMatchStats {
 
     public void setFootballTeam(FootballTeam footballTeam) {
         this.footballTeam = footballTeam;
+    }
+
+    public Integer getGoals() {
+        return goals;
+    }
+
+    public void setGoals(Integer goals) {
+        this.goals = goals;
     }
 
     public Integer getShots() {
@@ -88,5 +97,10 @@ public class FootballTeamMatchStats {
 
     public void setRedCards(Integer redCards) {
         this.redCards = redCards;
+    }
+
+    public void incrementGoalsScoredByOne() {
+        this.goals++;
+        this.shotsOnTarget++;
     }
 }
