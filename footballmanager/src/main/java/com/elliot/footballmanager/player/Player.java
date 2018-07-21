@@ -1,10 +1,11 @@
 package com.elliot.footballmanager.player;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
+import java.util.Stack;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.match.model.Movement;
 import com.elliot.footballmanager.player.attributes.GoalkeeperAttributes;
 import com.elliot.footballmanager.player.attributes.MentalAttributes;
 import com.elliot.footballmanager.player.attributes.PhysicalAttributes;
@@ -32,10 +33,13 @@ public class Player implements Serializable, IPlayer {
 	private MentalAttributes mentalAttributes;
 	private GoalkeeperAttributes goalkeeperAttributes;
 
+	private Integer preferredXCoordinate;
+	private Integer preferredYCoordinate;
 
-	private Integer xCoordinate;
-	private Integer yCoordinate;
+	private Integer currentXCoordinate;
+	private Integer currentYCoordinate;
 
+	private Stack<Movement.Direction> directionsBackToPreferredCoordinates = new Stack<Movement.Direction>();
 	private Integer[] opposingTeamsGoal = new Integer[2];
 
 	public Player() {
@@ -72,6 +76,20 @@ public class Player implements Serializable, IPlayer {
 		this.technicalAttributes = technicalAttributes;
 		this.mentalAttributes = mentalAttributes;
 		this.goalkeeperAttributes = goalkeeperAttributes;
+	}
+
+	public void setBothPreferredAndCurrentXCoordinate(Integer xCoordinate) {
+		this.setPreferredXCoordinate(xCoordinate);
+		this.setCurrentXCoordinate(xCoordinate);
+	}
+
+	public void setBothPreferredAndCurrentYCoordinate(Integer yCoordinate) {
+		this.setPreferredYCoordinate(yCoordinate);
+		this.setCurrentYCoordinate(yCoordinate);
+	}
+
+	public void addDirectionBackToPrefferedCoordinates(Movement.Direction direction) {
+		this.getDirectionsBackToPreferredCoordinates().push(direction);
 	}
 
 	public Integer getId() {
@@ -178,20 +196,44 @@ public class Player implements Serializable, IPlayer {
 		this.goalkeeperAttributes = goalkeeperAttributes;
 	}
 
-	public Integer getxCoordinate() {
-		return xCoordinate;
+	public Integer getPreferredXCoordinate() {
+		return preferredXCoordinate;
 	}
 
-	public void setxCoordinate(Integer xCoordinate) {
-		this.xCoordinate = xCoordinate;
+	public void setPreferredXCoordinate(Integer preferredXCoordinate) {
+		this.preferredXCoordinate = preferredXCoordinate;
 	}
 
-	public Integer getyCoordinate() {
-		return yCoordinate;
+	public Integer getPreferredYCoordinate() {
+		return preferredYCoordinate;
 	}
 
-	public void setyCoordinate(Integer yCoordinate) {
-		this.yCoordinate = yCoordinate;
+	public void setPreferredYCoordinate(Integer preferredYCoordinate) {
+		this.preferredYCoordinate = preferredYCoordinate;
+	}
+
+	public Integer getCurrentXCoordinate() {
+		return currentXCoordinate;
+	}
+
+	public void setCurrentXCoordinate(Integer xCoordinate) {
+		this.currentXCoordinate = xCoordinate;
+	}
+
+	public Integer getCurrentYCoordinate() {
+		return currentYCoordinate;
+	}
+
+	public void setCurrentYCoordinate(Integer yCoordinate) {
+		this.currentYCoordinate = yCoordinate;
+	}
+
+	public Stack<Movement.Direction> getDirectionsBackToPreferredCoordinates() {
+		return directionsBackToPreferredCoordinates;
+	}
+
+	public void setDirectionsBackToPreferredCoordinates(Stack<Movement.Direction> directionsBackToPreferredCoordinates) {
+		this.directionsBackToPreferredCoordinates = directionsBackToPreferredCoordinates;
 	}
 
 	public Integer[] getOpposingTeamsGoal() {

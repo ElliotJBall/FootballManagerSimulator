@@ -7,9 +7,10 @@ import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.model.Football;
+import com.elliot.footballmanager.match.model.Movement;
+import com.elliot.footballmanager.match.model.Pass;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
-import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilderConstants;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Player;
 
@@ -95,7 +96,7 @@ public class MatchEngine {
             Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
             Player playerToKickOffGame = players[6];
 
-            football = new Football(playerToKickOffGame.getxCoordinate(), playerToKickOffGame.getyCoordinate(),
+            football = new Football(playerToKickOffGame.getCurrentXCoordinate(), playerToKickOffGame.getCurrentYCoordinate(),
                     playerToKickOffGame);
             return;
         }
@@ -111,73 +112,71 @@ public class MatchEngine {
     }
 
     private static void simulateOneHalfOfFootball() {
+        double startTime = MatchEngineConstants.MINUTES_REMAINING_IN_HALF;
         double timeRemainingInHalf = MatchEngineConstants.MINUTES_REMAINING_IN_HALF;
 
         // TODO: Look into alternative for Double due to precision issues, BigDecimal suitable replacement?
         while (timeRemainingInHalf > 0D) {
             determineNextGameAction();
-
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
-            System.out.println(football.getPlayerInPossession().getName() + " " + football.getCurrentXCoordinate() + " " + football.getCurrentYCoordinate());
-
             timeRemainingInHalf -= 0.10D;
+            Double currentTime = startTime - timeRemainingInHalf;
+
+            System.out.println("[" + String.format("%.2f", currentTime) + "]" + football.getPlayerInPossession().getName() + " " + football.getCurrentXCoordinate() + " " + football.getCurrentYCoordinate());
+
         }
     }
 
     private static void determineNextGameAction() {
-        passToAnotherTeamMate();
-    }
-
-    private static void passToAnotherTeamMate() {
-        List<Player> playersAvailableToPassTo = new ArrayList<Player>();
-        if (RandomNumberGenerator.getRandomNumberBetweenZeroAndOneHundred() < 60) {
-            playersAvailableToPassTo = getPlayersWithinSpecifiedPassingRange(MatchEngineConstants.SHORT_PASSING_RANGE);
+        if (RandomNumberGenerator.getRandomNumberBetweenZeroAndOneHundred() < 50) {
+            passToAnotherTeamMate();
         } else {
-            playersAvailableToPassTo = getPlayersWithinSpecifiedPassingRange(MatchEngineConstants.LONG_PASSING_RANGE);
+            movePlayerInPossessionToNewTile();
         }
 
-        football.setPlayerInPossession(playersAvailableToPassTo.get(RandomNumberGenerator.getRandomNumberBetweenZeroAnGivenNumber(playersAvailableToPassTo.size())));
-    }
-
-    private static List<Player> getPlayersWithinSpecifiedPassingRange(String passingRange) {
-        List<Player> playersInShortRange = new ArrayList<Player>();
-        List<Player> playersInLongRange = new ArrayList<Player>();
-        for (Player player : squadCurrentlyInPossession()) {
-            if (player.equals(football.getPlayerInPossession())) {
+        for (Player player : getSquadCurrentlyInPossession()) {
+            if (football.getPlayerInPossession().equals(player)) {
                 continue;
             }
 
-            if (isWithinShortRangePassingDistance(player)) {
-                playersInShortRange.add(player);
-            } else {
-                playersInLongRange.add(player);
+            if (!player.getCurrentXCoordinate().equals(player.getPreferredXCoordinate())
+                    || !player.getCurrentYCoordinate().equals(player.getPreferredYCoordinate())) {
+                Movement movement = new Movement();
+                movement.movePlayerNotInPossessionBackToPreferredPositions(player);
             }
         }
-
-        if (passingRange.equals(MatchEngineConstants.SHORT_PASSING_RANGE)) {
-            return playersInShortRange;
-        } else {
-            return playersInLongRange;
-        }
-
     }
 
-    private static List<Player> squadCurrentlyInPossession() {
+    private static void passToAnotherTeamMate() {
+        Pass pass = new Pass(getSquadCurrentlyInPossession(), football);
+        Player newPlayerInPossession = pass.getPlayerTheBallIsBeingPassedTo();
+        football.setPlayerInPossession(newPlayerInPossession);
+    }
+
+    private static void movePlayerInPossessionToNewTile() {
+        Player playerInPossession = football.getPlayerInPossession();
+        removePlayerFromOldTile(playerInPossession);
+
+        Movement movement = new Movement();
+        movement.movePlayerToNewTile(playerInPossession);
+
+        addPlayerToNewTile(playerInPossession);
+        football.updateCoordinatesToPlayerInPossessions();
+    }
+
+    private static void removePlayerFromOldTile(Player player) {
+        footballPitch[player.getCurrentXCoordinate()][player.getCurrentYCoordinate()].removePlayerFromTile(player);
+    }
+
+    private static void addPlayerToNewTile(Player player) {
+        MatchEngine.footballPitch[player.getCurrentXCoordinate()][player.getCurrentYCoordinate()].addPlayerToTile(player);
+    }
+
+    private static List<Player> getSquadCurrentlyInPossession() {
         if (football.getPlayerInPossession().getCurrentClub().getTeamName().equals(homeTeam.getTeamName())) {
             return Arrays.asList(homeTeamMatchSetup.getSelectedFormation().getStartingLineup());
         } else {
             return Arrays.asList(awayTeamMatchSetup.getSelectedFormation().getStartingLineup());
         }
-    }
-
-    private static boolean isWithinShortRangePassingDistance(Player player) {
-        return football.getCurrentXCoordinate() - player.getxCoordinate() <= MatchEngineConstants.SHORT_RANGE_PASSING_DISTANCE
-                && football.getCurrentYCoordinate() - player.getyCoordinate() <= MatchEngineConstants.SHORT_RANGE_PASSING_DISTANCE;
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {

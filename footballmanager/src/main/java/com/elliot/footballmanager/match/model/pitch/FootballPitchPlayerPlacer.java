@@ -118,7 +118,7 @@ public class FootballPitchPlayerPlacer {
         FootballPitch[] rowToInsertInto = footballPitch[rowToInsertPlayersInto];
 
         for (Player player : playersToPlace) {
-            player.setxCoordinate(rowToInsertPlayersInto);
+            player.setBothPreferredAndCurrentXCoordinate(rowToInsertPlayersInto);
         }
 
         // Choose appropriate placing strategy and align the players evenly across the FootballPitch
@@ -132,7 +132,7 @@ public class FootballPitchPlayerPlacer {
     private static void addOddNumberOfPlayersToFootballPitch(List<Player> playersToPlace, FootballPitch[] rowToInsertInto) {
         // Start from the middle of the FootballPitch[], increment and add a player on each side
         Player middlePlayer = playersToPlace.get(0);
-        middlePlayer.setyCoordinate(FootballPitchBuilderConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW);
+        middlePlayer.setBothPreferredAndCurrentYCoordinate(FootballPitchBuilderConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW);
         rowToInsertInto[FootballPitchBuilderConstants.MIDDLE_OF_A_FOOTBALL_PITCH_ROW].addPlayerToTile(middlePlayer);
         playersToPlace.remove(0);
 
@@ -154,13 +154,13 @@ public class FootballPitchPlayerPlacer {
     private static void addPlayerToGivenFootballRow(List<Player> playersToPlace, FootballPitch[] rowToInsertInto, Integer leftSide, Integer rightSide) {
         while (playersToPlace.size() > 0) {
             Player leftPlayer = playersToPlace.get(0);
-            leftPlayer.setyCoordinate(leftSide);
+            leftPlayer.setBothPreferredAndCurrentYCoordinate(leftSide);
             rowToInsertInto[leftSide].addPlayerToTile(leftPlayer);
             playersToPlace.remove(0);
             leftSide -= 2;
 
             Player rightPlayer = playersToPlace.get(0);
-            rightPlayer.setyCoordinate(rightSide);
+            rightPlayer.setBothPreferredAndCurrentYCoordinate(rightSide);
             rowToInsertInto[rightSide].addPlayerToTile(rightPlayer);
             playersToPlace.remove(0);
             rightSide += 2;

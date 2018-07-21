@@ -44,11 +44,18 @@ public class Football {
 
     public void setPlayerInPossession(Player playerInPossession) {
         this.playerInPossession = playerInPossession;
-        this.setCurrentXCoordinate(playerInPossession.getxCoordinate());
-        this.setCurrentYCoordinate(playerInPossession.getyCoordinate());
+        this.setCurrentXCoordinate(playerInPossession.getCurrentXCoordinate());
+        this.setCurrentYCoordinate(playerInPossession.getCurrentYCoordinate());
     }
 
     public void removePlayerFromPossession() {
         this.playerInPossession = null;
+    }
+
+    public void updateCoordinatesToPlayerInPossessions() {
+        if (playerInPossession != null) {
+            this.setCurrentXCoordinate(this.getPlayerInPossession().getCurrentXCoordinate());
+            this.setCurrentYCoordinate(this.getPlayerInPossession().getCurrentYCoordinate());
+        }
     }
 }
