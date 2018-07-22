@@ -52,7 +52,7 @@ public class Football {
         this.playerInPossession = null;
     }
 
-    public void updateCoordinatesToPlayerInPossessions() {
+    public void updatePlayerInPossessionCoordinates() {
         if (playerInPossession != null) {
             this.setCurrentXCoordinate(this.getPlayerInPossession().getCurrentXCoordinate());
             this.setCurrentYCoordinate(this.getPlayerInPossession().getCurrentYCoordinate());

@@ -42,6 +42,8 @@ public class Player implements Serializable, IPlayer {
 	private Stack<Movement.Direction> directionsBackToPreferredCoordinates = new Stack<Movement.Direction>();
 	private Integer[] opposingTeamsGoal = new Integer[2];
 
+	public Integer gameTicksUntilRecoveredFromTackle = 0;
+
 	public Player() {
 
 	}
@@ -242,5 +244,13 @@ public class Player implements Serializable, IPlayer {
 
 	public void setOpposingTeamsGoal(Integer[] opposingTeamsGoal) {
 		this.opposingTeamsGoal = opposingTeamsGoal;
+	}
+
+	public Integer getGameTicksUntilRecoveredFromTackle() {
+		return gameTicksUntilRecoveredFromTackle;
+	}
+
+	public void setGameTicksUntilRecoveredFromTackle(Integer gameTicksUntilRecoveredFromTackle) {
+		this.gameTicksUntilRecoveredFromTackle = gameTicksUntilRecoveredFromTackle;
 	}
 }

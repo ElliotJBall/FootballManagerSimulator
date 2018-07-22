@@ -9,12 +9,14 @@ import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.model.Football;
 import com.elliot.footballmanager.match.model.Movement;
 import com.elliot.footballmanager.match.model.Pass;
+import com.elliot.footballmanager.match.model.Tackle;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Player;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * The MatchEngine is where a simulation of a football
@@ -38,7 +40,6 @@ public class MatchEngine {
     private static Football football;
 
     private static FootballTeamMatchStats matchStats;
-
 
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
@@ -133,17 +134,10 @@ public class MatchEngine {
             movePlayerInPossessionToNewTile();
         }
 
-        for (Player player : getSquadCurrentlyInPossession()) {
-            if (football.getPlayerInPossession().equals(player)) {
-                continue;
-            }
-
-            if (!player.getCurrentXCoordinate().equals(player.getPreferredXCoordinate())
-                    || !player.getCurrentYCoordinate().equals(player.getPreferredYCoordinate())) {
-                Movement movement = new Movement();
-                movement.movePlayerNotInPossessionBackToPreferredPositions(player);
-            }
-        }
+        // After a GameAction has happened begin moving all out of position players back to preferred Coordinates
+        moveNonPossessionPlayersToPreferredCoordinates();
+        checkIfAPlayerCanAttemptATackle();
+        updatePlayersTackledRecovery();
     }
 
     private static void passToAnotherTeamMate() {
@@ -160,7 +154,44 @@ public class MatchEngine {
         movement.movePlayerToNewTile(playerInPossession);
 
         addPlayerToNewTile(playerInPossession);
-        football.updateCoordinatesToPlayerInPossessions();
+        football.updatePlayerInPossessionCoordinates();
+    }
+
+    private static void checkIfAPlayerCanAttemptATackle() {
+        List<Player> players = getSquadNotCurrentlyInPossession().stream()
+                .filter(player -> player.getGameTicksUntilRecoveredFromTackle().equals(0)
+                        && football.getCurrentXCoordinate().equals(player.getCurrentXCoordinate() + 1)
+                        || football.getCurrentXCoordinate().equals(player.getCurrentXCoordinate() - 1)
+                        || football.getCurrentYCoordinate().equals(player.getCurrentYCoordinate() + 1)
+                        || football.getCurrentYCoordinate().equals(player.getCurrentYCoordinate() - 1))
+                .collect(Collectors.toList());
+
+        if (players.size() > 0) {
+            Player playerToChallengeForPossession = players.get(RandomNumberGenerator.getRandomNumberBetweenZeroAnGivenNumber(players.size()));
+
+            Tackle tackle = new Tackle(playerToChallengeForPossession, football);
+            tackle.attemptTackleOnPlayerInPossession();
+        }
+    }
+
+    private static void updatePlayersTackledRecovery() {
+        for (Player player : getAllPlayersFromBothSquads()) {
+            player.setGameTicksUntilRecoveredFromTackle(player.getGameTicksUntilRecoveredFromTackle() - 1);
+        }
+    }
+
+    private static void moveNonPossessionPlayersToPreferredCoordinates() {
+        for (Player player : getAllPlayersFromBothSquads()) {
+            if (football.getPlayerInPossession().equals(player)) {
+                continue;
+            }
+
+            if (!player.getCurrentXCoordinate().equals(player.getPreferredXCoordinate())
+                    || !player.getCurrentYCoordinate().equals(player.getPreferredYCoordinate())) {
+                Movement movement = new Movement();
+                movement.movePlayerNotInPossessionBackToPreferredPositions(player);
+            }
+        }
     }
 
     private static void removePlayerFromOldTile(Player player) {
@@ -168,7 +199,7 @@ public class MatchEngine {
     }
 
     private static void addPlayerToNewTile(Player player) {
-        MatchEngine.footballPitch[player.getCurrentXCoordinate()][player.getCurrentYCoordinate()].addPlayerToTile(player);
+        footballPitch[player.getCurrentXCoordinate()][player.getCurrentYCoordinate()].addPlayerToTile(player);
     }
 
     private static List<Player> getSquadCurrentlyInPossession() {
@@ -177,6 +208,21 @@ public class MatchEngine {
         } else {
             return Arrays.asList(awayTeamMatchSetup.getSelectedFormation().getStartingLineup());
         }
+    }
+
+    private static List<Player> getSquadNotCurrentlyInPossession() {
+        if (football.getPlayerInPossession().getCurrentClub().getTeamName().equals(homeTeam.getTeamName())) {
+            return Arrays.asList(awayTeamMatchSetup.getSelectedFormation().getStartingLineup());
+        } else {
+            return Arrays.asList(homeTeamMatchSetup.getSelectedFormation().getStartingLineup());
+        }
+    }
+
+    private static List<Player> getAllPlayersFromBothSquads() {
+        List<Player> allPlayersOnFootballPitch = new ArrayList<Player>();
+        allPlayersOnFootballPitch.addAll(Arrays.asList(homeTeamMatchSetup.getSelectedFormation().getStartingLineup()));
+        allPlayersOnFootballPitch.addAll(Arrays.asList(awayTeamMatchSetup.getSelectedFormation().getStartingLineup()));
+        return allPlayersOnFootballPitch;
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {
