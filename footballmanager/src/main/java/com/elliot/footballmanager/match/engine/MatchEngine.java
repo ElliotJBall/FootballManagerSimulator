@@ -6,14 +6,12 @@ import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup
 import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
-import com.elliot.footballmanager.match.model.Football;
-import com.elliot.footballmanager.match.model.Movement;
-import com.elliot.footballmanager.match.model.Pass;
-import com.elliot.footballmanager.match.model.Tackle;
+import com.elliot.footballmanager.match.model.*;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Player;
+import org.omg.CORBA.MARSHAL;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -34,12 +32,10 @@ public class MatchEngine {
     public static FootballTeamMatchSetup homeTeamMatchSetup;
     public static FootballTeamMatchSetup awayTeamMatchSetup;
 
-    private static Map<FootballTeam, FootballTeamMatchStats> footballTeamToMatchStats;
+    private static Map<String, FootballTeamMatchStats> footballTeamToMatchStats;
 
     public static FootballPitch[][] footballPitch;
     private static Football football;
-
-    private static FootballTeamMatchStats matchStats;
 
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
@@ -74,9 +70,9 @@ public class MatchEngine {
     }
 
       private static void initialiseFootballTeamMatchStats() {
-        footballTeamToMatchStats = new HashMap<FootballTeam, FootballTeamMatchStats>();
-        footballTeamToMatchStats.put(homeTeam, new FootballTeamMatchStats(homeTeam));
-        footballTeamToMatchStats.put(awayTeam, new FootballTeamMatchStats(awayTeam));
+        footballTeamToMatchStats = new HashMap<String, FootballTeamMatchStats>();
+        footballTeamToMatchStats.put(homeTeam.getTeamName(), new FootballTeamMatchStats(homeTeam));
+        footballTeamToMatchStats.put(awayTeam.getTeamName(), new FootballTeamMatchStats(awayTeam));
     }
 
     private static void initialiseFootballTeamSquads() {
@@ -135,8 +131,11 @@ public class MatchEngine {
         }
 
         // After a GameAction has happened begin moving all out of position players back to preferred Coordinates
-        moveNonPossessionPlayersToPreferredCoordinates();
         checkIfAPlayerCanAttemptATackle();
+
+        checkIfPlayerAttemptsShotAtGoal();
+
+        moveNonPossessionPlayersToPreferredCoordinates();
         updatePlayersTackledRecovery();
     }
 
@@ -171,6 +170,17 @@ public class MatchEngine {
 
             Tackle tackle = new Tackle(playerToChallengeForPossession, football);
             tackle.attemptTackleOnPlayerInPossession();
+        }
+    }
+
+    private static void checkIfPlayerAttemptsShotAtGoal() {
+        Shot shot = new Shot(football.getPlayerInPossession());
+
+        if (shot.doesPlayerDecideToShoot()) {
+            Player opposingTeamsGoalKeeper = getSquadNotCurrentlyInPossession().get(0);
+            FootballTeamMatchStats matchStats = footballTeamToMatchStats.get(football.getPlayerInPossession().getCurrentClub().getTeamName());
+
+            shot.attemptShot(football, opposingTeamsGoalKeeper, matchStats);
         }
     }
 

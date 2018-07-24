@@ -101,6 +101,16 @@ public class FootballTeamMatchStats {
 
     public void incrementGoalsScoredByOne() {
         this.goals++;
+        this.shots++;
         this.shotsOnTarget++;
+    }
+
+    public void incrementShotsOnTargetByOne() {
+        this.shots++;
+        this.shotsOnTarget++;
+    }
+
+    public void incrementShotsByOne() {
+        this.shots++;
     }
 }
