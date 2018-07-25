@@ -1,4 +1,4 @@
-package com.elliot.footballmanager.match.engine;
+package com.elliot.footballmanager.match;
 
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilderConstants;
 

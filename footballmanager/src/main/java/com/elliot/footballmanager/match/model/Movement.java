@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.match.model;
 
-import com.elliot.footballmanager.match.engine.RandomNumberGenerator;
+import com.elliot.footballmanager.match.RandomNumberGenerator;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilderConstants;
 import com.elliot.footballmanager.player.Player;
 
