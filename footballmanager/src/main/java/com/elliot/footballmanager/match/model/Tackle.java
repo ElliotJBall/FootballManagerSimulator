@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.match.model;
 
+import com.elliot.footballmanager.match.RandomNumberGenerator;
 import com.elliot.footballmanager.player.Player;
 
 /**
@@ -7,7 +8,7 @@ import com.elliot.footballmanager.player.Player;
  * for the ball.
  * @author Elliot
  */
-public class Tackle {
+public class Tackle extends MatchEvent {
 
     private Player playerAttemptingChallenge;
     private Player playerBeingChallenged;
@@ -45,6 +46,25 @@ public class Tackle {
             tacklingMethod = TacklingMethod.SLIDING_TACKLE;
             return playerAttemptingChallenge.getTechnicalAttributes().getSlidingTackle();
         }
+    }
+
+    public Player getPlayerAttemptingChallenge() {
+        return playerAttemptingChallenge;
+    }
+
+    public Player getPlayerBeingChallenged() {
+        return playerBeingChallenged;
+    }
+
+    @Override
+    protected String buildMatchEventString() {
+        StringBuilder message = new StringBuilder();
+        message.append(getCurrentGameTime() + " ");
+        message.append(getPlayerBeingChallenged().getName() + " ");
+        message.append("Is being challenged by ");
+        message.append(getPlayerAttemptingChallenge().getName());
+
+        return message.toString();
     }
 
     /**

@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  */
 public class MatchEngine {
 
+    private static boolean logGameEvents = false;
+
     private static Fixture fixture;
 
     private static FootballTeam homeTeam;
@@ -49,6 +51,8 @@ public class MatchEngine {
         addPlayersToPitch();
 
         giveATeamTheFootball();
+
+        MatchEngine.logGameEvents = true;
 
         simulateOneHalfOfFootball();
         simulateOneHalfOfFootball();
@@ -238,5 +242,13 @@ public class MatchEngine {
     private static void persistMatchResultToDatabase(MatchResult matchResult) {
         MatchEngineDao matchEngineDao = new MatchEngineDaoImpl();
         matchEngineDao.persistResultToDatabase(matchResult);
+    }
+
+    public static boolean isLoggingGameEvents() {
+        return logGameEvents;
+    }
+
+    public static void setIsLoggingGameEvents(boolean isLoggingGameEvents) {
+        MatchEngine.logGameEvents = isLoggingGameEvents;
     }
 }

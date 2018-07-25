@@ -9,21 +9,27 @@ import com.elliot.footballmanager.player.Player;
  * the MatchEngine FootballPitch.
  * @author Elliot
  */
-public class Movement {
+public class Movement extends MatchEvent {
+
+    private Player playerInPossession;
+    private Direction directionToMovePlayerIn;
 
     public Movement() {
 
     }
 
     public void movePlayerToNewTile(Player player) {
-        Direction directionToMovePlayerIn = getRandomDirection();
+        playerInPossession = player;
+        directionToMovePlayerIn = getRandomDirection();
 
-        while (willMovePlayerOutsideFootballPitch(player, directionToMovePlayerIn) != false) {
-            directionToMovePlayerIn = getRandomDirection();
+        while (willMovePlayerOutsideFootballPitch(player, getDirectionToMovePlayerIn()) != false) {
+            setDirectionToMovePlayerIn(getRandomDirection());
         }
 
-        player.addDirectionBackToPrefferedCoordinates(getOppositeDirectionForGivenDirection(directionToMovePlayerIn));
-        updatePlayerWithNewCoordinates(player, directionToMovePlayerIn);
+        player.addDirectionBackToPrefferedCoordinates(getOppositeDirectionForGivenDirection(getDirectionToMovePlayerIn()));
+        updatePlayerWithNewCoordinates(player, getDirectionToMovePlayerIn());
+
+        doesEventNeedToBeLogged();
     }
 
     private Direction getRandomDirection() {
@@ -106,28 +112,53 @@ public class Movement {
         }
     }
 
+    public Player getPlayerInPossession() {
+        return playerInPossession;
+    }
+
+    public Direction getDirectionToMovePlayerIn() {
+        return directionToMovePlayerIn;
+    }
+
+    public void setDirectionToMovePlayerIn(Direction directionToMovePlayerIn) {
+        this.directionToMovePlayerIn = directionToMovePlayerIn;
+    }
+
+    @Override
+    protected String buildMatchEventString() {
+        StringBuilder message = new StringBuilder();
+        message.append(getCurrentGameTime() + " ");
+        message.append(getPlayerInPossession().getName() + " ");
+        message.append("Has moved ");
+        message.append(getDirectionToMovePlayerIn().getDirectionValueAsString());
+
+        return message.toString();
+    }
+
     /**
      * The possible directions that a player can move in
      * on the FootballPitch.
      * @author Elliot
      */
     public enum Direction {
-        UP(0, -1),
-        DOWN(0, 1),
-        LEFT(-1, 0),
-        RIGHT(1, 0),
-        DIAGONAL_LEFT_UP(-1, -1),
-        DIAGONAL_LEFT_DOWN(-1, 1),
-        DIAGONAL_RIGHT_UP(1, -1),
-        DIAGONAL_RIGHT_DOWN(1, 1),
-        NO_DIRECTION(0, 0);
+        UP(0, -1, "Up"),
+        DOWN(0, 1, "Down"),
+        LEFT(-1, 0, "Left"),
+        RIGHT(1, 0, "Right"),
+        DIAGONAL_LEFT_UP(-1, -1, "Diagonally Left Up"),
+        DIAGONAL_LEFT_DOWN(-1, 1, "Diagonally Left Down"),
+        DIAGONAL_RIGHT_UP(1, -1, "Diagonally Right Up"),
+        DIAGONAL_RIGHT_DOWN(1, 1, "Diagonally Right Down"),
+        NO_DIRECTION(0, 0, "No Movement");
 
         private Integer xValue;
         private Integer yValue;
+        private String directionValueAsString;
 
-        Direction(Integer xValue, Integer yValue) {
+        Direction(Integer xValue, Integer yValue, String directionValueAsString) {
             this.setXValue(xValue);
             this.setYValue(yValue);
+            this.directionValueAsString = directionValueAsString;
         }
 
         public Integer getXValue() {
@@ -144,6 +175,14 @@ public class Movement {
 
         public void setYValue(Integer yValue) {
             this.yValue = yValue;
+        }
+
+        public String getDirectionValueAsString() {
+            return directionValueAsString;
+        }
+
+        public void setDirectionValueAsString(String directionValueAsString) {
+            this.directionValueAsString = directionValueAsString;
         }
     }
 

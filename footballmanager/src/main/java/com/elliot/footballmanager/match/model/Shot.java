@@ -9,10 +9,11 @@ import com.elliot.footballmanager.player.Player;
  * decides to shoot and calculates whether he scores.
  * @author Elliot
  */
-public class Shot {
+public class Shot extends MatchEvent {
 
     private Player playerTakingShot;
     private Integer numberOfTilesAwayFromGoal;
+    private ShotOutcome shotOutcome;
 
     public Shot() {
 
@@ -37,15 +38,19 @@ public class Shot {
 
         if (randomChanceOfScoring < (playersChanceOfScoring / 2)) {
             updateMatchStatsGoalScored(matchStats);
-            giveGoalKeeperTheFootball(football, opposingTeamsGoalkeeper);
+            setShotOutcome(ShotOutcome.GOAL_SCORED);
         } else if (randomChanceOfScoring >= (playersChanceOfScoring / 2)
                 && randomChanceOfScoring <= playersChanceOfScoring) {
             updateMatchStatsShotSaved(matchStats);
-            giveGoalKeeperTheFootball(football, opposingTeamsGoalkeeper);
+            setShotOutcome(ShotOutcome.SHOT_SAVED);
         } else {
             updateMatchStatsShotMissed(matchStats);
-            giveGoalKeeperTheFootball(football, opposingTeamsGoalkeeper);
+            setShotOutcome(ShotOutcome.SHOT_MISSED);
         }
+
+        giveGoalKeeperTheFootball(football, opposingTeamsGoalkeeper);
+
+        doesEventNeedToBeLogged();
     }
 
     private void updateMatchStatsGoalScored(FootballTeamMatchStats matchStats) {
@@ -97,5 +102,44 @@ public class Shot {
 
     public void setNumberOfTilesAwayFromGoal(Integer numberOfTilesAwayFromGoal) {
         this.numberOfTilesAwayFromGoal = numberOfTilesAwayFromGoal;
+    }
+
+    public ShotOutcome getShotOutcome() {
+        return shotOutcome;
+    }
+
+    public void setShotOutcome(ShotOutcome shotOutcome) {
+        this.shotOutcome = shotOutcome;
+    }
+
+    @Override
+    public String buildMatchEventString() {
+        StringBuilder message = new StringBuilder();
+        message.append(getCurrentGameTime() + " ");
+        message.append(getPlayerTakingShot().getName() + " ");
+        message.append(" Has taken a shot! He has ");
+        message.append(getShotOutcome().getShotOutcomeValue());
+
+        return message.toString();
+    }
+
+    private enum ShotOutcome {
+        SHOT_MISSED("Missed!"),
+        SHOT_SAVED("Had his shot saved!"),
+        GOAL_SCORED("Scored!!!");
+
+        private String ShotOutcomeValue;
+
+        ShotOutcome(String shotOutcomeValue) {
+            this.ShotOutcomeValue = shotOutcomeValue;
+        }
+
+        public String getShotOutcomeValue() {
+            return ShotOutcomeValue;
+        }
+
+        public void setShotOutcomeValue(String shotOutcomeValue) {
+            ShotOutcomeValue = shotOutcomeValue;
+        }
     }
 }

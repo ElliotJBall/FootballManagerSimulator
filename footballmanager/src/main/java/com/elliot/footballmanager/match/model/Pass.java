@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.match.model;
 
+import com.elliot.footballmanager.match.RandomNumberGenerator;
 import com.elliot.footballmanager.player.Player;
 
 import java.util.ArrayList;
@@ -12,7 +13,7 @@ import java.util.List;
  * within the MatchEngine.
  * @author Elliot
  */
-public class Pass {
+public class Pass extends MatchEvent {
 
     private static Integer SHORT_RANGE_PASSING_DISTANCE = 2;
     private static String SHORT_PASSING_RANGE = "SHORT_RANGE";
@@ -20,6 +21,7 @@ public class Pass {
 
     private Football football;
     private List<Player> squadCurrentlyInPossession;
+    private Player playerSelectedForPass;
 
     public Pass() {
 
@@ -38,7 +40,11 @@ public class Pass {
             playersAvailableToPassTo = getPlayersWithinSpecifiedPassingRange(LONG_PASSING_RANGE);
         }
 
-        return playersAvailableToPassTo.get(RandomNumberGenerator.getRandomNumberBetweenZeroAnGivenNumber(playersAvailableToPassTo.size()));
+
+        setPlayerSelectedForPass(playersAvailableToPassTo.get(RandomNumberGenerator.getRandomNumberBetweenZeroAnGivenNumber(playersAvailableToPassTo.size())));
+
+        doesEventNeedToBeLogged();
+        return getPlayerSelectedForPass();
     }
 
     private List<Player> getPlayersWithinSpecifiedPassingRange(String passingRange) {
@@ -67,5 +73,24 @@ public class Pass {
     private boolean isWithinShortRangePassingDistance(Player player) {
         return this.football.getCurrentXCoordinate() - player.getCurrentXCoordinate() <= SHORT_RANGE_PASSING_DISTANCE
                 && this.football.getCurrentYCoordinate() - player.getCurrentYCoordinate() <= SHORT_RANGE_PASSING_DISTANCE;
+    }
+
+    public Player getPlayerSelectedForPass() {
+        return playerSelectedForPass;
+    }
+
+    public void setPlayerSelectedForPass(Player playerSelectedForPass) {
+        this.playerSelectedForPass = playerSelectedForPass;
+    }
+
+    @Override
+    protected String buildMatchEventString() {
+        StringBuilder message = new StringBuilder();
+        message.append(getCurrentGameTime() + " ");
+        message.append(football.getPlayerInPossession().getName() + " ");
+        message.append("Has passed the ball to ");
+        message.append(getPlayerSelectedForPass().getName());
+
+        return message.toString();
     }
 }
