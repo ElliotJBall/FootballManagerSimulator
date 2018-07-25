@@ -87,9 +87,13 @@ public class Pass extends MatchEvent {
     protected String buildMatchEventString() {
         StringBuilder message = new StringBuilder();
         message.append(getCurrentGameTime() + " ");
-        message.append(football.getPlayerInPossession().getName() + " ");
-        message.append("Has passed the ball to ");
+        message.append("[");
+        message.append(football.getPlayerInPossession().getName());
+        message.append("]");
+        message.append(" Passes To ");
+        message.append("[");
         message.append(getPlayerSelectedForPass().getName());
+        message.append("]");
 
         return message.toString();
     }

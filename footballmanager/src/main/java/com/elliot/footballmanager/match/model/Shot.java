@@ -116,9 +116,13 @@ public class Shot extends MatchEvent {
     public String buildMatchEventString() {
         StringBuilder message = new StringBuilder();
         message.append(getCurrentGameTime() + " ");
+        message.append("[");
         message.append(getPlayerTakingShot().getName() + " ");
-        message.append(" Has taken a shot! He has ");
+        message.append("]");
+        message.append(" Shoots ");
+        message.append("[");
         message.append(getShotOutcome().getShotOutcomeValue());
+        message.append("]");
 
         return message.toString();
     }

@@ -16,7 +16,7 @@ public abstract class MatchEvent {
     }
 
     protected String getCurrentGameTime() {
-        return "";
+        return "[" + MatchEngine.getCurrentTimeInGame() + "]";
     }
 
     protected abstract String buildMatchEventString();

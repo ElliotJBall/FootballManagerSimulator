@@ -128,9 +128,13 @@ public class Movement extends MatchEvent {
     protected String buildMatchEventString() {
         StringBuilder message = new StringBuilder();
         message.append(getCurrentGameTime() + " ");
-        message.append(getPlayerInPossession().getName() + " ");
-        message.append("Has moved ");
+        message.append("[");
+        message.append(getPlayerInPossession().getName());
+        message.append("]");
+        message.append(" Moved ");
+        message.append("[");
         message.append(getDirectionToMovePlayerIn().getDirectionValueAsString());
+        message.append("]");
 
         return message.toString();
     }

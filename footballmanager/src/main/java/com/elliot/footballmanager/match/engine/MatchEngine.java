@@ -13,7 +13,10 @@ import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Player;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +41,8 @@ public class MatchEngine {
 
     public static FootballPitch[][] footballPitch;
     private static Football football;
+
+    private static double currentTimeInGame = 0.0d;
 
     // Private Constructor to avoid instantiation of MatchEngine objects
     private MatchEngine() {
@@ -113,17 +118,14 @@ public class MatchEngine {
     }
 
     private static void simulateOneHalfOfFootball() {
-        double startTime = MatchEngineConstants.MINUTES_REMAINING_IN_HALF;
-        double timeRemainingInHalf = MatchEngineConstants.MINUTES_REMAINING_IN_HALF;
+        double simulationTime = MatchEngine.getCurrentTimeInGame() <= MatchEngineConstants.MINUTES_IN_FIRST_HALF ?
+                MatchEngineConstants.MINUTES_IN_FIRST_HALF : MatchEngineConstants.MINUTES_IN_SECOND_HALF;
 
-        // TODO: Look into alternative for Double due to precision issues, BigDecimal suitable replacement?
-        while (timeRemainingInHalf > 0D) {
+        while (MatchEngine.getCurrentTimeInGame() <= simulationTime) {
             determineNextGameAction();
-            timeRemainingInHalf -= 0.10D;
-            Double currentTime = startTime - timeRemainingInHalf;
+            MatchEngine.setCurrentTimeInGame(MatchEngine.getCurrentTimeInGame() + 0.10D);
 
-            System.out.println("[" + String.format("%.2f", currentTime) + "]" + football.getPlayerInPossession().getName() + " " + football.getCurrentXCoordinate() + " " + football.getCurrentYCoordinate());
-
+            isDelayForUserRequired();
         }
     }
 
@@ -190,7 +192,9 @@ public class MatchEngine {
 
     private static void updatePlayersTackledRecovery() {
         for (Player player : getAllPlayersFromBothSquads()) {
-            player.setGameTicksUntilRecoveredFromTackle(player.getGameTicksUntilRecoveredFromTackle() - 1);
+            if (player.getGameTicksUntilRecoveredFromTackle() > 0) {
+                player.setGameTicksUntilRecoveredFromTackle(player.getGameTicksUntilRecoveredFromTackle() - 1);
+            }
         }
     }
 
@@ -250,5 +254,26 @@ public class MatchEngine {
 
     public static void setIsLoggingGameEvents(boolean isLoggingGameEvents) {
         MatchEngine.logGameEvents = isLoggingGameEvents;
+    }
+
+    private static void isDelayForUserRequired() {
+        // If the logGameEvents flag is true, Add small delay slowing number of Events displayed
+        try {
+            if (MatchEngine.isLoggingGameEvents()) {
+                TimeUnit.MILLISECONDS.sleep(400);
+            }
+        } catch (InterruptedException e) {
+            System.out.println(e);
+        }
+    }
+
+    public static double getCurrentTimeInGame() {
+        return currentTimeInGame;
+    }
+
+    private static void setCurrentTimeInGame(double currentTimeInGame) {
+        MatchEngine.currentTimeInGame = BigDecimal.valueOf(currentTimeInGame)
+                .setScale(2, RoundingMode.HALF_UP)
+                .doubleValue();
     }
 }

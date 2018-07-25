@@ -8,7 +8,7 @@ import com.elliot.footballmanager.player.Player;
  */
 public class MatchEngineMediator {
 
-    public static void printMessageToConsole(String messagge) {
-        System.out.println(messagge);
+    public static void printMessageToConsole(String message) {
+        System.out.println(message);
     }
 }

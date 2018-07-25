@@ -36,6 +36,8 @@ public class Tackle extends MatchEvent {
             playerBeingChallenged.setGameTicksUntilRecoveredFromTackle(tacklingMethod.getGameTickRecoveryTime());
             football.setPlayerInPossession(playerAttemptingChallenge);
         }
+
+        doesEventNeedToBeLogged();
     }
 
     private Integer determineTacklingStrategy() {
@@ -60,9 +62,13 @@ public class Tackle extends MatchEvent {
     protected String buildMatchEventString() {
         StringBuilder message = new StringBuilder();
         message.append(getCurrentGameTime() + " ");
-        message.append(getPlayerBeingChallenged().getName() + " ");
-        message.append("Is being challenged by ");
+        message.append("[");
         message.append(getPlayerAttemptingChallenge().getName());
+        message.append("]");
+        message.append(" Challenged ");
+        message.append("[");
+        message.append(getPlayerBeingChallenged().getName());
+        message.append("]");
 
         return message.toString();
     }
