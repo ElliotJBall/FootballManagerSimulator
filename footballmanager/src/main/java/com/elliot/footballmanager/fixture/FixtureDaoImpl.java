@@ -57,7 +57,7 @@ public class FixtureDaoImpl implements FixtureDao {
 				String dateString = rs.getString("DATE_OF_MATCH");
 				Date date = DateUtils.FIXTURE_DATE_FORMAT.parse(dateString);
 				
-				upcomingFixtures.add(new Fixture(homeTeam, awayTeam,
+				upcomingFixtures.add(new Fixture(rs.getInt("FIXTURE_ID"), homeTeam, awayTeam,
 						date, rs.getInt("LEAGUE_ID")));
 			}
 			return upcomingFixtures;

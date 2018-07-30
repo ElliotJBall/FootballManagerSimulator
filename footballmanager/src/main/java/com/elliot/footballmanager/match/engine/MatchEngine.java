@@ -62,6 +62,7 @@ public class MatchEngine {
         simulateOneHalfOfFootball();
         simulateOneHalfOfFootball();
 
+        beginPostMatchSetup();
         return null;
     }
 
@@ -243,11 +244,6 @@ public class MatchEngine {
         return allPlayersOnFootballPitch;
     }
 
-    private static void persistMatchResultToDatabase(MatchResult matchResult) {
-        MatchEngineDao matchEngineDao = new MatchEngineDaoImpl();
-        matchEngineDao.persistResultToDatabase(matchResult);
-    }
-
     public static boolean isLoggingGameEvents() {
         return logGameEvents;
     }
@@ -257,14 +253,14 @@ public class MatchEngine {
     }
 
     private static void isDelayForUserRequired() {
-        // If the logGameEvents flag is true, Add small delay slowing number of Events displayed
+/*        // If the logGameEvents flag is true, Add small delay slowing number of Events displayed
         try {
             if (MatchEngine.isLoggingGameEvents()) {
                 TimeUnit.MILLISECONDS.sleep(400);
             }
         } catch (InterruptedException e) {
             System.out.println(e);
-        }
+        }*/
     }
 
     public static double getCurrentTimeInGame() {
@@ -275,5 +271,23 @@ public class MatchEngine {
         MatchEngine.currentTimeInGame = BigDecimal.valueOf(currentTimeInGame)
                 .setScale(2, RoundingMode.HALF_UP)
                 .doubleValue();
+    }
+
+    private static void beginPostMatchSetup() {
+        MatchResult matchResult = buildMatchResult();
+        matchResult.displayPostMatchResult();
+
+        persistMatchResultToDatabase(matchResult);
+    }
+
+    private static MatchResult buildMatchResult() {
+        FootballTeamMatchStats homeTeamMatchStats = MatchEngine.footballTeamToMatchStats.get(homeTeam.getTeamName());
+        FootballTeamMatchStats awayTeamMatchStats = MatchEngine.footballTeamToMatchStats.get(awayTeam.getTeamName());
+        return new MatchResult(MatchEngine.fixture, homeTeamMatchStats, awayTeamMatchStats);
+    }
+
+    private static void persistMatchResultToDatabase(MatchResult matchResult) {
+        MatchEngineDao matchEngineDao = new MatchEngineDaoImpl();
+        matchEngineDao.persistResultToDatabase(matchResult);
     }
 }

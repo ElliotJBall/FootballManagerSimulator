@@ -11,6 +11,7 @@ import com.elliot.footballmanager.footballteam.FootballTeam;
  */
 public class Fixture {
 
+	private Integer fixtureId;
 	private FootballTeam homeTeam;
 	private FootballTeam awayTeam;
 	private Date dateOfFixture;
@@ -20,11 +21,20 @@ public class Fixture {
 		
 	}
 	
-	public Fixture(FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture, Integer leagueId) {
+	public Fixture(Integer fixtureId, FootballTeam homeTeam, FootballTeam awayTeam, Date dateOfFixture, Integer leagueId) {
+		this.fixtureId = fixtureId;
 		this.homeTeam = homeTeam;
 		this.awayTeam = awayTeam;
 		this.dateOfFixture = dateOfFixture;
 		this.leagueId = leagueId;
+	}
+
+	public Integer getFixtureId() {
+		return fixtureId;
+	}
+
+	public void setFixtureId(Integer fixtureId) {
+		this.fixtureId = fixtureId;
 	}
 
 	public FootballTeam getHomeTeam() {
