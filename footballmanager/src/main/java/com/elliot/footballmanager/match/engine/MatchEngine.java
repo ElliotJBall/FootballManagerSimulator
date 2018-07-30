@@ -16,7 +16,6 @@ import com.elliot.footballmanager.player.Player;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -275,7 +274,7 @@ public class MatchEngine {
 
     private static void beginPostMatchSetup() {
         MatchResult matchResult = buildMatchResult();
-        matchResult.displayPostMatchResult();
+       matchResult.displayMatchResult();
 
         persistMatchResultToDatabase(matchResult);
     }

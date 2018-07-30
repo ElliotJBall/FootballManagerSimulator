@@ -45,16 +45,17 @@ public class MatchResult {
         return result;
     }
 
-    public String displayPostMatchResult() {
+    public void displayMatchResult() {
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Full Time Result :");
+        stringBuilder.append("FT: ");
         stringBuilder.append(homeTeamMatchStats.getFootballTeam().getTeamName());
         stringBuilder.append(" ");
         stringBuilder.append("[" + homeTeamMatchStats.getGoals() + "]");
+        stringBuilder.append(" - ");
+        stringBuilder.append("[" + awayTeamMatchStats.getGoals() + "]");
         stringBuilder.append(" ");
         stringBuilder.append(awayTeamMatchStats.getFootballTeam().getTeamName());
-        stringBuilder.append(" ");
-        stringBuilder.append("[" + awayTeamMatchStats.getGoals() + "]");
-        return stringBuilder.toString();
+
+        System.out.println(stringBuilder);
     }
 }
