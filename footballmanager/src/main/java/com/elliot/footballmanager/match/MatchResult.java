@@ -45,7 +45,7 @@ public class MatchResult {
         return result;
     }
 
-    public void displayMatchResult() {
+    public void displayPostMatchInfo() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("FT: ");
         stringBuilder.append(homeTeamMatchStats.getFootballTeam().getTeamName());

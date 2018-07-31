@@ -1,6 +1,7 @@
 package com.elliot.footballmanager.fixture;
 
 import java.util.Date;
+import java.util.Objects;
 
 import com.elliot.footballmanager.footballteam.FootballTeam;
 
@@ -67,6 +68,23 @@ public class Fixture {
 
 	public void setLeagueId(Integer leagueId) {
 		this.leagueId = leagueId;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Fixture fixture = (Fixture) o;
+		return Objects.equals(fixtureId, fixture.fixtureId) &&
+				Objects.equals(homeTeam, fixture.homeTeam) &&
+				Objects.equals(awayTeam, fixture.awayTeam) &&
+				Objects.equals(dateOfFixture, fixture.dateOfFixture) &&
+				Objects.equals(leagueId, fixture.leagueId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(fixtureId, homeTeam, awayTeam, dateOfFixture, leagueId);
 	}
 
 	@Override

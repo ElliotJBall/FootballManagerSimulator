@@ -2,10 +2,15 @@ package com.elliot.footballmanager.menu;
 
 import com.elliot.footballmanager.DateUtils;
 import com.elliot.footballmanager.fixture.Fixture;
+import com.elliot.footballmanager.fixture.FixtureDao;
+import com.elliot.footballmanager.fixture.FixtureDaoImpl;
 import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.engine.MatchEngine;
 
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 /**
@@ -36,7 +41,7 @@ public class MatchDayMenu implements GameMenu {
             try {
                 switch (scanner.nextInt()) {
                     case 6:
-                        MatchEngine.beginFootballMatchSimulator(gameManager);
+                        simulateCurrentDatesFixtures();
                         //TODO: Continue with simulation, show post game stats then continue into the main menu / post game conference
                         break;
                     case 7:
@@ -77,6 +82,30 @@ public class MatchDayMenu implements GameMenu {
         System.out.println("[6] Start Match");
         System.out.println("[7] View / Edit team formation");
         System.out.println("[8] Back to main menu");
+    }
+
+    private void simulateCurrentDatesFixtures() {
+        MatchEngine.setIsLoggingGameEvents(true);
+        Fixture currentPlayersFixture = gameManager.getUpcomingFixtures().remove();
+
+        MatchResult matchResult = MatchEngine.beginFootballMatchSimulator(currentPlayersFixture);
+        matchResult.displayPostMatchInfo();
+
+        simulateRemainingFixtures(currentPlayersFixture);
+    }
+
+    private void simulateRemainingFixtures(Fixture currentPlayersFixture) {
+        FixtureDao fixtureDao = new FixtureDaoImpl();
+        List<MatchResult> matchResults = new ArrayList<MatchResult>();
+        MatchEngine.setIsLoggingGameEvents(false);
+
+        for (Fixture fixture : fixtureDao.getFixturesForGivenDate(gameManager.getCurrentDate())) {
+            if (!currentPlayersFixture.equals(fixture)) {
+                MatchResult matchResult = MatchEngine.beginFootballMatchSimulator(fixture);
+                matchResult.displayPostMatchInfo();
+                matchResults.add(matchResult);
+            }
+        }
     }
 
     private GameManager getGameManager() {

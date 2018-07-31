@@ -16,6 +16,7 @@ import com.elliot.footballmanager.player.Player;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**
@@ -48,31 +49,34 @@ public class MatchEngine {
 
     }
 
-    public static MatchResult beginFootballMatchSimulator(GameManager gameManager) {
-        beginPreMatchSetup(gameManager);
+    public static MatchResult beginFootballMatchSimulator(Fixture fixture) {
+        beginPreMatchSetup(fixture);
 
         buildFootballPitch();
         addPlayersToPitch();
 
         giveATeamTheFootball();
 
-        MatchEngine.logGameEvents = true;
-
         simulateOneHalfOfFootball();
         simulateOneHalfOfFootball();
 
-        beginPostMatchSetup();
-        return null;
+        return beginPostMatchSetup();
     }
 
-    private static void beginPreMatchSetup(GameManager gameManager) {
-        initialiseFixtureInformation(gameManager);
+    private static void beginPreMatchSetup(Fixture fixture) {
+        resetMatchEngineVariables();
+
+        initialiseFixtureInformation(fixture);
         initialiseFootballTeamMatchStats();
         initialiseFootballTeamSquads();
     }
 
-    private static void initialiseFixtureInformation(GameManager gameManager) {
-        fixture = gameManager.getUpcomingFixtures().remove();
+    private static void resetMatchEngineVariables() {
+        currentTimeInGame = 0.0d;
+    }
+
+    private static void initialiseFixtureInformation(Fixture fixture) {
+        MatchEngine.fixture = fixture;
 
         homeTeam = fixture.getHomeTeam();
         awayTeam = fixture.getAwayTeam();
@@ -98,20 +102,17 @@ public class MatchEngine {
     }
 
     private static void giveATeamTheFootball() {
-        if (football == null) {
-            Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
-            Player playerToKickOffGame = players[6];
+        Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+        Player playerToKickOffGame = players[6];
 
-            football = new Football(playerToKickOffGame.getCurrentXCoordinate(), playerToKickOffGame.getCurrentYCoordinate(),
-                    playerToKickOffGame);
-            return;
-        }
+        football = new Football(playerToKickOffGame.getCurrentXCoordinate(), playerToKickOffGame.getCurrentYCoordinate(),
+                playerToKickOffGame);
 
         if (football.getPlayerInPossession().getCurrentClub().equals(homeTeam)) {
-            Player[] players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
+            players = homeTeamMatchSetup.getSelectedFormation().getStartingLineup();
             football.setPlayerInPossession(players[6]);
         } else {
-            Player[] players = awayTeamMatchSetup.getSelectedFormation().getStartingLineup();
+            players = awayTeamMatchSetup.getSelectedFormation().getStartingLineup();
             football.setPlayerInPossession(players[6]);
         }
 
@@ -252,8 +253,8 @@ public class MatchEngine {
     }
 
     private static void isDelayForUserRequired() {
-/*        // If the logGameEvents flag is true, Add small delay slowing number of Events displayed
-        try {
+        // If the logGameEvents flag is true, Add small delay slowing number of Events displayed
+/*        try {
             if (MatchEngine.isLoggingGameEvents()) {
                 TimeUnit.MILLISECONDS.sleep(400);
             }
@@ -272,11 +273,11 @@ public class MatchEngine {
                 .doubleValue();
     }
 
-    private static void beginPostMatchSetup() {
+    private static MatchResult beginPostMatchSetup() {
         MatchResult matchResult = buildMatchResult();
-       matchResult.displayMatchResult();
-
         persistMatchResultToDatabase(matchResult);
+        return matchResult;
+
     }
 
     private static MatchResult buildMatchResult() {

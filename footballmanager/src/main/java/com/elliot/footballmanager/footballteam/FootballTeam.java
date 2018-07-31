@@ -2,6 +2,7 @@ package com.elliot.footballmanager.footballteam;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
@@ -124,5 +125,25 @@ public class FootballTeam implements Serializable, IFootballTeam {
 
 	public String printFootballTeamMenuInfo() {
 		return "[" + this.getFootballTeamId() + "]" + " " + this.getTeamName();
-	}	
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		FootballTeam that = (FootballTeam) o;
+		return Objects.equals(footballTeamId, that.footballTeamId) &&
+				Objects.equals(teamName, that.teamName) &&
+				Objects.equals(leagueId, that.leagueId) &&
+				Objects.equals(location, that.location) &&
+				Objects.equals(stadium, that.stadium) &&
+				Objects.equals(stadiumCapacity, that.stadiumCapacity) &&
+				Objects.equals(squad, that.squad) &&
+				Objects.equals(matchSetup, that.matchSetup);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(footballTeamId, teamName, leagueId, location, stadium, stadiumCapacity, squad, matchSetup);
+	}
 }
