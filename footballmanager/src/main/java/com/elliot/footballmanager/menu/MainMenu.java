@@ -81,7 +81,7 @@ public class MainMenu implements GameMenu {
 		System.out.println("[2] View football team options");
 		System.out.println("[3] View upcoming fixtures");
 		// (E.g. 01/01/2020 | Current Team  | League Position)
-		System.out.println("[4] View quick information information");		
+		System.out.println("[4] View quick information");
 		System.out.println("[5] Open match day menu");
 	}
 	
