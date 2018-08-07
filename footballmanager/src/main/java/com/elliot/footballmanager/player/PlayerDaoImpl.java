@@ -32,7 +32,7 @@ public class PlayerDaoImpl implements PlayerDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return new ArrayList<Player>();
 			}
 			

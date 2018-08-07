@@ -67,7 +67,7 @@ public class LeagueDaoImpl implements LeagueDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return null;
 			}
 			return new League(rs.getInt("LEAGUE_ID"), rs.getString("LEAGUE_NAME"), rs.getInt("COUNTRY_ID"));

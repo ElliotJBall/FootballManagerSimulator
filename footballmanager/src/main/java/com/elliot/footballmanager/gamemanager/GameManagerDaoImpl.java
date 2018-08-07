@@ -69,7 +69,7 @@ public class GameManagerDaoImpl implements GameManagerDao {
 		try (Connection conn = SqliteDatabaseConnector.connect();
 				Statement stmt = conn.createStatement();
 				ResultSet rs = stmt.executeQuery(query)) {
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				System.out.println("No save game found! Please create a new game first.");
 				return;
 			}

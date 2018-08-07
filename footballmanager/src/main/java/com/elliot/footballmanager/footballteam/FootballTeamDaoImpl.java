@@ -50,7 +50,7 @@ public class FootballTeamDaoImpl implements FootballTeamDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return null;
 			}
 			return new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getString("TEAM_NAME"),
@@ -72,7 +72,7 @@ public class FootballTeamDaoImpl implements FootballTeamDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return null;
 			}
 			return new FootballTeam(rs.getInt("FOOTBALL_TEAM_ID"), rs.getString("TEAM_NAME"),
