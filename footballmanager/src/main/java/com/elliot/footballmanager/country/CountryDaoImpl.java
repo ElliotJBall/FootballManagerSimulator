@@ -44,7 +44,7 @@ public class CountryDaoImpl implements CountryDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return null;
 			}
 			

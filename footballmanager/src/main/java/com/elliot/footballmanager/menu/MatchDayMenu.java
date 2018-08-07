@@ -40,14 +40,14 @@ public class MatchDayMenu implements GameMenu {
         do {
             try {
                 switch (scanner.nextInt()) {
-                    case 6:
-                        simulateCurrentDatesFixtures();
-                        //TODO: Continue with simulation, show post game stats then continue into the main menu / post game conference
+                    case 1:
+                        List<MatchResult> matchResults = simulateCurrentDatesFixtures();
+                        displayPostMatchMenu(matchResults);
                         break;
-                    case 7:
+                    case 2:
                         displaySquadOptions();
                         break;
-                    case 8:
+                    case 3:
                         GameMenu mainMenu = new MainMenu(gameManager);
                         mainMenu.beginMenuSelectionLoop();
                         break;
@@ -79,22 +79,26 @@ public class MatchDayMenu implements GameMenu {
     }
 
     public void displayMenuOptions() {
-        System.out.println("[6] Start Match");
-        System.out.println("[7] View / Edit team formation");
-        System.out.println("[8] Back to main menu");
+        System.out.println("[1] Start Match");
+        System.out.println("[2] View / Edit team formation");
+        System.out.println("[3] Back to main menu");
     }
 
-    private void simulateCurrentDatesFixtures() {
+    private List<MatchResult> simulateCurrentDatesFixtures() {
+        List<MatchResult> matchResults = new ArrayList<MatchResult>();
+
         MatchEngine.setIsLoggingGameEvents(true);
         Fixture currentPlayersFixture = gameManager.getUpcomingFixtures().remove();
 
-        MatchResult matchResult = MatchEngine.beginFootballMatchSimulator(currentPlayersFixture);
-        matchResult.displayPostMatchInfo();
+        MatchResult playersMatchResult = MatchEngine.beginFootballMatchSimulator(currentPlayersFixture);
 
-        simulateRemainingFixtures(currentPlayersFixture);
+        matchResults = simulateRemainingFixtures(currentPlayersFixture);
+        matchResults.add(0, playersMatchResult);
+
+        return matchResults;
     }
 
-    private void simulateRemainingFixtures(Fixture currentPlayersFixture) {
+    private List<MatchResult> simulateRemainingFixtures(Fixture currentPlayersFixture) {
         FixtureDao fixtureDao = new FixtureDaoImpl();
         List<MatchResult> matchResults = new ArrayList<MatchResult>();
         MatchEngine.setIsLoggingGameEvents(false);
@@ -102,10 +106,15 @@ public class MatchDayMenu implements GameMenu {
         for (Fixture fixture : fixtureDao.getFixturesForGivenDate(gameManager.getCurrentDate())) {
             if (!currentPlayersFixture.equals(fixture)) {
                 MatchResult matchResult = MatchEngine.beginFootballMatchSimulator(fixture);
-                matchResult.displayPostMatchInfo();
                 matchResults.add(matchResult);
             }
         }
+        return matchResults;
+    }
+
+    private void displayPostMatchMenu(List<MatchResult> matchResults) {
+        PostMatchMenu postMatchMenu = new PostMatchMenu(gameManager, matchResults);
+        postMatchMenu.beginMenuSelectionLoop();
     }
 
     private GameManager getGameManager() {

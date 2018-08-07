@@ -8,6 +8,8 @@ import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDaoImpl;
 import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.standings.StandingDao;
+import com.elliot.footballmanager.standings.StandingDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +32,7 @@ public class NewSeasonBuilder {
 
         setupFixtures();
         setupTeamsMatchInfo();
+        setupStandings();
     }
 
     private static void setupFixtures() {
@@ -56,6 +59,19 @@ public class NewSeasonBuilder {
         for (FootballTeam footballTeam : gameManager.getCurrentLeague().getFootballTeams()) {
             footballTeam.setMatchSetup(FootballTeamMatchSetupBuilder.buildNewMatchSetup(footballTeam));
             footballTeamMatchSetupDao.persistFootballTeamMatchSetup(footballTeam);
+        }
+    }
+
+    private static void setupStandings() {
+        System.out.println("Generating Standings...");
+
+        Integer leagueId = gameManager.getCurrentLeague().getLeagueId();
+        FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
+        gameManager.getCurrentLeague().setFootballTeams(new ArrayList<FootballTeam>(footballTeamDao.getAllFootballTeams(leagueId)));
+
+        StandingDao standingDao = new StandingDaoImpl();
+        for (FootballTeam footballTeam :gameManager.getCurrentLeague().getFootballTeams()) {
+            standingDao.createNewStandingForFootballTeam(footballTeam);
         }
     }
 }

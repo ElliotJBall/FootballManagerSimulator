@@ -12,6 +12,7 @@ import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
 import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.standings.StandingBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -275,6 +276,8 @@ public class MatchEngine {
 
     private static MatchResult beginPostMatchSetup() {
         MatchResult matchResult = buildMatchResult();
+
+        updateStandingInformation(matchResult);
         persistMatchResultToDatabase(matchResult);
         return matchResult;
 
@@ -284,6 +287,12 @@ public class MatchEngine {
         FootballTeamMatchStats homeTeamMatchStats = MatchEngine.footballTeamToMatchStats.get(homeTeam.getTeamName());
         FootballTeamMatchStats awayTeamMatchStats = MatchEngine.footballTeamToMatchStats.get(awayTeam.getTeamName());
         return new MatchResult(MatchEngine.fixture, homeTeamMatchStats, awayTeamMatchStats);
+    }
+
+    private static void updateStandingInformation(MatchResult matchResult) {
+        StandingBuilder standingBuilder = new StandingBuilder(matchResult);
+        standingBuilder.buildStandingsFromMatchResult();
+        standingBuilder.updateStandingsInDatabase();
     }
 
     private static void persistMatchResultToDatabase(MatchResult matchResult) {

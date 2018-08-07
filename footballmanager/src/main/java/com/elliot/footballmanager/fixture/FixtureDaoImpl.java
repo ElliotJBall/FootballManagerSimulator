@@ -44,7 +44,7 @@ public class FixtureDaoImpl implements FixtureDao {
 			
 			ResultSet rs = pstmt.executeQuery();
 			
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return new LinkedList<Fixture>();
 			}
 			
@@ -82,7 +82,7 @@ public class FixtureDaoImpl implements FixtureDao {
 
 			ResultSet rs = pstmt.executeQuery();
 
-			if (!rs.next()) {
+			if (rs.isAfterLast()) {
 				return fixtures;
 			}
 
