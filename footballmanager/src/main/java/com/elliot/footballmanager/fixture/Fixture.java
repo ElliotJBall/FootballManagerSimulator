@@ -75,11 +75,7 @@ public class Fixture {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Fixture fixture = (Fixture) o;
-		return Objects.equals(fixtureId, fixture.fixtureId) &&
-				Objects.equals(homeTeam, fixture.homeTeam) &&
-				Objects.equals(awayTeam, fixture.awayTeam) &&
-				Objects.equals(dateOfFixture, fixture.dateOfFixture) &&
-				Objects.equals(leagueId, fixture.leagueId);
+		return Objects.equals(fixtureId, fixture.fixtureId);
 	}
 
 	@Override
