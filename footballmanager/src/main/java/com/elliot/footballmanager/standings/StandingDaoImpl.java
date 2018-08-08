@@ -82,8 +82,8 @@ public class StandingDaoImpl implements StandingDao {
     }
 
     @Override
-    public List<Standing> getOrderedTableByLeagueId(Integer leagueId) {
-        List<Standing> table = new ArrayList<Standing>();
+    public LeagueTable getOrderedTableByLeagueId(Integer leagueId) {
+        LeagueTable leagueTable = new LeagueTable();
         String query = "SELECT * FROM STANDING WHERE LEAGUE_ID = ?";
 
         try (Connection conn = SqliteDatabaseConnector.connect();
@@ -92,18 +92,16 @@ public class StandingDaoImpl implements StandingDao {
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.isAfterLast()) {
-                return table;
+                return new LeagueTable();
             }
 
             while (rs.next()) {
-                table.add(buildStandingObject(rs));
+                leagueTable.addStandingToTable(buildStandingObject(rs));
             }
-
-            orderTableByPoints(table);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return table;
+        return leagueTable;
     }
 
     private Standing buildStandingObject(ResultSet rs) throws SQLException {

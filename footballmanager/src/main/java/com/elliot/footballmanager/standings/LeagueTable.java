@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class LeagueTable {
 
-    List<Standing> table;
+    private List<Standing> table;
 
     //TODO: Replace calls for the list of standings with the table object holding the list itself
 

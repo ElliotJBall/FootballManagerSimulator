@@ -1,5 +1,9 @@
 package com.elliot.footballmanager.standings;
 
+import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.footballteam.FootballTeamDao;
+import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
+
 /**
  * Represents a FootballTeams current standing
  * in a league table.
@@ -136,4 +140,26 @@ public class Standing {
     public void setGamesPlayed(Integer gamesPlayed) {
         this.gamesPlayed = gamesPlayed;
     }
+
+    public void printStandingLeagueTableEntry() {
+        //TODO: May want an in memory map of FootballTeamIds - FootballTeamName to minimise DB calls
+        //TODO: Format league table when displaying in console
+        FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
+        FootballTeam footballTeam = footballTeamDao.getFootballTeamById(footballTeamId);
+
+        StringBuilder sb = new StringBuilder();
+        sb.append("[" + tablePosition + "]" + " ");
+        sb.append(footballTeam.getTeamName() + " ");
+        sb.append(gamesPlayed + " ");
+        sb.append(wins + " ");
+        sb.append(draws + " ");
+        sb.append(losses + " ");
+        sb.append(goalsFor + " ");
+        sb.append(goalsAgainst + " ");
+        sb.append(goalDifference + " ");
+        sb.append(points);
+
+        System.out.println(sb.toString());
+    }
+
 }

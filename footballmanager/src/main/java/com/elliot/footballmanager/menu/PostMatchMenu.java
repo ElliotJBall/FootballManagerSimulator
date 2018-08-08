@@ -2,6 +2,9 @@ package com.elliot.footballmanager.menu;
 
 import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.match.MatchResult;
+import com.elliot.footballmanager.standings.LeagueTable;
+import com.elliot.footballmanager.standings.StandingDao;
+import com.elliot.footballmanager.standings.StandingDaoImpl;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -27,6 +30,15 @@ public class PostMatchMenu implements GameMenu {
         this.matchResults = matchResults;
     }
 
+    public List<MatchResult> getMatchResults() {
+        return matchResults;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+
     @Override
     public void beginMenuSelectionLoop() {
         displayMenuOptions();
@@ -44,6 +56,7 @@ public class PostMatchMenu implements GameMenu {
                         displayMenuOptions();
                         break;
                     case 2:
+                        displayLeagueTable();
                         break;
                     case 3:
                         break;
@@ -66,13 +79,15 @@ public class PostMatchMenu implements GameMenu {
         }
     }
 
-    public List<MatchResult> getMatchResults() {
-        return matchResults;
+    private void displayLeagueTable() {
+        StandingDao standingDao = new StandingDaoImpl();
+        LeagueTable leagueTable = standingDao.getOrderedTableByLeagueId(gameManager.getCurrentLeague().getLeagueId());
+
+        for (int i = 0; i < leagueTable.getTable().size(); i++) {
+            leagueTable.getTable().get(i).printStandingLeagueTableEntry();
+        }
     }
 
-    public GameManager getGameManager() {
-        return gameManager;
-    }
 
     @Override
     public void displayMenuOptions() {

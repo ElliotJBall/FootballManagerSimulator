@@ -19,7 +19,7 @@ public class StandingBuilder {
     private Standing homeTeamStanding;
     private Standing awayTeamStanding;
 
-    private List<Standing> outdatedTable;
+    private LeagueTable outdatedTable;
 
     private StandingBuilder() {
 
@@ -135,14 +135,12 @@ public class StandingBuilder {
 
         updateTableStanding(homeTeamStanding);
         updateTableStanding(awayTeamStanding);
-
-        StandingComparator.orderTableByPoints(outdatedTable);
     }
 
     private void updateTableStanding(Standing standingToUpdate) {
-        for (int i = 0; i <= outdatedTable.size(); i++) {
-            if (outdatedTable.get(i).getFootballTeamId().equals(standingToUpdate.getFootballTeamId())) {
-                outdatedTable.set(i, standingToUpdate);
+        for (int i = 0; i <= outdatedTable.getTable().size(); i++) {
+            if (outdatedTable.getTable().get(i).getFootballTeamId().equals(standingToUpdate.getFootballTeamId())) {
+                outdatedTable.getTable().set(i, standingToUpdate);
                 return;
             }
         }
@@ -150,7 +148,7 @@ public class StandingBuilder {
 
     private void persistUpdatedTable() {
         StandingDao standingDao = new StandingDaoImpl();
-        for (Standing standing : outdatedTable) {
+        for (Standing standing : outdatedTable.getTable()) {
             standingDao.updateStandingRecord(standing);
         }
     }

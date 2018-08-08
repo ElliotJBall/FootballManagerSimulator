@@ -29,6 +29,5 @@ public interface StandingDao {
      * @param leagueId The league we want all FootballTeam standings for
      * @return List of standings for given league
      */
-    //TODO: Replace List<Standing> with LeagueTable object
-    public List<Standing> getOrderedTableByLeagueId(Integer leagueId);
+    public LeagueTable getOrderedTableByLeagueId(Integer leagueId);
 }
