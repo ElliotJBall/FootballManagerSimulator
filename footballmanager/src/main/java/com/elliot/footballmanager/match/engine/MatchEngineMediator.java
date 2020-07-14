@@ -1,7 +1,5 @@
 package com.elliot.footballmanager.match.engine;
 
-import com.elliot.footballmanager.player.Player;
-
 /**
  * Used when simulating a game to output match events.
  * @author Elliot

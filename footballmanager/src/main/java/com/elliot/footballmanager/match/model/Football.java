@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.match.model;
 
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
 /**
  * @author Elliot

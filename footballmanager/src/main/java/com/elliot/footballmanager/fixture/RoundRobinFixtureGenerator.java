@@ -1,5 +1,7 @@
 package com.elliot.footballmanager.fixture;
 
+import com.elliot.footballmanager.entity.dao.FixtureDao;
+import com.elliot.footballmanager.entity.dao.impl.FixtureDaoImpl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -9,8 +11,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.elliot.footballmanager.DateUtils;
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.league.League;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.League;
 
 /**
  * Given a <link>League</link> containing all the <link>FootballTeam</link>'s 

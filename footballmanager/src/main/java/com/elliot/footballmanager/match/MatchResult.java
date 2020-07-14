@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.match;
 
-import com.elliot.footballmanager.fixture.Fixture;
+import com.elliot.footballmanager.entity.Fixture;
 
 /**
  * The MatchResult object is created after a FootballMatch has

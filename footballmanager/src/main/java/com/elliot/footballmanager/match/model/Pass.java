@@ -1,7 +1,7 @@
 package com.elliot.footballmanager.match.model;
 
 import com.elliot.footballmanager.match.RandomNumberGenerator;
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;

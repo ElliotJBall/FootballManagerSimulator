@@ -1,5 +1,8 @@
 package com.elliot.footballmanager.standings;
 
+import com.elliot.footballmanager.entity.dao.StandingDao;
+import com.elliot.footballmanager.entity.dao.impl.StandingDaoImpl;
+import com.elliot.footballmanager.entity.Standing;
 import com.elliot.footballmanager.match.MatchResult;
 
 import java.util.List;

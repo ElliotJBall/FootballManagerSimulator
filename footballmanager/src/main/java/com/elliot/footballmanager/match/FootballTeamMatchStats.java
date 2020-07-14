@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.match;
 
-import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.entity.FootballTeam;
 
 /**
  * @author Elliot

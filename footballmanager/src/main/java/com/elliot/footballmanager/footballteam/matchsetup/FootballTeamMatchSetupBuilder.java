@@ -1,8 +1,8 @@
 package com.elliot.footballmanager.footballteam.matchsetup;
 
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.player.Player;
-import com.elliot.footballmanager.player.Position;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.Player;
+import com.elliot.footballmanager.match.model.Position;
 
 import java.util.*;
 

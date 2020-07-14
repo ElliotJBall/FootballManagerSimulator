@@ -1,9 +1,7 @@
 package com.elliot.footballmanager.match.model.pitch;
 
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 
 /**

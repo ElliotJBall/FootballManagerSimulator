@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.menu;
 
-import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.entity.GameManager;
 
 import java.util.Scanner;
 

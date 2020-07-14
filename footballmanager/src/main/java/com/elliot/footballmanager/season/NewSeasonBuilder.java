@@ -1,15 +1,17 @@
 package com.elliot.footballmanager.season;
 
+import com.elliot.footballmanager.entity.dao.FixtureDao;
+import com.elliot.footballmanager.entity.dao.impl.FixtureDaoImpl;
 import com.elliot.footballmanager.fixture.*;
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.dao.FootballTeamDao;
+import com.elliot.footballmanager.entity.dao.impl.FootballTeamDaoImpl;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupBuilder;
-import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
-import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDaoImpl;
-import com.elliot.footballmanager.gamemanager.GameManager;
-import com.elliot.footballmanager.standings.StandingDao;
-import com.elliot.footballmanager.standings.StandingDaoImpl;
+import com.elliot.footballmanager.entity.dao.FootballTeamMatchSetupDao;
+import com.elliot.footballmanager.entity.dao.impl.FootballTeamMatchSetupDaoImpl;
+import com.elliot.footballmanager.entity.GameManager;
+import com.elliot.footballmanager.entity.dao.StandingDao;
+import com.elliot.footballmanager.entity.dao.impl.StandingDaoImpl;
 
 import java.util.ArrayList;
 import java.util.List;

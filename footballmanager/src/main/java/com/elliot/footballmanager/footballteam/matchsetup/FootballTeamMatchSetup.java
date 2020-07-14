@@ -1,9 +1,8 @@
 package com.elliot.footballmanager.footballteam.matchsetup;
 
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
 import java.io.Serializable;
-import java.util.Arrays;
 
 /**
  * This class is used to store a FootballTeam objects current

@@ -2,8 +2,8 @@ package com.elliot.footballmanager.match.model.pitch;
 
 import com.elliot.footballmanager.footballteam.matchsetup.MatchDaySquad;
 import com.elliot.footballmanager.match.engine.MatchEngine;
-import com.elliot.footballmanager.player.Player;
-import com.elliot.footballmanager.player.Position;
+import com.elliot.footballmanager.entity.Player;
+import com.elliot.footballmanager.match.model.Position;
 
 import java.util.ArrayList;
 import java.util.Collection;

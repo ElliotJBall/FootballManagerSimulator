@@ -2,28 +2,20 @@ package com.elliot.footballmanager.menu;
 
 import java.util.*;
 
-import com.elliot.footballmanager.country.Country;
-import com.elliot.footballmanager.country.CountryDao;
-import com.elliot.footballmanager.country.CountryDaoImpl;
+import com.elliot.footballmanager.entity.Country;
+import com.elliot.footballmanager.entity.dao.CountryDao;
+import com.elliot.footballmanager.entity.dao.impl.CountryDaoImpl;
 import com.elliot.footballmanager.database.SqliteDatabaseConnector;
-import com.elliot.footballmanager.fixture.FixtureDao;
-import com.elliot.footballmanager.fixture.FixtureDaoImpl;
-import com.elliot.footballmanager.fixture.FixtureGenerator;
-import com.elliot.footballmanager.fixture.FixtureGeneratorFactory;
-import com.elliot.footballmanager.fixture.FixtureGeneratorType;
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
-import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupBuilder;
-import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDao;
-import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetupDaoImpl;
-import com.elliot.footballmanager.gamemanager.GameManager;
-import com.elliot.footballmanager.league.League;
-import com.elliot.footballmanager.league.LeagueDao;
-import com.elliot.footballmanager.league.LeagueDaoImpl;
-import com.elliot.footballmanager.manager.Manager;
-import com.elliot.footballmanager.manager.ManagerDao;
-import com.elliot.footballmanager.manager.ManagerDaoImpl;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.dao.FootballTeamDao;
+import com.elliot.footballmanager.entity.dao.impl.FootballTeamDaoImpl;
+import com.elliot.footballmanager.entity.GameManager;
+import com.elliot.footballmanager.entity.League;
+import com.elliot.footballmanager.entity.dao.LeagueDao;
+import com.elliot.footballmanager.entity.dao.impl.LeagueDaoImpl;
+import com.elliot.footballmanager.entity.Manager;
+import com.elliot.footballmanager.entity.dao.ManagerDao;
+import com.elliot.footballmanager.entity.dao.impl.ManagerDaoImpl;
 import com.elliot.footballmanager.season.NewSeasonBuilder;
 
 /**

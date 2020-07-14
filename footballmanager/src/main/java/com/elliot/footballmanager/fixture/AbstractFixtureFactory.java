@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
-import com.elliot.footballmanager.league.League;
-import com.elliot.footballmanager.league.LeagueDao;
-import com.elliot.footballmanager.league.LeagueDaoImpl;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.dao.FootballTeamDao;
+import com.elliot.footballmanager.entity.dao.impl.FootballTeamDaoImpl;
+import com.elliot.footballmanager.entity.League;
+import com.elliot.footballmanager.entity.dao.LeagueDao;
+import com.elliot.footballmanager.entity.dao.impl.LeagueDaoImpl;
 
 /**
  * Provides all the common information required by all

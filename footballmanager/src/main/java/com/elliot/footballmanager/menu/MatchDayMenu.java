@@ -1,10 +1,10 @@
 package com.elliot.footballmanager.menu;
 
 import com.elliot.footballmanager.DateUtils;
-import com.elliot.footballmanager.fixture.Fixture;
-import com.elliot.footballmanager.fixture.FixtureDao;
-import com.elliot.footballmanager.fixture.FixtureDaoImpl;
-import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.entity.Fixture;
+import com.elliot.footballmanager.entity.dao.FixtureDao;
+import com.elliot.footballmanager.entity.dao.impl.FixtureDaoImpl;
+import com.elliot.footballmanager.entity.GameManager;
 import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.engine.MatchEngine;
 

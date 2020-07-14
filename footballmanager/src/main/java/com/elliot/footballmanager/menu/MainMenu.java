@@ -4,8 +4,8 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import com.elliot.footballmanager.DateUtils;
-import com.elliot.footballmanager.fixture.Fixture;
-import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.entity.Fixture;
+import com.elliot.footballmanager.entity.GameManager;
 
 /**
  * Once a user has loaded / created a save game the MainMenu class provides 

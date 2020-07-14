@@ -1,13 +1,7 @@
 package com.elliot.footballmanager.match.model.pitch;
 
-import com.elliot.footballmanager.footballteam.matchsetup.MatchDaySquad;
-import com.elliot.footballmanager.match.engine.MatchEngine;
-import com.elliot.footballmanager.player.Player;
-import com.elliot.footballmanager.player.Position;
-
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Helper class to create and return a new FootballPitch object for use

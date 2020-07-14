@@ -1,13 +1,11 @@
 package com.elliot.footballmanager.menu;
 
-import com.elliot.footballmanager.footballteam.FootballTeam;
-import com.elliot.footballmanager.footballteam.FootballTeamDao;
-import com.elliot.footballmanager.footballteam.FootballTeamDaoImpl;
-import com.elliot.footballmanager.gamemanager.GameManager;
+import com.elliot.footballmanager.entity.FootballTeam;
+import com.elliot.footballmanager.entity.dao.FootballTeamDao;
+import com.elliot.footballmanager.entity.dao.impl.FootballTeamDaoImpl;
+import com.elliot.footballmanager.entity.GameManager;
 
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

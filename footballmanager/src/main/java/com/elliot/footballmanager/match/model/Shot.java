@@ -2,7 +2,7 @@ package com.elliot.footballmanager.match.model;
 
 import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.RandomNumberGenerator;
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
 /**
  * Used within the MatchEngine to determine whether a Player

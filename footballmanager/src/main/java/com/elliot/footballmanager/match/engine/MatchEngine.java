@@ -1,9 +1,10 @@
 package com.elliot.footballmanager.match.engine;
 
-import com.elliot.footballmanager.fixture.Fixture;
-import com.elliot.footballmanager.footballteam.FootballTeam;
+import com.elliot.footballmanager.entity.dao.MatchEngineDao;
+import com.elliot.footballmanager.entity.dao.impl.MatchEngineDaoImpl;
+import com.elliot.footballmanager.entity.Fixture;
+import com.elliot.footballmanager.entity.FootballTeam;
 import com.elliot.footballmanager.footballteam.matchsetup.FootballTeamMatchSetup;
-import com.elliot.footballmanager.gamemanager.GameManager;
 import com.elliot.footballmanager.match.FootballTeamMatchStats;
 import com.elliot.footballmanager.match.MatchResult;
 import com.elliot.footballmanager.match.RandomNumberGenerator;
@@ -11,13 +12,12 @@ import com.elliot.footballmanager.match.model.*;
 import com.elliot.footballmanager.match.model.pitch.FootballPitch;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchBuilder;
 import com.elliot.footballmanager.match.model.pitch.FootballPitchPlayerPlacer;
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 import com.elliot.footballmanager.standings.StandingBuilder;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 /**

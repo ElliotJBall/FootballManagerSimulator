@@ -1,6 +1,6 @@
 package com.elliot.footballmanager.footballteam.matchsetup;
 
-import com.elliot.footballmanager.player.Player;
+import com.elliot.footballmanager.entity.Player;
 
 import java.io.Serializable;
 import java.util.Arrays;

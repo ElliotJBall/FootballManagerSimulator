@@ -1,5 +1,6 @@
 package com.elliot.footballmanager.standings;
 
+import com.elliot.footballmanager.entity.Standing;
 import java.util.Comparator;
 import java.util.List;
 
