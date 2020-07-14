@@ -9,23 +9,24 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Helper class for methods that can be used across all
- * the menu classes.
+ * Helper class for methods that can be used across all the menu classes.
+ *
  * @author Elliot
  */
 public class MenuHelper {
 
-	private MenuHelper() {
+  private MenuHelper() {
 
-	}
+  }
 
-	public static Map<Integer, FootballTeam> buildFootballTeamMapDisplay(GameManager gameManager) {
-		Map<Integer, FootballTeam> footballTeamToIds = new HashMap<Integer, FootballTeam>();
+  public static Map<Integer, FootballTeam> buildFootballTeamMapDisplay(GameManager gameManager) {
+    Map<Integer, FootballTeam> footballTeamToIds = new HashMap<Integer, FootballTeam>();
 
-		FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
-		for (FootballTeam footballTeam : footballTeamDao.getAllFootballTeams(gameManager.getCurrentLeague().getLeagueId())) {
-			footballTeamToIds.put(footballTeam.getFootballTeamId(), footballTeam);
-		}
-		return footballTeamToIds;
-	}
+    FootballTeamDao footballTeamDao = new FootballTeamDaoImpl();
+    for (FootballTeam footballTeam : footballTeamDao
+        .getAllFootballTeams(gameManager.getCurrentLeague().getLeagueId())) {
+      footballTeamToIds.put(footballTeam.getFootballTeamId(), footballTeam);
+    }
+    return footballTeamToIds;
+  }
 }

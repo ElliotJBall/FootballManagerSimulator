@@ -54,7 +54,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>com.elliot.footballmanager.App</mainClass>
+              <mainClass>com.elliot.footballmanager.FootballManagerApplication</mainClass>
             </manifest>
           </archive>
           <appendAssemblyId>false</appendAssemblyId>

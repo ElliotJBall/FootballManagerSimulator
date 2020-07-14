@@ -7,67 +7,66 @@ import com.elliot.footballmanager.entity.FootballTeam;
 
 /**
  * @author Elliot
- *
  */
 public class League {
 
-	private Integer leagueId;
-	private String leagueName;
-	private Integer countryId;
-	private List<FootballTeam> footballTeams;
-	private List<Fixture> upcomingFixtures;
-	
-	public League() {
-		
-	}
+  private Integer leagueId;
+  private String leagueName;
+  private Integer countryId;
+  private List<FootballTeam> footballTeams;
+  private List<Fixture> upcomingFixtures;
 
-	public League(Integer leagueId, String leagueName, Integer countryId) {
-		this.leagueId = leagueId;
-		this.leagueName = leagueName;
-		this.countryId = countryId;
-	}
+  public League() {
 
-	public Integer getLeagueId() {
-		return leagueId;
-	}
+  }
 
-	public void setLeagueId(Integer leagueId) {
-		this.leagueId = leagueId;
-	}
+  public League(Integer leagueId, String leagueName, Integer countryId) {
+    this.leagueId = leagueId;
+    this.leagueName = leagueName;
+    this.countryId = countryId;
+  }
 
-	public String getLeagueName() {
-		return leagueName;
-	}
+  public Integer getLeagueId() {
+    return leagueId;
+  }
 
-	public void setLeagueName(String leagueName) {
-		this.leagueName = leagueName;
-	}
+  public void setLeagueId(Integer leagueId) {
+    this.leagueId = leagueId;
+  }
 
-	public Integer getCountryId() {
-		return countryId;
-	}
+  public String getLeagueName() {
+    return leagueName;
+  }
 
-	public void setCountryId(Integer countryId) {
-		this.countryId = countryId;
-	}
+  public void setLeagueName(String leagueName) {
+    this.leagueName = leagueName;
+  }
 
-	public List<FootballTeam> getFootballTeams() {
-		return footballTeams;
-	}
+  public Integer getCountryId() {
+    return countryId;
+  }
 
-	public void setFootballTeams(List<FootballTeam> footballTeams) {
-		this.footballTeams = footballTeams;
-	}
-	
-	public List<Fixture> getUpcomingFixtures() {
-		return upcomingFixtures;
-	}
+  public void setCountryId(Integer countryId) {
+    this.countryId = countryId;
+  }
 
-	public void setUpcomingFixtures(List<Fixture> upcomingFixtures) {
-		this.upcomingFixtures = upcomingFixtures;
-	}
+  public List<FootballTeam> getFootballTeams() {
+    return footballTeams;
+  }
 
-	public String printLeagueMenuInfo() {
-		return "[" + this.getLeagueId()  + "]" + " " + this.getLeagueName();
-	}
+  public void setFootballTeams(List<FootballTeam> footballTeams) {
+    this.footballTeams = footballTeams;
+  }
+
+  public List<Fixture> getUpcomingFixtures() {
+    return upcomingFixtures;
+  }
+
+  public void setUpcomingFixtures(List<Fixture> upcomingFixtures) {
+    this.upcomingFixtures = upcomingFixtures;
+  }
+
+  public String printLeagueMenuInfo() {
+    return "[" + this.getLeagueId() + "]" + " " + this.getLeagueName();
+  }
 }

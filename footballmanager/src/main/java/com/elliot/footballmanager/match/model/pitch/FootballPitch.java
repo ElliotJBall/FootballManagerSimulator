@@ -9,10 +9,10 @@ import java.util.Set;
  */
 public interface FootballPitch {
 
-    public void addPlayerToTile(Player player);
+  public void addPlayerToTile(Player player);
 
-    public void removePlayerFromTile(Player player);
+  public void removePlayerFromTile(Player player);
 
-    public Set<Player> getPlayersWithinThisTile();
+  public Set<Player> getPlayersWithinThisTile();
 
 }

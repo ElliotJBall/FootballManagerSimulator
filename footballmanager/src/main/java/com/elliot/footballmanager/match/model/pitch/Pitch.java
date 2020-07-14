@@ -10,46 +10,46 @@ import java.util.Set;
  */
 public abstract class Pitch implements FootballPitch {
 
-    private Integer xCoordinate;
-    private Integer yCoordinate;
+  private Integer xCoordinate;
+  private Integer yCoordinate;
 
-    private Set<Player> playersWithinThisTile;
+  private Set<Player> playersWithinThisTile;
 
-    public Pitch() {
+  public Pitch() {
 
+  }
+
+  public Pitch(Integer xCoordinate, Integer yCoordinate) {
+    this.xCoordinate = xCoordinate;
+    this.yCoordinate = yCoordinate;
+
+    playersWithinThisTile = new HashSet<Player>();
+  }
+
+  public Integer getxCoordinate() {
+    return this.xCoordinate;
+  }
+
+  public Integer getyCoordinate() {
+    return this.yCoordinate;
+  }
+
+  @Override
+  public void addPlayerToTile(Player player) {
+    if (playersWithinThisTile == null) {
+      playersWithinThisTile = new HashSet<Player>();
     }
+    playersWithinThisTile.add(player);
+  }
 
-    public Pitch(Integer xCoordinate, Integer yCoordinate) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
+  @Override
+  public void removePlayerFromTile(Player player) {
+    playersWithinThisTile.remove(player);
+  }
 
-        playersWithinThisTile = new HashSet<Player>();
-    }
-
-    public Integer getxCoordinate() {
-        return this.xCoordinate;
-    }
-
-    public Integer getyCoordinate() {
-        return this.yCoordinate;
-    }
-
-    @Override
-    public void addPlayerToTile(Player player) {
-        if (playersWithinThisTile == null) {
-            playersWithinThisTile = new HashSet<Player>();
-        }
-        playersWithinThisTile.add(player);
-    }
-
-    @Override
-    public void removePlayerFromTile(Player player) {
-        playersWithinThisTile.remove(player);
-    }
-
-    @Override
-    public Set<Player> getPlayersWithinThisTile() {
-        return playersWithinThisTile;
-    }
+  @Override
+  public Set<Player> getPlayersWithinThisTile() {
+    return playersWithinThisTile;
+  }
 
 }

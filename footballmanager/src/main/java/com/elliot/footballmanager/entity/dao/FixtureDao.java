@@ -8,14 +8,13 @@ import java.util.Queue;
 import com.elliot.footballmanager.entity.FootballTeam;
 
 /**
- * 
  * @author Elliot
  */
 public interface FixtureDao {
-	
-	public void insertFixturesIntoDatabase(List<String> allFixtures);
-	
-	public Queue<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam);
 
-	public List<Fixture> getFixturesForGivenDate(Date date);
+  public void insertFixturesIntoDatabase(List<String> allFixtures);
+
+  public Queue<Fixture> getFootballTeamsUpcomingFixtures(FootballTeam footballTeam);
+
+  public List<Fixture> getFixturesForGivenDate(Date date);
 }

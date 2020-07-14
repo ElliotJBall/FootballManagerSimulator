@@ -14,140 +14,142 @@ import com.elliot.footballmanager.menu.MatchDayMenu;
 /**
  * The GameManager class handles all the information required to successfully play the Football
  * Manager simulator.
+ *
  * @author Elliot
  */
 public class GameManager {
 
-	private Country currentCountry;
-	private League currentLeague;
-	private FootballTeam currentFootballTeam;
-	private Manager manager;
-	private Date currentDate;
-	private Queue<Fixture> upcomingFixtures;
-	
-	public GameManager() {
+  private Country currentCountry;
+  private League currentLeague;
+  private FootballTeam currentFootballTeam;
+  private Manager manager;
+  private Date currentDate;
+  private Queue<Fixture> upcomingFixtures;
 
-	}
-	
-	public GameManager(Country currentCountry, League currentLeague, FootballTeam currentFootballTeam,
-			Manager manager, Date currentDate) {
-		this.currentCountry = currentCountry;
-		this.currentLeague = currentLeague;
-		this.currentFootballTeam = currentFootballTeam;
-		this.manager = manager;
-		this.currentDate = currentDate;
-	}
+  public GameManager() {
 
-	/**
-	 * Retrieves the selected Country, League, FootballTeam and Manager 
-	 * from the database and instantiates a new GameManager object. 
-	 */
-	public void loadSavedGame() {
-		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
-		gameManagerDao.loadSavedGame(this);
-		
-		FixtureDao fixtureDao = new FixtureDaoImpl();
-		this.setUpcomingFixtures(fixtureDao.getFootballTeamsUpcomingFixtures(this.getCurrentFootballTeam()));
-		
-		new MainMenu(this);
-	}
-	
-	/**
-	 * Persists the current information stored in the GameManager object 
-	 * into the database.
-	 */
-	public void saveGame() {
-		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
-		gameManagerDao.saveGame(this);
-		
-		new MainMenu(this);
-	}
+  }
 
-	/**
-	 * Persists the current information stored in the GameManager object
-	 * into the database and then exits the program.
-	 */
-	public void saveGameAndExit() {
-		GameManagerDao gameManagerDao = new GameManagerDaoImpl();
-		gameManagerDao.saveGame(this);
-	}
-	
-	public String getQuickGameInfo() {
-		return  DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(this.getCurrentDate())
-				+ " " + this.getCurrentFootballTeam().getTeamName()
-				+ " " + this.getCurrentLeague().getLeagueName();
-	}
+  public GameManager(Country currentCountry, League currentLeague, FootballTeam currentFootballTeam,
+      Manager manager, Date currentDate) {
+    this.currentCountry = currentCountry;
+    this.currentLeague = currentLeague;
+    this.currentFootballTeam = currentFootballTeam;
+    this.manager = manager;
+    this.currentDate = currentDate;
+  }
 
-	/**
-	 * Advances the currentDate by a day until a new Fixture is found.
-	 */
-	public void simulateGame() {
-		while (currentDate.before(this.getUpcomingFixtures().peek().getDateOfFixture())) {
-			currentDate = DateUtils.addDays(currentDate, 1);
-			System.out.println("Current date : " + DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(currentDate));
-		}
+  /**
+   * Retrieves the selected Country, League, FootballTeam and Manager from the database and
+   * instantiates a new GameManager object.
+   */
+  public void loadSavedGame() {
+    GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+    gameManagerDao.loadSavedGame(this);
 
-		// Match day
-		if (currentDate.equals(this.getUpcomingFixtures().peek().getDateOfFixture())) {
-			MatchDayMenu matchDayMenu = new MatchDayMenu(this);
-			matchDayMenu.beginMenuSelectionLoop();
-		}
-	}
+    FixtureDao fixtureDao = new FixtureDaoImpl();
+    this.setUpcomingFixtures(
+        fixtureDao.getFootballTeamsUpcomingFixtures(this.getCurrentFootballTeam()));
 
-	public void beginMatchDaySimulation() {
+    new MainMenu(this);
+  }
 
-	}
+  /**
+   * Persists the current information stored in the GameManager object into the database.
+   */
+  public void saveGame() {
+    GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+    gameManagerDao.saveGame(this);
 
-	public boolean isMatchDay() {
-		return this.getCurrentDate().equals(this.getUpcomingFixtures().peek().getDateOfFixture());
-	}
+    new MainMenu(this);
+  }
 
-	
-	public Country getCurrentCountry() {
-		return currentCountry;
-	}
+  /**
+   * Persists the current information stored in the GameManager object into the database and then
+   * exits the program.
+   */
+  public void saveGameAndExit() {
+    GameManagerDao gameManagerDao = new GameManagerDaoImpl();
+    gameManagerDao.saveGame(this);
+  }
 
-	public void setCurrentCountry(Country selectedCountry) {
-		this.currentCountry = selectedCountry;
-	}
+  public String getQuickGameInfo() {
+    return DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(this.getCurrentDate())
+        + " " + this.getCurrentFootballTeam().getTeamName()
+        + " " + this.getCurrentLeague().getLeagueName();
+  }
 
-	public League getCurrentLeague() {
-		return currentLeague;
-	}
+  /**
+   * Advances the currentDate by a day until a new Fixture is found.
+   */
+  public void simulateGame() {
+    while (currentDate.before(this.getUpcomingFixtures().peek().getDateOfFixture())) {
+      currentDate = DateUtils.addDays(currentDate, 1);
+      System.out
+          .println("Current date : " + DateUtils.FIXTURE_DATE_DISPLAY_FORMAT.format(currentDate));
+    }
 
-	public void setCurrentLeague(League currentLeague) {
-		this.currentLeague = currentLeague;
-	}
+    // Match day
+    if (currentDate.equals(this.getUpcomingFixtures().peek().getDateOfFixture())) {
+      MatchDayMenu matchDayMenu = new MatchDayMenu(this);
+      matchDayMenu.beginMenuSelectionLoop();
+    }
+  }
 
-	public FootballTeam getCurrentFootballTeam() {
-		return currentFootballTeam;
-	}
+  public void beginMatchDaySimulation() {
 
-	public void setCurrentFootballTeam(FootballTeam footballTeam) {
-		this.currentFootballTeam = footballTeam;
-	}
+  }
 
-	public Date getCurrentDate() {
-		return currentDate;
-	}
+  public boolean isMatchDay() {
+    return this.getCurrentDate().equals(this.getUpcomingFixtures().peek().getDateOfFixture());
+  }
 
-	public void setCurrentDate(Date currentDate) {
-		this.currentDate = currentDate;
-	}
 
-	public Manager getManager() {
-		return manager;
-	}
+  public Country getCurrentCountry() {
+    return currentCountry;
+  }
 
-	public void setManager(Manager manager) {
-		this.manager = manager;
-	}
+  public void setCurrentCountry(Country selectedCountry) {
+    this.currentCountry = selectedCountry;
+  }
 
-	public Queue<Fixture> getUpcomingFixtures() {
-		return upcomingFixtures;
-	}
+  public League getCurrentLeague() {
+    return currentLeague;
+  }
 
-	public void setUpcomingFixtures(Queue<Fixture> upcomingFixtures) {
-		this.upcomingFixtures = upcomingFixtures;
-	}
+  public void setCurrentLeague(League currentLeague) {
+    this.currentLeague = currentLeague;
+  }
+
+  public FootballTeam getCurrentFootballTeam() {
+    return currentFootballTeam;
+  }
+
+  public void setCurrentFootballTeam(FootballTeam footballTeam) {
+    this.currentFootballTeam = footballTeam;
+  }
+
+  public Date getCurrentDate() {
+    return currentDate;
+  }
+
+  public void setCurrentDate(Date currentDate) {
+    this.currentDate = currentDate;
+  }
+
+  public Manager getManager() {
+    return manager;
+  }
+
+  public void setManager(Manager manager) {
+    this.manager = manager;
+  }
+
+  public Queue<Fixture> getUpcomingFixtures() {
+    return upcomingFixtures;
+  }
+
+  public void setUpcomingFixtures(Queue<Fixture> upcomingFixtures) {
+    this.upcomingFixtures = upcomingFixtures;
+  }
 }
