@@ -1,11 +1,26 @@
 # Elliot's FootballManager 
 The aim of this project is to produce a Console based application that emulates the popular Football Manager series.
 
-## How to run (Maven)
-1. Clone project
-2. CD into top level directory and run mvn clean assembly:assembly
-3. Copy the Database file into the footballManager directory
-4. java -jar name.of.jar-jar-with-dependencies.jar
+## How to run
+1. Clone project and CD into the top level directory
+2. Generate the jar by running:
+```java
+mvn clean package
+```
+3. Copy the database file into the football manager directory
+```bash
+cp FootballManagerDatabase ./footballManager/
+```
+4. To start the game, run the following command:
+```java
+java -jar elliots-football-manager.jar
+```
+
+## Tests
+To run the test suite (_If there are any tests_) Simply run:
+```java
+mvn clean test
+```
 
 ## License 
 MIT License
